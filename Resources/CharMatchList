@@ -1,0 +1,52 @@
+{
+  "version": 20230417,
+  "encoding": "UTF-8",
+  "1": {
+    "name": "英( )",
+    "left": "(",
+    "right": ")",
+    "checked": 0
+  },
+  "2": {
+    "name": "中（ ）",
+    "left": "（",
+    "right": "）",
+    "checked": 0
+  },
+  "3": {
+    "name": "英[ ]",
+    "left": "[",
+    "right": "]",
+    "checked": 0
+  },
+  "4": {
+    "name": "中【 】",
+    "left": "【",
+    "right": "】",
+    "checked": 0
+  },
+  "5": {
+    "name": "{ }",
+    "left": "{",
+    "right": "}",
+    "checked": 0
+  },
+  "6": {
+    "name": "《 》",
+    "left": "《",
+    "right": "》",
+    "checked": 0
+  },
+  "7": {
+    "name": "中“ ”",
+    "left": "“",
+    "right": "”",
+    "checked": 0
+  },
+  "8": {
+    "name": "中‘ ’",
+    "left": "‘",
+    "right": "’",
+    "checked": 0
+  }
+}
