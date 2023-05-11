@@ -57,7 +57,7 @@
 ## 如何使用
 - 请遵循项目开源协议
 - 建议使用release模式，不会显示未完成部分。debug模式会显示所有功能，容易触发bug。
-  - release模式需要将[预设文件7z](doc/settings.7z)解压至ProgramData目录，如`C:\ProgramData\分点作答\FDscend\Config`
+  - release模式需要将[预设文件7z](doc/settings.7z)解压至ProgramData目录，如其中的Config子文件夹应当在`C:\ProgramData\分点作答\FDscend\Config`
   - debug模式需要将工程放置于`D:\code\WordAddIn1\WordAddIn1.sln`。（由于项目使用了绝对路径）
 
 ## 一些不重要的说明（可以跳过）
