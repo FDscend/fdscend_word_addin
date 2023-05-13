@@ -973,6 +973,15 @@ namespace WordAddIn1
 
             DeleteShading_Click(sender, e);
 
+
+            object Replace_String = "^l";       //要替换的字符
+            object ms = System.Type.Missing;
+            object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
+            object ReplaceWith = "^p";             //最终替换成的字符
+            //执行Word自带的查找/替换功能函数
+            Globals.ThisAddIn.Application.Selection.Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
+
+
             //Globals.ThisAddIn.Application.Selection.ConvertToTable(Separator: Word.WdTableFieldSeparator.wdSeparateByParagraphs, NumColumns: 1, NumRows: 10, AutoFitBehavior: Word.WdAutoFitBehavior.wdAutoFitFixed);            
             Word.Table table = Globals.ThisAddIn.Application.Selection.ConvertToTable(Separator: Word.WdTableFieldSeparator.wdSeparateByParagraphs);
             //table.Borders.Enable = 5;
@@ -1692,6 +1701,16 @@ namespace WordAddIn1
         private void CodeFormatLatex_Click(object sender, RibbonControlEventArgs e)
         {
             //latex 样式排版
+            DeleteShading_Click(sender, e);
+
+            object Replace_String = "^l";       //要替换的字符
+            object ms = System.Type.Missing;
+            object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
+            object ReplaceWith = "^p";             //最终替换成的字符
+            //执行Word自带的查找/替换功能函数
+            Globals.ThisAddIn.Application.Selection.Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
+
+
             Word.Table table = Globals.ThisAddIn.Application.Selection.ConvertToTable(Separator: Word.WdTableFieldSeparator.wdSeparateByParagraphs);
 
             JObject js = ImportJSON(PresetCodeLatexFile);
