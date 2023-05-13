@@ -1,5 +1,5 @@
 {
-  "version": 20230510,
+  "version": 20230513,
   "encoding": "UTF-8",
   "1": {
     "from": ",",
@@ -82,6 +82,20 @@
     "from": "|",
     "to": {
       "to1": "｜"
+    },
+    "checked": 0
+  },
+  "13": {
+    "from": "^p",
+    "to": {
+      "to1": "^l"
+    },
+    "checked": 0
+  },
+  "14": {
+    "from": "^l",
+    "to": {
+      "to1": "^p"
     },
     "checked": 0
   }
