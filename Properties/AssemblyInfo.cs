@@ -32,7 +32,7 @@ using System.Security;
 //
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”: :
- [assembly: AssemblyVersion("0.9.*")]
+ [assembly: AssemblyVersion("0.11.*")]
 //[assembly: AssemblyVersion("0.7.0.0")]
 //[assembly: AssemblyFileVersion("0.7.0.0")]
 

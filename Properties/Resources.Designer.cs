@@ -91,7 +91,7 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.10.0 的本地化字符串。
+        ///   查找类似 0.11.0 的本地化字符串。
         /// </summary>
         public static string current_ver {
             get {
@@ -106,6 +106,16 @@ namespace WordAddIn1.Properties {
             get {
                 object obj = ResourceManager.GetObject("document", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Icon ico {
+            get {
+                object obj = ResourceManager.GetObject("ico", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -265,6 +275,16 @@ namespace WordAddIn1.Properties {
         public static System.Drawing.Bitmap 表格着色 {
             get {
                 object obj = ResourceManager.GetObject("表格着色", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 页眉横线 {
+            get {
+                object obj = ResourceManager.GetObject("页眉横线", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
