@@ -25,6 +25,9 @@ namespace WordAddIn1
         // #endif
 
         string PresetFile;
+        Color TableBackcolor1;
+        Color TableBackcolor2;
+        Color TableBackcolorH;
 
         public TableColoringForm(string preset)
         {
@@ -45,7 +48,9 @@ namespace WordAddIn1
             //表格效果展示
             TableBackcolor1 = ReadTHINGcolor(1, "TableBackcolor1");
             TableBackcolor2 = ReadTHINGcolor(1, "TableBackcolor2");
+            TableBackcolorH = ReadTHINGcolor(1, "TableBackcolorH");
             SetTableLineColor();
+            SetTableLineTxt();
 
         }
 
@@ -84,8 +89,7 @@ namespace WordAddIn1
             return Color.FromArgb(r, g, b);
         }
 
-        Color TableBackcolor1;
-        Color TableBackcolor2;
+        
         private void TableColorPresetList_SelectedIndexChanged(object sender, EventArgs e)
         {
             //更新颜色预览
@@ -97,6 +101,7 @@ namespace WordAddIn1
 
             TableBackcolor1 = ReadTHINGcolor(PresetChoice, "TableBackcolor1");
             TableBackcolor2 = ReadTHINGcolor(PresetChoice, "TableBackcolor2");
+            TableBackcolorH = ReadTHINGcolor(PresetChoice, "TableBackcolorH");
 
             SetTableLineColor();
         }
@@ -116,7 +121,7 @@ namespace WordAddIn1
             }
             else
             {
-                TableLine1.BackColor = Color.White;
+                TableLine1.BackColor = TableBackcolorH;
                 TableLine2.BackColor = TableBackcolor2;
                 TableLine3.BackColor = TableBackcolor1;
                 TableLine4.BackColor = TableBackcolor2;
@@ -175,6 +180,8 @@ namespace WordAddIn1
             }
             else
             {
+                tables_select.Rows[1].Shading.BackgroundPatternColor = GetColor(TableBackcolorH);
+
                 for (int i = 2; i <= row; i++)  //排除首行
                 {
                     if (i % 2 == 1)
@@ -233,6 +240,9 @@ namespace WordAddIn1
             string c2r = TableBackcolor2.R.ToString();
             string c2g = TableBackcolor2.G.ToString();
             string c2b = TableBackcolor2.B.ToString();
+            string cHr = TableBackcolorH.R.ToString();
+            string cHg = TableBackcolorH.G.ToString();
+            string cHb = TableBackcolorH.B.ToString();
 
             if (presetName != "")
             {
@@ -246,6 +256,9 @@ namespace WordAddIn1
                 js["preset_" + num + "_TableBackcolor2_r"] = c2r;
                 js["preset_" + num + "_TableBackcolor2_g"] = c2g;
                 js["preset_" + num + "_TableBackcolor2_b"] = c2b;
+                js["preset_" + num + "_TableBackcolorH_r"] = cHr;
+                js["preset_" + num + "_TableBackcolorH_g"] = cHg;
+                js["preset_" + num + "_TableBackcolorH_b"] = cHb;
 
                 SetjsonFun(PresetFile, js);
 
@@ -277,6 +290,9 @@ namespace WordAddIn1
                     js["preset_" + i + "_TableBackcolor2_r"] = js["preset_" + j + "_TableBackcolor2_r"];
                     js["preset_" + i + "_TableBackcolor2_g"] = js["preset_" + j + "_TableBackcolor2_g"];
                     js["preset_" + i + "_TableBackcolor2_b"] = js["preset_" + j + "_TableBackcolor2_b"];
+                    js["preset_" + i + "_TableBackcolorH_r"] = js["preset_" + j + "_TableBackcolorH_r"];
+                    js["preset_" + i + "_TableBackcolorH_g"] = js["preset_" + j + "_TableBackcolorH_g"];
+                    js["preset_" + i + "_TableBackcolorH_b"] = js["preset_" + j + "_TableBackcolorH_b"];
                 }
 
                 //delete json opt
@@ -289,6 +305,9 @@ namespace WordAddIn1
                 js["preset_" + PresetCount + "_TableBackcolor2_r"] = "";
                 js["preset_" + PresetCount + "_TableBackcolor2_g"] = "";
                 js["preset_" + PresetCount + "_TableBackcolor2_b"] = "";
+                js["preset_" + PresetCount + "_TableBackcolorH_r"] = "";
+                js["preset_" + PresetCount + "_TableBackcolorH_g"] = "";
+                js["preset_" + PresetCount + "_TableBackcolorH_b"] = "";
 
                 SetjsonFun(PresetFile, js);
 
@@ -383,6 +402,9 @@ namespace WordAddIn1
                 js["preset_" + (StartPresetCount + 1) + "_TableBackcolor2_r"] = jsIn["preset_" + InportSelected + "_TableBackcolor2_r"];
                 js["preset_" + (StartPresetCount + 1) + "_TableBackcolor2_g"] = jsIn["preset_" + InportSelected + "_TableBackcolor2_g"];
                 js["preset_" + (StartPresetCount + 1) + "_TableBackcolor2_b"] = jsIn["preset_" + InportSelected + "_TableBackcolor2_b"];
+                js["preset_" + (StartPresetCount + 1) + "_TableBackcolorH_r"] = jsIn["preset_" + InportSelected + "_TableBackcolorH_r"];
+                js["preset_" + (StartPresetCount + 1) + "_TableBackcolorH_g"] = jsIn["preset_" + InportSelected + "_TableBackcolorH_g"];
+                js["preset_" + (StartPresetCount + 1) + "_TableBackcolorH_b"] = jsIn["preset_" + InportSelected + "_TableBackcolorH_b"];
                 js["num"] = (StartPresetCount + 1).ToString();
 
                 SetjsonFun(PresetFile, js);
@@ -399,6 +421,15 @@ namespace WordAddIn1
                 InportPresetList.Items.Remove(InportPresetList.SelectedItem);
                 InportPresetList.Refresh();
             }
+        }
+
+        private void NewColorH_Click(object sender, EventArgs e)
+        {
+            //自定义颜色3
+            DialogResult dr = colorDialog1.ShowDialog();
+            if (dr == DialogResult.OK) TableBackcolorH = colorDialog1.Color;
+
+            SetTableLineColor();
         }
     }
 }

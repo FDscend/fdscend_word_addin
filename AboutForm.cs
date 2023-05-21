@@ -31,7 +31,8 @@ namespace WordAddIn1
             InitializeComponent();
 
             //version
-            label2.Text = "当前版本：" + Properties.Resources.current_ver + "\r\n内部版本：" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            //label2.Text = "当前版本：" + Properties.Resources.current_ver + "\r\n内部版本：" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            label2.Text = "当前版本：" + Properties.Resources.current_ver;
         }
 
         private void AboutForm_Load(object sender, EventArgs e)

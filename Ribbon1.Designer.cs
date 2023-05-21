@@ -84,12 +84,12 @@ namespace WordAddIn1
             this.FileTabOnOff = this.Factory.CreateRibbonToggleButton();
             this.changecharCE = this.Factory.CreateRibbonToggleButton();
             this.checkCharMatch = this.Factory.CreateRibbonToggleButton();
+            this.del_header_line = this.Factory.CreateRibbonButton();
             this.ControlActive = this.Factory.CreateRibbonButton();
             this.hide = this.Factory.CreateRibbonButton();
             this.showHidden = this.Factory.CreateRibbonButton();
             this.About = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
-            this.del_header_line = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.group_tuisong.SuspendLayout();
             this.code.SuspendLayout();
@@ -123,7 +123,6 @@ namespace WordAddIn1
             this.group_tuisong.Items.Add(this.button_clearFont);
             this.group_tuisong.Items.Add(this.TimeHeader);
             this.group_tuisong.Items.Add(this.author);
-            this.group_tuisong.Items.Add(this.del_header_line);
             this.group_tuisong.Label = "文案";
             this.group_tuisong.Name = "group_tuisong";
             this.group_tuisong.Visible = false;
@@ -169,6 +168,7 @@ namespace WordAddIn1
             this.ToolsBox.Items.Add(this.FileTabOnOff);
             this.ToolsBox.Items.Add(this.changecharCE);
             this.ToolsBox.Items.Add(this.checkCharMatch);
+            this.ToolsBox.Items.Add(this.del_header_line);
             this.ToolsBox.Label = "工具箱";
             this.ToolsBox.Name = "ToolsBox";
             this.ToolsBox.Visible = false;
@@ -240,7 +240,7 @@ namespace WordAddIn1
             this.button_header.Label = "页眉";
             this.button_header.Name = "button_header";
             this.button_header.ScreenTip = "设置页眉";
-            this.button_header.SuperTip = "中间页眉东南大学数学学院新媒体中心";
+            this.button_header.SuperTip = "中间页眉文字";
             this.button_header.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_header_Click);
             // 
             // button_footer
@@ -248,7 +248,7 @@ namespace WordAddIn1
             this.button_footer.Label = "页脚";
             this.button_footer.Name = "button_footer";
             this.button_footer.ScreenTip = "设置页脚";
-            this.button_footer.SuperTip = "右下角添加采编部";
+            this.button_footer.SuperTip = "右下角添加页脚文字";
             this.button_footer.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_footer_Click);
             // 
             // button_font
@@ -468,7 +468,9 @@ namespace WordAddIn1
             this.CodeFormat2.Image = global::WordAddIn1.Properties.Resources._2;
             this.CodeFormat2.Label = "一键排版";
             this.CodeFormat2.Name = "CodeFormat2";
+            this.CodeFormat2.ScreenTip = "代码一键排版";
             this.CodeFormat2.ShowImage = true;
+            this.CodeFormat2.SuperTip = "样式3";
             this.CodeFormat2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CodeFormat2_Click);
             // 
             // ParagraphShading
@@ -547,6 +549,15 @@ namespace WordAddIn1
             this.checkCharMatch.SuperTip = "检查符号是否配对";
             this.checkCharMatch.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkCharMatch_Click);
             // 
+            // del_header_line
+            // 
+            this.del_header_line.Image = global::WordAddIn1.Properties.Resources.页眉横线;
+            this.del_header_line.Label = "页眉横线";
+            this.del_header_line.Name = "del_header_line";
+            this.del_header_line.ScreenTip = "去除页眉横线";
+            this.del_header_line.ShowImage = true;
+            this.del_header_line.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.del_header_line_Click);
+            // 
             // ControlActive
             // 
             this.ControlActive.Label = "增加";
@@ -580,13 +591,6 @@ namespace WordAddIn1
             // 
             this.button1.Label = "button1";
             this.button1.Name = "button1";
-            // 
-            // del_header_line
-            // 
-            this.del_header_line.Label = "页眉横线";
-            this.del_header_line.Name = "del_header_line";
-            this.del_header_line.ScreenTip = "去除页眉横线";
-            this.del_header_line.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.del_header_line_Click);
             // 
             // Ribbon1
             // 

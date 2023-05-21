@@ -12,6 +12,7 @@ using System.Drawing;//color
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Net;
 
 
 
@@ -24,6 +25,7 @@ namespace WordAddIn1
 
 
         //全局路径
+        string latest_info = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\latest.json";
 #if DEBUG
         string ControlKey = "D:\\code\\WordAddIn1\\Resources\\ControlKey";
         string PresetCodeFile = "D:\\code\\WordAddIn1\\Resources\\Preset_Code";
@@ -32,6 +34,7 @@ namespace WordAddIn1
         string PresetToolsBoxTable = "D:\\code\\WordAddIn1\\Resources\\ToolsBox_TablePreset";
         string XMTsetting = "D:\\code\\WordAddIn1\\Resources\\XMT";
         string PresetCodeMDFile = "D:\\code\\WordAddIn1\\Resources\\Preset_CodeMD";
+        string CheckUpdateFile = "D:\\code\\WordAddIn1\\Resources\\CheckUpdate";
 #endif
 #if !DEBUG
         string ControlKey = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Config\\ControlKey";
@@ -41,6 +44,7 @@ namespace WordAddIn1
         string PresetToolsBoxTable = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\ToolsBox_TablePreset";
         string XMTsetting = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\XMT";
         string PresetCodeMDFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\Preset_CodeMD";
+        string CheckUpdateFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Config\\CheckUpdate";
 #endif
 
 
@@ -262,7 +266,67 @@ namespace WordAddIn1
             CodeBackcolor2 = ReadCodeTHINGcolor(int.Parse(js["DefaultPreset"].ToString()), "CodeBackcolor2");
             CodeBorderLine = ReadCodeTHINGcolor(int.Parse(js["DefaultPreset"].ToString()), "CodeBorderLine");
 
+
+            //check update
+            JObject js_update = ImportJSON(CheckUpdateFile);
+            if (js_update["auto_check"].ToString() == "yes")
+            {
+                AutoUpdate();
+            }
         }
+
+        void AutoUpdate()
+        {
+            //check update
+
+            JObject js = ImportJSON(CheckUpdateFile);
+            string strTime = js["latest_date"].ToString();
+            double fre_day = double.Parse(js["delay_day"].ToString());
+
+            DateTime dt_latest = Convert.ToDateTime(strTime);
+            DateTime dt_check = dt_latest.AddDays(fre_day);
+
+            DateTime dt_now = DateTime.Now;
+
+            if (dt_check < dt_now)  //检查上次更新时间
+            {
+                //检查版本
+                if (File.Exists(latest_info))
+                {
+                    File.Delete(latest_info);
+                }
+
+                string url = "https://api.github.com/repos/FDscend/fdscend_word_addin/releases/latest";
+                WebClient webClient = new WebClient();
+                webClient.Headers.Add("user-agent", "Mozilla/4.0 ((compatible; MSIE 8.0; Windows NT 6.1;.NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;)");
+
+                ServicePointManager.SecurityProtocol = (SecurityProtocolType)48
+                                                | (SecurityProtocolType)192
+                                                | (SecurityProtocolType)768
+                                                | (SecurityProtocolType)3072;
+
+                webClient.DownloadFile(url, latest_info);
+
+                JObject js_latest = ImportJSON(latest_info);
+                Version ver_cur = new Version(Properties.Resources.current_ver);
+                Version ver_latest = new Version(js_latest["tag_name"].ToString().Substring(1));
+
+                if (ver_cur < ver_latest)
+                {
+                    DialogResult dr = MessageBox.Show("插件更新啦，去看看吧！", "分点作答", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.RightAlign, false);
+
+                    if (dr == DialogResult.OK)
+                    {
+                        System.Diagnostics.Process.Start("https://github.com/FDscend/fdscend_word_addin");
+                    }
+
+                    js["latest_date"] = dt_now.ToString("d");
+                    SetjsonFun(CheckUpdateFile, js);
+                }
+
+            }
+        }
+
 
         void KeyAllTrue()
         {

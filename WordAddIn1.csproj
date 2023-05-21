@@ -275,6 +275,7 @@
     <EmbeddedResource Include="Resources\ControlKey">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="Resources\CheckUpdate" />
     <None Include="Resources\Preset_Code">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -298,6 +299,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico.ico" />
+    <None Include="Resources\页眉横线.png" />
     <None Include="Resources\Preset_CodeMD" />
     <Content Include="Resources\pair.png" />
     <None Include="Resources\CharMatchList" />

@@ -50,9 +50,10 @@ namespace WordAddIn1
             this.saveFileDialogExPreset = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialogINPreset = new System.Windows.Forms.OpenFileDialog();
             this.InportPresetGroup = new System.Windows.Forms.GroupBox();
+            this.InportOK = new System.Windows.Forms.Button();
             this.InportPresetList = new System.Windows.Forms.ListBox();
             this.checkBoxInport = new System.Windows.Forms.CheckBox();
-            this.InportOK = new System.Windows.Forms.Button();
+            this.NewColorH = new System.Windows.Forms.Button();
             this.groupTableColor.SuspendLayout();
             this.groupColorEffect.SuspendLayout();
             this.InportPresetGroup.SuspendLayout();
@@ -162,7 +163,7 @@ namespace WordAddIn1
             this.ColorOK.BackColor = System.Drawing.Color.OldLace;
             this.ColorOK.Location = new System.Drawing.Point(4, 486);
             this.ColorOK.Name = "ColorOK";
-            this.ColorOK.Size = new System.Drawing.Size(102, 39);
+            this.ColorOK.Size = new System.Drawing.Size(127, 39);
             this.ColorOK.TabIndex = 2;
             this.ColorOK.Text = "*使用*";
             this.ColorOK.UseVisualStyleBackColor = false;
@@ -171,7 +172,7 @@ namespace WordAddIn1
             // ExchangeColor
             // 
             this.ExchangeColor.BackColor = System.Drawing.Color.OldLace;
-            this.ExchangeColor.Location = new System.Drawing.Point(107, 486);
+            this.ExchangeColor.Location = new System.Drawing.Point(137, 486);
             this.ExchangeColor.Name = "ExchangeColor";
             this.ExchangeColor.Size = new System.Drawing.Size(102, 39);
             this.ExchangeColor.TabIndex = 3;
@@ -184,7 +185,7 @@ namespace WordAddIn1
             this.NewColor.BackColor = System.Drawing.Color.OldLace;
             this.NewColor.Location = new System.Drawing.Point(3, 531);
             this.NewColor.Name = "NewColor";
-            this.NewColor.Size = new System.Drawing.Size(102, 39);
+            this.NewColor.Size = new System.Drawing.Size(78, 39);
             this.NewColor.TabIndex = 4;
             this.NewColor.Text = "颜色1";
             this.NewColor.UseVisualStyleBackColor = false;
@@ -193,9 +194,9 @@ namespace WordAddIn1
             // NewColor2
             // 
             this.NewColor2.BackColor = System.Drawing.Color.OldLace;
-            this.NewColor2.Location = new System.Drawing.Point(107, 531);
+            this.NewColor2.Location = new System.Drawing.Point(82, 531);
             this.NewColor2.Name = "NewColor2";
-            this.NewColor2.Size = new System.Drawing.Size(102, 39);
+            this.NewColor2.Size = new System.Drawing.Size(78, 39);
             this.NewColor2.TabIndex = 5;
             this.NewColor2.Text = "颜色2";
             this.NewColor2.UseVisualStyleBackColor = false;
@@ -204,9 +205,9 @@ namespace WordAddIn1
             // SavePreset
             // 
             this.SavePreset.BackColor = System.Drawing.Color.BlanchedAlmond;
-            this.SavePreset.Location = new System.Drawing.Point(211, 486);
+            this.SavePreset.Location = new System.Drawing.Point(247, 486);
             this.SavePreset.Name = "SavePreset";
-            this.SavePreset.Size = new System.Drawing.Size(102, 39);
+            this.SavePreset.Size = new System.Drawing.Size(66, 39);
             this.SavePreset.TabIndex = 6;
             this.SavePreset.Text = "保存";
             this.SavePreset.UseVisualStyleBackColor = false;
@@ -215,9 +216,9 @@ namespace WordAddIn1
             // DeletePreset
             // 
             this.DeletePreset.BackColor = System.Drawing.Color.BlanchedAlmond;
-            this.DeletePreset.Location = new System.Drawing.Point(211, 531);
+            this.DeletePreset.Location = new System.Drawing.Point(247, 531);
             this.DeletePreset.Name = "DeletePreset";
-            this.DeletePreset.Size = new System.Drawing.Size(102, 39);
+            this.DeletePreset.Size = new System.Drawing.Size(66, 39);
             this.DeletePreset.TabIndex = 7;
             this.DeletePreset.Text = "删除";
             this.DeletePreset.UseVisualStyleBackColor = false;
@@ -269,6 +270,17 @@ namespace WordAddIn1
             this.InportPresetGroup.Text = "导入预设列表";
             this.InportPresetGroup.Visible = false;
             // 
+            // InportOK
+            // 
+            this.InportOK.BackColor = System.Drawing.Color.OldLace;
+            this.InportOK.Location = new System.Drawing.Point(221, 35);
+            this.InportOK.Name = "InportOK";
+            this.InportOK.Size = new System.Drawing.Size(82, 100);
+            this.InportOK.TabIndex = 1;
+            this.InportOK.Text = "确认";
+            this.InportOK.UseVisualStyleBackColor = false;
+            this.InportOK.Click += new System.EventHandler(this.InportOK_Click);
+            // 
             // InportPresetList
             // 
             this.InportPresetList.FormattingEnabled = true;
@@ -291,22 +303,23 @@ namespace WordAddIn1
             this.checkBoxInport.UseVisualStyleBackColor = false;
             this.checkBoxInport.CheckedChanged += new System.EventHandler(this.checkBoxInport_CheckedChanged);
             // 
-            // InportOK
+            // NewColorH
             // 
-            this.InportOK.BackColor = System.Drawing.Color.OldLace;
-            this.InportOK.Location = new System.Drawing.Point(221, 35);
-            this.InportOK.Name = "InportOK";
-            this.InportOK.Size = new System.Drawing.Size(82, 100);
-            this.InportOK.TabIndex = 1;
-            this.InportOK.Text = "确认";
-            this.InportOK.UseVisualStyleBackColor = false;
-            this.InportOK.Click += new System.EventHandler(this.InportOK_Click);
+            this.NewColorH.BackColor = System.Drawing.Color.OldLace;
+            this.NewColorH.Location = new System.Drawing.Point(161, 531);
+            this.NewColorH.Name = "NewColorH";
+            this.NewColorH.Size = new System.Drawing.Size(78, 39);
+            this.NewColorH.TabIndex = 13;
+            this.NewColorH.Text = "颜色3";
+            this.NewColorH.UseVisualStyleBackColor = false;
+            this.NewColorH.Click += new System.EventHandler(this.NewColorH_Click);
             // 
             // TableColoringForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.NewColorH);
             this.Controls.Add(this.checkBoxInport);
             this.Controls.Add(this.InportPresetGroup);
             this.Controls.Add(this.Export);
@@ -357,5 +370,6 @@ namespace WordAddIn1
         private System.Windows.Forms.ListBox InportPresetList;
         private System.Windows.Forms.CheckBox checkBoxInport;
         private System.Windows.Forms.Button InportOK;
+        private System.Windows.Forms.Button NewColorH;
     }
 }
