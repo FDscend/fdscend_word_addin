@@ -91,7 +91,7 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.11.0 的本地化字符串。
+        ///   查找类似 0.12.0 的本地化字符串。
         /// </summary>
         public static string current_ver {
             get {
@@ -245,6 +245,26 @@ namespace WordAddIn1.Properties {
         public static System.Drawing.Bitmap 替换 {
             get {
                 object obj = ResourceManager.GetObject("替换", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 样式底纹 {
+            get {
+                object obj = ResourceManager.GetObject("样式底纹", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap 样式底纹清除 {
+            get {
+                object obj = ResourceManager.GetObject("样式底纹清除", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
