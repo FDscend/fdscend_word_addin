@@ -299,6 +299,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico.ico" />
+    <None Include="Resources\样式底纹清除.png" />
+    <None Include="Resources\样式底纹.png" />
     <None Include="Resources\页眉横线.png" />
     <None Include="Resources\Preset_CodeMD" />
     <Content Include="Resources\pair.png" />

@@ -13,7 +13,7 @@
     "to": {
       "to1": "。"
     },
-    "checked": 1
+    "checked": 0
   },
   "3": {
     "from": ";",
@@ -41,14 +41,14 @@
     "to": {
       "to1": "（"
     },
-    "checked": 0
+    "checked": 1
   },
   "7": {
     "from": ")",
     "to": {
       "to1": "）"
     },
-    "checked": 0
+    "checked": 1
   },
   "8": {
     "from": "[",

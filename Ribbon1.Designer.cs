@@ -76,9 +76,15 @@ namespace WordAddIn1
             this.CodeControl = this.Factory.CreateRibbonButton();
             this.CodeFormatLatex = this.Factory.CreateRibbonButton();
             this.CodeFormat2 = this.Factory.CreateRibbonButton();
+            this.SetCode3CurrentColor = this.Factory.CreateRibbonButton();
+            this.saveCode3Color = this.Factory.CreateRibbonButton();
+            this.ParaShadeSplit = this.Factory.CreateRibbonSplitButton();
             this.ParagraphShading = this.Factory.CreateRibbonButton();
             this.ParaShadingColorSet = this.Factory.CreateRibbonButton();
             this.DeleteShading = this.Factory.CreateRibbonButton();
+            this.StyleShadeSplit = this.Factory.CreateRibbonSplitButton();
+            this.styleShading = this.Factory.CreateRibbonButton();
+            this.styleShadeClear = this.Factory.CreateRibbonButton();
             this.TableColoring = this.Factory.CreateRibbonToggleButton();
             this.ThreeLine = this.Factory.CreateRibbonButton();
             this.FileTabOnOff = this.Factory.CreateRibbonToggleButton();
@@ -154,15 +160,16 @@ namespace WordAddIn1
             // Code2
             // 
             this.Code2.Items.Add(this.CodeFormat2);
+            this.Code2.Items.Add(this.SetCode3CurrentColor);
+            this.Code2.Items.Add(this.saveCode3Color);
             this.Code2.Label = "代码排版3";
             this.Code2.Name = "Code2";
             this.Code2.Visible = false;
             // 
             // ToolsBox
             // 
-            this.ToolsBox.Items.Add(this.ParagraphShading);
-            this.ToolsBox.Items.Add(this.ParaShadingColorSet);
-            this.ToolsBox.Items.Add(this.DeleteShading);
+            this.ToolsBox.Items.Add(this.ParaShadeSplit);
+            this.ToolsBox.Items.Add(this.StyleShadeSplit);
             this.ToolsBox.Items.Add(this.TableColoring);
             this.ToolsBox.Items.Add(this.ThreeLine);
             this.ToolsBox.Items.Add(this.FileTabOnOff);
@@ -473,22 +480,52 @@ namespace WordAddIn1
             this.CodeFormat2.SuperTip = "样式3";
             this.CodeFormat2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CodeFormat2_Click);
             // 
+            // SetCode3CurrentColor
+            // 
+            this.SetCode3CurrentColor.Label = "颜色";
+            this.SetCode3CurrentColor.Name = "SetCode3CurrentColor";
+            this.SetCode3CurrentColor.ScreenTip = "设置底纹颜色";
+            this.SetCode3CurrentColor.SuperTip = "选择颜色，并且应用到本文档。注意：不会修改预设文件。";
+            this.SetCode3CurrentColor.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SetCode3CurrentColor_Click);
+            // 
+            // saveCode3Color
+            // 
+            this.saveCode3Color.Label = "保存";
+            this.saveCode3Color.Name = "saveCode3Color";
+            this.saveCode3Color.ScreenTip = "保存颜色";
+            this.saveCode3Color.SuperTip = "将本文档使用的代码排版3的底纹颜色保存至预设文件";
+            this.saveCode3Color.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.saveCode3Color_Click);
+            // 
+            // ParaShadeSplit
+            // 
+            this.ParaShadeSplit.Image = global::WordAddIn1.Properties.Resources.底纹;
+            this.ParaShadeSplit.Items.Add(this.ParagraphShading);
+            this.ParaShadeSplit.Items.Add(this.ParaShadingColorSet);
+            this.ParaShadeSplit.Items.Add(this.DeleteShading);
+            this.ParaShadeSplit.Label = "段落底纹";
+            this.ParaShadeSplit.Name = "ParaShadeSplit";
+            this.ParaShadeSplit.ScreenTip = "段落底纹";
+            this.ParaShadeSplit.SuperTip = "设置段落底纹的工具集";
+            this.ParaShadeSplit.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ParaShadeSplit_Click);
+            // 
             // ParagraphShading
             // 
             this.ParagraphShading.Image = global::WordAddIn1.Properties.Resources.底纹;
-            this.ParagraphShading.Label = "段落底纹";
+            this.ParagraphShading.Label = "段落着色";
             this.ParagraphShading.Name = "ParagraphShading";
-            this.ParagraphShading.ScreenTip = "给段落加上底纹";
+            this.ParagraphShading.ScreenTip = "段落着色";
             this.ParagraphShading.ShowImage = true;
+            this.ParagraphShading.SuperTip = "给段落加上底纹";
             this.ParagraphShading.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ParagraphShading_Click);
             // 
             // ParaShadingColorSet
             // 
             this.ParaShadingColorSet.Image = ((System.Drawing.Image)(resources.GetObject("ParaShadingColorSet.Image")));
-            this.ParaShadingColorSet.Label = "底纹颜色";
+            this.ParaShadingColorSet.Label = "设置颜色";
             this.ParaShadingColorSet.Name = "ParaShadingColorSet";
-            this.ParaShadingColorSet.ScreenTip = "设置默认底纹颜色";
+            this.ParaShadingColorSet.ScreenTip = "设置颜色";
             this.ParaShadingColorSet.ShowImage = true;
+            this.ParaShadingColorSet.SuperTip = "设置默认底纹颜色";
             this.ParaShadingColorSet.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ParaShadingColorSet_Click);
             // 
             // DeleteShading
@@ -496,9 +533,41 @@ namespace WordAddIn1
             this.DeleteShading.Image = global::WordAddIn1.Properties.Resources.删除底纹;
             this.DeleteShading.Label = "清除底纹";
             this.DeleteShading.Name = "DeleteShading";
-            this.DeleteShading.ScreenTip = "清除选择段落的底纹";
+            this.DeleteShading.ScreenTip = "清除底纹";
             this.DeleteShading.ShowImage = true;
+            this.DeleteShading.SuperTip = "清除选择段落的底纹";
             this.DeleteShading.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.DeleteShading_Click);
+            // 
+            // StyleShadeSplit
+            // 
+            this.StyleShadeSplit.Image = global::WordAddIn1.Properties.Resources.样式底纹;
+            this.StyleShadeSplit.Items.Add(this.styleShading);
+            this.StyleShadeSplit.Items.Add(this.styleShadeClear);
+            this.StyleShadeSplit.Label = "样式底纹";
+            this.StyleShadeSplit.Name = "StyleShadeSplit";
+            this.StyleShadeSplit.ScreenTip = "样式底纹";
+            this.StyleShadeSplit.SuperTip = "设置样式底纹的工具集";
+            this.StyleShadeSplit.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.StyleShadeSplit_Click);
+            // 
+            // styleShading
+            // 
+            this.styleShading.Image = global::WordAddIn1.Properties.Resources.样式底纹;
+            this.styleShading.Label = "底纹颜色";
+            this.styleShading.Name = "styleShading";
+            this.styleShading.ScreenTip = "底纹颜色";
+            this.styleShading.ShowImage = true;
+            this.styleShading.SuperTip = "设置样式底纹颜色";
+            this.styleShading.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.styleShading_Click);
+            // 
+            // styleShadeClear
+            // 
+            this.styleShadeClear.Image = global::WordAddIn1.Properties.Resources.样式底纹清除;
+            this.styleShadeClear.Label = "清除底纹";
+            this.styleShadeClear.Name = "styleShadeClear";
+            this.styleShadeClear.ScreenTip = "清除底纹";
+            this.styleShadeClear.ShowImage = true;
+            this.styleShadeClear.SuperTip = "删除样式中的底纹";
+            this.styleShadeClear.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.styleShadeClear_Click);
             // 
             // TableColoring
             // 
@@ -672,6 +741,12 @@ namespace WordAddIn1
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton changecharCE;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton checkCharMatch;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton del_header_line;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton SetCode3CurrentColor;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton saveCode3Color;
+        internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton ParaShadeSplit;
+        internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton StyleShadeSplit;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton styleShading;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton styleShadeClear;
     }
 
     partial class ThisRibbonCollection

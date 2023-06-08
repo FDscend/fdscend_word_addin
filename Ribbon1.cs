@@ -65,6 +65,7 @@ namespace WordAddIn1
         Color CodeTxtColor = Color.FromArgb(165, 165, 165);
         //string CodeFontName = "新宋体";
         //double CodeFontSize = 9.5;
+        Word.WdColor codeMD_CurrentColor;
 
         ColorDialog MyColorDialog = new ColorDialog();
         TableColoringForm tableColoringForm;
@@ -77,12 +78,15 @@ namespace WordAddIn1
         Microsoft.Office.Tools.CustomTaskPane changCharPane;
         Microsoft.Office.Tools.CustomTaskPane charMatchPane;
 
-        // int 默认 0
+        // 样式是否存在 int 默认 0
         int maintitle_bool;
         int title_1_bool;
         int title_2_bool;
         int maintext_bool;
         int codeMD_bool;
+
+        int paraShandingChoice = 1;
+        int styleShadingChoice = 1;
 
 
         public static JObject ImportJSON(string jsonfile)
@@ -266,6 +270,11 @@ namespace WordAddIn1
             CodeBackcolor2 = ReadCodeTHINGcolor(int.Parse(js["DefaultPreset"].ToString()), "CodeBackcolor2");
             CodeBorderLine = ReadCodeTHINGcolor(int.Parse(js["DefaultPreset"].ToString()), "CodeBorderLine");
 
+            JObject js_codeMD = ImportJSON(PresetCodeMDFile);
+            int r = int.Parse(js_codeMD["ParaShadingColor_r"].ToString());
+            int g = int.Parse(js_codeMD["ParaShadingColor_g"].ToString());
+            int b = int.Parse(js_codeMD["ParaShadingColor_b"].ToString());
+            codeMD_CurrentColor = GetColor(Color.FromArgb(r, g, b));
 
             //check update
             JObject js_update = ImportJSON(CheckUpdateFile);
@@ -1035,7 +1044,7 @@ namespace WordAddIn1
             JObject js = ImportJSON(PresetCodeFile);
             string CodeListNumStatus = js["CodeListNum"].ToString();
 
-            DeleteShading_Click(sender, e);
+            Globals.ThisAddIn.Application.Selection.ParagraphFormat.Shading.BackgroundPatternColor = Word.WdColor.wdColorAutomatic;
 
 
             object Replace_String = "^l";       //要替换的字符
@@ -1233,6 +1242,8 @@ namespace WordAddIn1
         private void CodeTabSetting_Click(object sender, RibbonControlEventArgs e)
         {
             //设置颜色1
+            MyColorDialog.Color = CodeBackcolor1;
+            MyColorDialog.FullOpen = true;
 
             DialogResult dr = MyColorDialog.ShowDialog();
             if (dr == DialogResult.OK) CodeBackcolor1 = MyColorDialog.Color;
@@ -1247,6 +1258,8 @@ namespace WordAddIn1
         private void CodeTabSetting2_Click(object sender, RibbonControlEventArgs e)
         {
             //设置颜色2
+            MyColorDialog.Color = CodeBackcolor2;
+            MyColorDialog.FullOpen = true;
 
             DialogResult dr = MyColorDialog.ShowDialog();
             if (dr == DialogResult.OK) CodeBackcolor2 = MyColorDialog.Color;
@@ -1283,6 +1296,8 @@ namespace WordAddIn1
         private void BorderLine_Click(object sender, RibbonControlEventArgs e)
         {
             //代码竖线颜色
+            MyColorDialog.Color = CodeBorderLine;
+            MyColorDialog.FullOpen = true;
 
             DialogResult dr = MyColorDialog.ShowDialog();
             if (dr == DialogResult.OK)
@@ -1583,6 +1598,9 @@ namespace WordAddIn1
             int b = int.Parse(js["ParaShadingColor_b"].ToString());
             Color c = Color.FromArgb(r, g, b);
             Globals.ThisAddIn.Application.Selection.ParagraphFormat.Shading.BackgroundPatternColor = GetColor(c);
+
+            paraShandingChoice = 1;
+            ParaShadeSplit.Image = Properties.Resources.底纹;
         }
 
         private void CodeControl_Click(object sender, RibbonControlEventArgs e)
@@ -1594,19 +1612,30 @@ namespace WordAddIn1
         private void ParaShadingColorSet_Click(object sender, RibbonControlEventArgs e)
         {
             //修改段落底纹颜色
+            JObject js = ImportJSON(PresetToolsBoxShadeColor);
+            int r = int.Parse(js["ParaShadingColor_r"].ToString());
+            int g = int.Parse(js["ParaShadingColor_g"].ToString());
+            int b = int.Parse(js["ParaShadingColor_b"].ToString());
+            Color c = Color.FromArgb(r, g, b);
+
+            MyColorDialog.Color = c;
+            MyColorDialog.FullOpen = true;
+
             DialogResult dr = MyColorDialog.ShowDialog();
 
             if (dr == DialogResult.OK)
             {
-                Color c = MyColorDialog.Color;
+                c = MyColorDialog.Color;
                 //MessageBox.Show(c.ToString());
 
-                JObject js = ImportJSON(PresetToolsBoxShadeColor);
                 js["ParaShadingColor_r"] = c.R.ToString();
                 js["ParaShadingColor_g"] = c.G.ToString();
                 js["ParaShadingColor_b"] = c.B.ToString();
                 SetjsonFun(PresetToolsBoxShadeColor, js);
-            }           
+            }
+
+            paraShandingChoice = 2;
+            ParaShadeSplit.Image = Properties.Resources.底纹颜色;
         }
 
         private void CodeFormat2_Click(object sender, RibbonControlEventArgs e)
@@ -1637,20 +1666,16 @@ namespace WordAddIn1
 
             if (codeMD_bool == 0)
             {
-                CreatCodeMDStyle();
+                CreatCodeMDStyle(codeMD_CurrentColor);
                 codeMD_bool = 1;
             }
 
             Globals.ThisAddIn.Application.Selection.set_Style("code_MD");
         }
 
-        void CreatCodeMDStyle()
+        void CreatCodeMDStyle(Word.WdColor BGcolor)
         {
             JObject Js = ImportJSON(PresetCodeMDFile);
-
-            int r = int.Parse(Js["ParaShadingColor_r"].ToString());
-            int g = int.Parse(Js["ParaShadingColor_g"].ToString());
-            int b = int.Parse(Js["ParaShadingColor_b"].ToString());
 
             Globals.ThisAddIn.Application.ActiveDocument.Styles.Add("code_MD", Word.WdStyleType.wdStyleTypeParagraph);
             Globals.ThisAddIn.Application.ActiveDocument.Styles["code_MD"].AutomaticallyUpdate = false;
@@ -1718,7 +1743,7 @@ namespace WordAddIn1
 
             Globals.ThisAddIn.Application.ActiveDocument.Styles["code_MD"].ParagraphFormat.Shading.Texture = Word.WdTextureIndex.wdTextureNone;
             Globals.ThisAddIn.Application.ActiveDocument.Styles["code_MD"].ParagraphFormat.Shading.ForegroundPatternColor = Word.WdColor.wdColorAutomatic;
-            Globals.ThisAddIn.Application.ActiveDocument.Styles["code_MD"].ParagraphFormat.Shading.BackgroundPatternColor = GetColor(Color.FromArgb(r, g, b));
+            Globals.ThisAddIn.Application.ActiveDocument.Styles["code_MD"].ParagraphFormat.Shading.BackgroundPatternColor = BGcolor;
             Globals.ThisAddIn.Application.ActiveDocument.Styles["code_MD"].ParagraphFormat.Borders[Word.WdBorderType.wdBorderLeft].LineStyle = Word.WdLineStyle.wdLineStyleNone;
             Globals.ThisAddIn.Application.ActiveDocument.Styles["code_MD"].ParagraphFormat.Borders[Word.WdBorderType.wdBorderRight].LineStyle = Word.WdLineStyle.wdLineStyleNone;
             Globals.ThisAddIn.Application.ActiveDocument.Styles["code_MD"].ParagraphFormat.Borders[Word.WdBorderType.wdBorderTop].LineStyle = Word.WdLineStyle.wdLineStyleNone;
@@ -1739,6 +1764,9 @@ namespace WordAddIn1
         {
             //清除底纹
             Globals.ThisAddIn.Application.Selection.ParagraphFormat.Shading.BackgroundPatternColor = Word.WdColor.wdColorAutomatic;
+
+            paraShandingChoice = 3;
+            ParaShadeSplit.Image = Properties.Resources.删除底纹;
         }
 
 
@@ -1765,7 +1793,7 @@ namespace WordAddIn1
         private void CodeFormatLatex_Click(object sender, RibbonControlEventArgs e)
         {
             //latex 样式排版
-            DeleteShading_Click(sender, e);
+            Globals.ThisAddIn.Application.Selection.ParagraphFormat.Shading.BackgroundPatternColor = Word.WdColor.wdColorAutomatic;
 
             object Replace_String = "^l";       //要替换的字符
             object ms = System.Type.Missing;
@@ -2075,6 +2103,173 @@ namespace WordAddIn1
             {
                 Word.Range headerRange = section.Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range;
                 headerRange.Borders[Word.WdBorderType.wdBorderBottom].LineStyle = Word.WdLineStyle.wdLineStyleNone;
+            }
+        }
+
+        private void SetCode3CurrentColor_Click(object sender, RibbonControlEventArgs e)
+        {
+            //设置代码3底纹颜色
+
+            for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
+            {
+                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == "code_MD")
+                {
+                    codeMD_bool = 1;
+                    codeMD_CurrentColor = Globals.ThisAddIn.Application.ActiveDocument.Styles["code_MD"].ParagraphFormat.Shading.BackgroundPatternColor;
+                    break;
+                }
+            }
+
+
+            // 响应
+
+            //Wdcolor2Color(codeMD_CurrentColor);
+            //MessageBox.Show(Wdcolor2Color(codeMD_CurrentColor).ToString());
+
+            MyColorDialog.Color = Wdcolor2Color(codeMD_CurrentColor);
+            MyColorDialog.FullOpen = true;
+
+            DialogResult dr = MyColorDialog.ShowDialog();
+            if (dr == DialogResult.OK) codeMD_CurrentColor = GetColor(MyColorDialog.Color);
+
+            if (codeMD_bool == 1)
+            {
+                Globals.ThisAddIn.Application.ActiveDocument.Styles["code_MD"].ParagraphFormat.Shading.BackgroundPatternColor = codeMD_CurrentColor;
+            }
+        }
+
+        public Color Wdcolor2Color(Word.WdColor color_wd)
+        {
+            //convert WdColor to color class
+
+            string color_wd16 = Convert.ToString(int.Parse(color_wd.ToString()), 16);
+            string b_str16 = color_wd16.Substring(0, 2);
+            string g_str16 = color_wd16.Substring(2, 2);
+            string r_str16 = color_wd16.Substring(4, 2);
+
+            int r = Convert.ToInt32(r_str16, 16);
+            int g = Convert.ToInt32(g_str16, 16);
+            int b = Convert.ToInt32(b_str16, 16);
+
+            return Color.FromArgb(r, g, b);
+        }
+
+        private void saveCode3Color_Click(object sender, RibbonControlEventArgs e)
+        {
+            JObject js_codeMD = ImportJSON(PresetCodeMDFile);
+            js_codeMD["ParaShadingColor_r"] = Wdcolor2Color(codeMD_CurrentColor).R.ToString();
+            js_codeMD["ParaShadingColor_g"] = Wdcolor2Color(codeMD_CurrentColor).G.ToString();
+            js_codeMD["ParaShadingColor_b"] = Wdcolor2Color(codeMD_CurrentColor).B.ToString();
+
+            SetjsonFun(PresetCodeMDFile, js_codeMD);
+        }
+
+        private void ParaShadeSplit_Click(object sender, RibbonControlEventArgs e)
+        {
+            //段落底纹工具集
+
+            switch(paraShandingChoice)
+            {
+                case 1:
+                    ParagraphShading_Click(sender, e);
+                    break;
+                case 2:
+                    ParaShadingColorSet_Click(sender, e);  
+                    break;
+                case 3:
+                    DeleteShading_Click(sender, e);
+                    break;
+                default:
+                    MessageBox.Show("段落底纹错误！", "段落底纹");
+                    break;
+            }
+        }
+
+        private void styleShading_Click(object sender, RibbonControlEventArgs e)
+        {
+            //设置样式底纹颜色
+
+            string style_name = Interaction.InputBox("输入样式名称", "样式底纹").ToString();
+            int style_exsit = 0;
+            Word.WdColor style_color;
+
+            for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
+            {
+                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == style_name)
+                {
+                    style_exsit = 1;
+                    break;
+                }
+            }
+
+            if (style_exsit == 1)
+            {
+                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor != Word.WdColor.wdColorAutomatic)
+                {
+                    MyColorDialog.Color = Wdcolor2Color(Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor);
+                    MyColorDialog.FullOpen = true;
+                }
+
+                DialogResult dr = MyColorDialog.ShowDialog();
+
+                if (dr == DialogResult.OK)
+                { 
+                    style_color = GetColor(MyColorDialog.Color);
+                    Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor = style_color;
+                    
+                    styleShadingChoice = 1;
+                    StyleShadeSplit.Image = Properties.Resources.样式底纹;
+                }
+            }
+            else
+            {
+                MessageBox.Show("样式输入错误！", "样式底纹");
+            }
+        }
+
+        private void styleShadeClear_Click(object sender, RibbonControlEventArgs e)
+        {
+            //删除样式底纹颜色
+            string style_name = Interaction.InputBox("输入样式名称", "样式底纹").ToString();
+            int style_exsit = 0;
+
+            for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
+            {
+                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == style_name)
+                {
+                    style_exsit = 1;
+                    break;
+                }
+            }
+
+            if (style_exsit == 1)
+            {
+                Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor = Word.WdColor.wdColorAutomatic;
+
+                styleShadingChoice = 2;
+                StyleShadeSplit.Image = Properties.Resources.样式底纹清除;
+            }
+            else
+            {
+                MessageBox.Show("样式输入错误！", "样式底纹");
+            }
+        }
+
+        private void StyleShadeSplit_Click(object sender, RibbonControlEventArgs e)
+        {
+            //样式底纹工具集
+
+            switch (styleShadingChoice)
+            {
+                case 1:
+                    styleShading_Click(sender, e);
+                    break;
+                case 2:
+                    styleShadeClear_Click(sender, e);
+                    break;
+                default:
+                    MessageBox.Show("样式底纹错误！", "样式底纹");
+                    break;
             }
         }
     }

@@ -1,7 +1,7 @@
 {
   "version": "20230521",
   "encoding": "UTF-8",
-  "auto_check": "yes",
+  "auto_check": "no",
   "latest_date": "2023/5/20",
   "delay_day": "7"
 }
