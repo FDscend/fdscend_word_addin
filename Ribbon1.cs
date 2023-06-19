@@ -255,6 +255,9 @@ namespace WordAddIn1
             charMatchForm = new CharMatchForm();
             charMatchPane = Globals.ThisAddIn.CustomTaskPanes.Add(charMatchForm, "设置匹配字符");
 
+            //颜色对话框自定义颜色集
+            MyColorDialog.CustomColors = new int[] { 14282722, 13684944, 13298939, 14869500 };
+            
             //
 #if DEBUG
             KeyAllTrue();
@@ -318,11 +321,12 @@ namespace WordAddIn1
 
                 JObject js_latest = ImportJSON(latest_info);
                 Version ver_cur = new Version(Properties.Resources.current_ver);
-                Version ver_latest = new Version(js_latest["tag_name"].ToString().Substring(1));
+                string latest_version = js_latest["tag_name"].ToString().Substring(1);
+                Version ver_latest = new Version(latest_version);
 
                 if (ver_cur < ver_latest)
                 {
-                    DialogResult dr = MessageBox.Show("插件更新啦，去看看吧！", "分点作答", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.RightAlign, false);
+                    DialogResult dr = MessageBox.Show("插件更新啦，去看看吧！\r\n\r\n当前版本：" + Properties.Resources.current_ver + "\r\n最新版本：" + latest_version, "分点作答", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.RightAlign, false);
 
                     if (dr == DialogResult.OK)
                     {
@@ -2142,7 +2146,7 @@ namespace WordAddIn1
         {
             //convert WdColor to color class
 
-            string color_wd16 = Convert.ToString(int.Parse(color_wd.ToString()), 16);
+            string color_wd16 = Convert.ToString(((int)color_wd), 16);
             string b_str16 = color_wd16.Substring(0, 2);
             string g_str16 = color_wd16.Substring(2, 2);
             string r_str16 = color_wd16.Substring(4, 2);
@@ -2189,70 +2193,87 @@ namespace WordAddIn1
         {
             //设置样式底纹颜色
 
-            string style_name = Interaction.InputBox("输入样式名称", "样式底纹").ToString();
+            PatternSelectForm patterns = new PatternSelectForm(app.Documents);
+            patterns.ShowDialog();
+            string style_name = patterns.selectedName;
+
+            // string style_name = Interaction.InputBox("输入样式名称", "样式底纹").ToString();
             int style_exsit = 0;
             Word.WdColor style_color;
 
-            for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
+            if (style_name != "")
             {
-                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == style_name)
+                for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
                 {
-                    style_exsit = 1;
-                    break;
+                    if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == style_name)
+                    {
+                        style_exsit = 1;
+                        break;
+                    }
                 }
-            }
 
-            if (style_exsit == 1)
-            {
-                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor != Word.WdColor.wdColorAutomatic)
+                if (style_exsit == 1)
                 {
-                    MyColorDialog.Color = Wdcolor2Color(Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor);
-                    MyColorDialog.FullOpen = true;
+                    if (Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor != Word.WdColor.wdColorAutomatic)
+                    {
+                        MyColorDialog.Color = Wdcolor2Color(Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor);
+                        MyColorDialog.FullOpen = true;
+                    }
+
+                    DialogResult dr = MyColorDialog.ShowDialog();
+
+                    if (dr == DialogResult.OK)
+                    {
+                        style_color = GetColor(MyColorDialog.Color);
+                        Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor = style_color;
+
+                        styleShadingChoice = 1;
+                        StyleShadeSplit.Image = Properties.Resources.样式底纹;
+                    }
                 }
-
-                DialogResult dr = MyColorDialog.ShowDialog();
-
-                if (dr == DialogResult.OK)
-                { 
-                    style_color = GetColor(MyColorDialog.Color);
-                    Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor = style_color;
-                    
-                    styleShadingChoice = 1;
-                    StyleShadeSplit.Image = Properties.Resources.样式底纹;
+                else
+                {
+                    MessageBox.Show("样式输入错误！", "样式底纹");
                 }
             }
-            else
-            {
-                MessageBox.Show("样式输入错误！", "样式底纹");
-            }
+
         }
 
         private void styleShadeClear_Click(object sender, RibbonControlEventArgs e)
         {
             //删除样式底纹颜色
-            string style_name = Interaction.InputBox("输入样式名称", "样式底纹").ToString();
+
+            PatternSelectForm patterns = new PatternSelectForm(app.Documents);
+            patterns.ShowDialog();
+            string style_name = patterns.selectedName;
+
+            //string style_name = Interaction.InputBox("输入样式名称", "样式底纹").ToString();
             int style_exsit = 0;
 
-            for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
+            if (style_name != "")
             {
-                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == style_name)
+                for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
                 {
-                    style_exsit = 1;
-                    break;
+                    if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == style_name)
+                    {
+                        style_exsit = 1;
+                        break;
+                    }
+                }
+
+                if (style_exsit == 1)
+                {
+                    Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor = Word.WdColor.wdColorAutomatic;
+
+                    styleShadingChoice = 2;
+                    StyleShadeSplit.Image = Properties.Resources.样式底纹清除;
+                }
+                else
+                {
+                    MessageBox.Show("样式输入错误！", "样式底纹");
                 }
             }
-
-            if (style_exsit == 1)
-            {
-                Globals.ThisAddIn.Application.ActiveDocument.Styles[style_name].ParagraphFormat.Shading.BackgroundPatternColor = Word.WdColor.wdColorAutomatic;
-
-                styleShadingChoice = 2;
-                StyleShadeSplit.Image = Properties.Resources.样式底纹清除;
-            }
-            else
-            {
-                MessageBox.Show("样式输入错误！", "样式底纹");
-            }
+           
         }
 
         private void StyleShadeSplit_Click(object sender, RibbonControlEventArgs e)
