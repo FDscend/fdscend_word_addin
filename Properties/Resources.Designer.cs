@@ -91,7 +91,7 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.12.0 的本地化字符串。
+        ///   查找类似 0.12.1 的本地化字符串。
         /// </summary>
         public static string current_ver {
             get {

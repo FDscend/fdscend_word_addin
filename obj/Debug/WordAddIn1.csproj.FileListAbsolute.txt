@@ -40,3 +40,4 @@ D:\code\WordAddIn1\bin\Debug\WordAddIn1.dll.config
 D:\code\WordAddIn1\obj\Debug\WordAddIn1.TabForm.resources
 D:\code\WordAddIn1\obj\Debug\WordAddIn1.ChangeCharForm.resources
 D:\code\WordAddIn1\obj\Debug\WordAddIn1.CharMatchForm.resources
+D:\code\WordAddIn1\obj\Debug\WordAddIn1.PatternSelectForm.resources

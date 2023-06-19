@@ -40,3 +40,4 @@ D:\code\WordAddIn1\obj\Release\WordAddIn1.TabForm.resources
 D:\code\WordAddIn1\obj\Release\WordAddIn1.csproj.AssemblyReference.cache
 D:\code\WordAddIn1\obj\Release\WordAddIn1.ChangeCharForm.resources
 D:\code\WordAddIn1\obj\Release\WordAddIn1.CharMatchForm.resources
+D:\code\WordAddIn1\obj\Release\WordAddIn1.PatternSelectForm.resources
