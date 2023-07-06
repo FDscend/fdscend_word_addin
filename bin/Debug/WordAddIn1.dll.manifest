@@ -166,14 +166,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WordAddIn1.dll" size="1451520">
-      <assemblyIdentity name="WordAddIn1" version="0.11.8570.35253" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WordAddIn1.dll" size="1496064">
+      <assemblyIdentity name="WordAddIn1" version="0.11.8588.3933" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>cD5eaxCIbZXlpCRl6XkEBn8/UOw=</dsig:DigestValue>
+        <dsig:DigestValue>r4DKts4cc7AGlpUUHAseLi/9MrI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -195,6 +195,15 @@
       <dsig:DigestValue>Oqed9T75Fhu4WlCAW5QCVKshhUM=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="Resources\settings.png" size="22893">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>QWUxyRp6z9wrKLaxZq0xPc0WRtg=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="WordAddIn1.dll.config" size="122">
     <hash>
       <dsig:Transforms>
@@ -208,7 +217,7 @@
     <vstav3:entryPointsCollection>
       <vstav3:entryPoints>
         <vstav3:entryPoint class="WordAddIn1.ThisAddIn">
-          <assemblyIdentity name="WordAddIn1" version="0.11.8570.35253" language="neutral" processorArchitecture="msil" />
+          <assemblyIdentity name="WordAddIn1" version="0.11.8588.3933" language="neutral" processorArchitecture="msil" />
         </vstav3:entryPoint>
       </vstav3:entryPoints>
     </vstav3:entryPointsCollection>
@@ -222,11 +231,11 @@
             <vstov4:friendlyName>FDscend</vstov4:friendlyName>
             <vstov4:description>WordAddIn1</vstov4:description>
             <vstov4.1:ribbonTypes xmlns:vstov4.1="urn:schemas-microsoft-com:vsto.v4.1">
-              <vstov4.1:ribbonType name="WordAddIn1.Ribbon1, WordAddIn1, Version=0.11.8570.35253, Culture=neutral, PublicKeyToken=null" />
+              <vstov4.1:ribbonType name="WordAddIn1.Ribbon1, WordAddIn1, Version=0.11.8588.3933, Culture=neutral, PublicKeyToken=null" />
             </vstov4.1:ribbonTypes>
           </vstov4:appAddIn>
         </vstov4:customization>
       </vstov4:customizations>
     </vstav3:application>
   </vstav3:addIn>
-<publisherIdentity name="CN=LAPTOP-533SATQT\icydust" issuerKeyHash="f7b159fb9131299649e980edeabca9138b55f954" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>y1iu4EdbdF7LO0BDX58u+RRtscE=</DigestValue></Reference></SignedInfo><SignatureValue>xJpJhe1CXZMqtyHZmiAVnE4+Fm3kWjDml6YvlhNTEHJPrxHIIUiUL8sYhMQElbRny3Z9tuwHp+QWtnIPS2bDO1gImBYyvd2w96Ow2Z+enb8XddHspnDGXMUh/VOPcTF3sCueGKUe563AXIZr5v0F2eYjYz0GbwF1z2pIDH7N75M=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>0G3IfJmxAcP0cT8rFISWID2LyFPWc8gcRuzRxtM2ypDB2SsMvrA6TxmK2aU/gv1IQ2w6rD9wAF+DqEqzPo9jWIu7EdhY0wlBQLrNqqdW1nh7aMh0zvDFD5u1mAJT+IiNx9z0BIWDzWHq7+uvt/YO+qBI40eWdBiE046u2aRqiI0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="c1b16d14f92e9f5f43403bcb5e745b47e0ae58cb" Description="" Url=""><as:assemblyIdentity name="WordAddIn1.dll" version="0.0.3.0" publicKeyToken="2fa404433005285b" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=LAPTOP-533SATQT\icydust</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>9VMXhnvsRVPZO4Li+uuFKWyFTuI=</DigestValue></Reference></SignedInfo><SignatureValue>fxv3ScOtBlPqzC3xdXV7DMVZAePWBZeWSCoOY/4cx3zFtpA1bGizuIkgqvf7GKetfZlqJ2V2F9cgmb7xa086IZJ77Ginm8bXfocBss5B/80Az4KAJ4XKUUc0vYbcHGBiRuJ9NIbhP/26DwOBFWzQPHwecqAZMMsXWLdjk1VoDTg=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0G3IfJmxAcP0cT8rFISWID2LyFPWc8gcRuzRxtM2ypDB2SsMvrA6TxmK2aU/gv1IQ2w6rD9wAF+DqEqzPo9jWIu7EdhY0wlBQLrNqqdW1nh7aMh0zvDFD5u1mAJT+IiNx9z0BIWDzWHq7+uvt/YO+qBI40eWdBiE046u2aRqiI0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB9TCCAV6gAwIBAgIQc7Z5QVEpkadF9vDqkVHV0TANBgkqhkiG9w0BAQsFADA5MTcwNQYDVQQDHi4ATABBAFAAVABPAFAALQA1ADMAMwBTAEEAVABRAFQAXABpAGMAeQBkAHUAcwB0MB4XDTIyMDUyOTE0MDkxOVoXDTIzMDUyOTIwMDkxOVowOTE3MDUGA1UEAx4uAEwAQQBQAFQATwBQAC0ANQAzADMAUwBBAFQAUQBUAFwAaQBjAHkAZAB1AHMAdDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA0G3IfJmxAcP0cT8rFISWID2LyFPWc8gcRuzRxtM2ypDB2SsMvrA6TxmK2aU/gv1IQ2w6rD9wAF+DqEqzPo9jWIu7EdhY0wlBQLrNqqdW1nh7aMh0zvDFD5u1mAJT+IiNx9z0BIWDzWHq7+uvt/YO+qBI40eWdBiE046u2aRqiI0CAwEAATANBgkqhkiG9w0BAQsFAAOBgQAGzfSaaW2Or0bAtHnC7ZwWFht0gyeBjdh8+b1GsK/BMPKRmz/bLwsM9HWWa/XaoMiCVn1aEcC/KBbVMq98vGJ+8bs9unIHZk0rd2IyUpkAgmJU9lqyMi1bPJFICArwIzpPmjNuKYta8ubkCpy5psj84Z1rjwYT9QP/bnGo8PcQpA==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
+<publisherIdentity name="CN=LAPTOP-533SATQT\icydust" issuerKeyHash="f7b159fb9131299649e980edeabca9138b55f954" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>LKLyqpF1ycFPc6bOscmVCsEuCEY=</DigestValue></Reference></SignedInfo><SignatureValue>pNY189DdpX6HzJ50MsNnpRwQANHayCsoIQvtRzRQKDvHZmh8z6lQdEVjb/ZDVte+vh3RlWjg1hJeKkdkYvThIffLClPA4snvH0h1KYod1VeTi3vsVPpJbj4qjofg6ruR1Nsb7xjliT2/Zo6xoLVKzfMmB2G515ymwBgL89BppPM=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>0G3IfJmxAcP0cT8rFISWID2LyFPWc8gcRuzRxtM2ypDB2SsMvrA6TxmK2aU/gv1IQ2w6rD9wAF+DqEqzPo9jWIu7EdhY0wlBQLrNqqdW1nh7aMh0zvDFD5u1mAJT+IiNx9z0BIWDzWHq7+uvt/YO+qBI40eWdBiE046u2aRqiI0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="46082ec10a95c9b1cea6734fc1c97591aaf2a22c" Description="" Url=""><as:assemblyIdentity name="WordAddIn1.dll" version="0.0.3.0" publicKeyToken="2fa404433005285b" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=LAPTOP-533SATQT\icydust</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>QSmPqeUttgXfqjdJPGwx4RIE7uw=</DigestValue></Reference></SignedInfo><SignatureValue>lA8BGrk0VlzeGA8Ww7EN4kQUW2FVLnuTBb+5serPaejUQk/oNu2SQgErPEqRFqUkBOuGYZym5W9aWvJWz8ihshNZjoRPvkjfWTsV8lMNab2KrK2i1oCm1Tson2NS+/oWn9t0dKWLOO+k13OMiYvQ4h1mSuKcZeEuGsPS9YdBlMA=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0G3IfJmxAcP0cT8rFISWID2LyFPWc8gcRuzRxtM2ypDB2SsMvrA6TxmK2aU/gv1IQ2w6rD9wAF+DqEqzPo9jWIu7EdhY0wlBQLrNqqdW1nh7aMh0zvDFD5u1mAJT+IiNx9z0BIWDzWHq7+uvt/YO+qBI40eWdBiE046u2aRqiI0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB9TCCAV6gAwIBAgIQc7Z5QVEpkadF9vDqkVHV0TANBgkqhkiG9w0BAQsFADA5MTcwNQYDVQQDHi4ATABBAFAAVABPAFAALQA1ADMAMwBTAEEAVABRAFQAXABpAGMAeQBkAHUAcwB0MB4XDTIyMDUyOTE0MDkxOVoXDTIzMDUyOTIwMDkxOVowOTE3MDUGA1UEAx4uAEwAQQBQAFQATwBQAC0ANQAzADMAUwBBAFQAUQBUAFwAaQBjAHkAZAB1AHMAdDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA0G3IfJmxAcP0cT8rFISWID2LyFPWc8gcRuzRxtM2ypDB2SsMvrA6TxmK2aU/gv1IQ2w6rD9wAF+DqEqzPo9jWIu7EdhY0wlBQLrNqqdW1nh7aMh0zvDFD5u1mAJT+IiNx9z0BIWDzWHq7+uvt/YO+qBI40eWdBiE046u2aRqiI0CAwEAATANBgkqhkiG9w0BAQsFAAOBgQAGzfSaaW2Or0bAtHnC7ZwWFht0gyeBjdh8+b1GsK/BMPKRmz/bLwsM9HWWa/XaoMiCVn1aEcC/KBbVMq98vGJ+8bs9unIHZk0rd2IyUpkAgmJU9lqyMi1bPJFICArwIzpPmjNuKYta8ubkCpy5psj84Z1rjwYT9QP/bnGo8PcQpA==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

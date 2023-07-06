@@ -91,7 +91,7 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.12.1 的本地化字符串。
+        ///   查找类似 0.13.0 的本地化字符串。
         /// </summary>
         public static string current_ver {
             get {
@@ -110,12 +110,30 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
+        ///   查找类似 https://github.com/FDscend/fdscend_word_addin 的本地化字符串。
+        /// </summary>
+        public static string github_code_url {
+            get {
+                return ResourceManager.GetString("github_code_url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
         public static System.Drawing.Icon ico {
             get {
                 object obj = ResourceManager.GetObject("ico", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 https://api.github.com/repos/FDscend/fdscend_word_addin/releases/latest 的本地化字符串。
+        /// </summary>
+        public static string latest_info_url {
+            get {
+                return ResourceManager.GetString("latest_info_url", resourceCulture);
             }
         }
         
