@@ -37,7 +37,7 @@ D:\code\WordAddIn1\bin\Release\Resources\ToolsBox
 D:\code\WordAddIn1\bin\Release\WordAddIn1.dll.config
 D:\code\WordAddIn1\obj\Release\WordAddIn1.TableColoringForm.resources
 D:\code\WordAddIn1\obj\Release\WordAddIn1.TabForm.resources
-D:\code\WordAddIn1\obj\Release\WordAddIn1.csproj.AssemblyReference.cache
 D:\code\WordAddIn1\obj\Release\WordAddIn1.ChangeCharForm.resources
 D:\code\WordAddIn1\obj\Release\WordAddIn1.CharMatchForm.resources
 D:\code\WordAddIn1\obj\Release\WordAddIn1.PatternSelectForm.resources
+D:\code\WordAddIn1\obj\Release\WordAddIn1.SettingForm.resources
