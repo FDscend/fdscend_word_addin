@@ -43,7 +43,7 @@ namespace WordAddIn1
                     buttonNew[i].Parent = this;
                     buttonNew[i].Click += new System.EventHandler(this.button1_Click);
                     this.Controls.Add(buttonNew[i]);
-                    toolTip1.SetToolTip(buttonNew[i], Docs[DocNums - 1 - i].Name);
+                    toolTip1.SetToolTip(buttonNew[i], Docs[DocNums - 1 - i].Path + "\\" + Docs[DocNums - 1 - i].Name);
 
                 }
 
@@ -52,15 +52,22 @@ namespace WordAddIn1
 
             button1.Text = System.IO.Path.GetFileNameWithoutExtension(Docs[DocNums].Name);
             button1.BackColor = ColorNoSelected;
-            toolTip1.SetToolTip(button1, Docs[DocNums].Name);
+            toolTip1.SetToolTip(button1, Docs[DocNums].Path + "\\" + Docs[DocNums].Name);
 
 
             //遍历标签
             foreach (Control ctrl in this.Controls)
             {
-                if (ctrl.Text.Equals(System.IO.Path.GetFileNameWithoutExtension(Docs.Application.ActiveDocument.Name)))
+                //if (ctrl.Text.Equals(System.IO.Path.GetFileNameWithoutExtension(Docs.Application.ActiveDocument.Name)))
+                //{
+                //    ctrl.BackColor = ColorSelected;
+                //}
+                if (ctrl is Button)
                 {
-                    ctrl.BackColor = ColorSelected;
+                    if (Docs.Application.ActiveDocument.Path + "\\" + Docs.Application.ActiveDocument.Name == toolTip1.GetToolTip(ctrl))
+                    {
+                        ctrl.BackColor = ColorSelected;
+                    }
                 }
             }
 
@@ -74,7 +81,7 @@ namespace WordAddIn1
             //选中、跳转标签
             foreach(Word.Window wd in Globals.ThisAddIn.Application.Windows)
             {
-                if(wd.Document.Name == toolTip1.GetToolTip(button))
+                if (wd.Document.Path + "\\" + wd.Document.Name == toolTip1.GetToolTip(button))
                 {
                     wd.Activate();
                 }
@@ -82,7 +89,7 @@ namespace WordAddIn1
 
 
             //遍历标签
-                foreach (Control ctrl in this.Controls)
+            foreach (Control ctrl in this.Controls)
             {
                 if (ctrl is Button)
                 {

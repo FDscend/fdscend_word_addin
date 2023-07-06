@@ -38,11 +38,6 @@ namespace WordAddIn1
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group_tuisong = this.Factory.CreateRibbonGroup();
-            this.code = this.Factory.CreateRibbonGroup();
-            this.CodeLatex = this.Factory.CreateRibbonGroup();
-            this.Code2 = this.Factory.CreateRibbonGroup();
-            this.ToolsBox = this.Factory.CreateRibbonGroup();
-            this.control = this.Factory.CreateRibbonGroup();
             this.button_tuisong = this.Factory.CreateRibbonButton();
             this.button_MainTitle = this.Factory.CreateRibbonButton();
             this.button_title_1 = this.Factory.CreateRibbonButton();
@@ -59,6 +54,7 @@ namespace WordAddIn1
             this.author_doc = this.Factory.CreateRibbonButton();
             this.author_c = this.Factory.CreateRibbonButton();
             this.author_new = this.Factory.CreateRibbonButton();
+            this.code = this.Factory.CreateRibbonGroup();
             this.CodeFormat = this.Factory.CreateRibbonButton();
             this.CodeTabSetting = this.Factory.CreateRibbonButton();
             this.CodeTabSetting2 = this.Factory.CreateRibbonButton();
@@ -74,10 +70,13 @@ namespace WordAddIn1
             this.CodeListNum = this.Factory.CreateRibbonButton();
             this.CodeBoderLineFun = this.Factory.CreateRibbonButton();
             this.CodeControl = this.Factory.CreateRibbonButton();
+            this.CodeLatex = this.Factory.CreateRibbonGroup();
             this.CodeFormatLatex = this.Factory.CreateRibbonButton();
+            this.Code2 = this.Factory.CreateRibbonGroup();
             this.CodeFormat2 = this.Factory.CreateRibbonButton();
             this.SetCode3CurrentColor = this.Factory.CreateRibbonButton();
             this.saveCode3Color = this.Factory.CreateRibbonButton();
+            this.ToolsBox = this.Factory.CreateRibbonGroup();
             this.ParaShadeSplit = this.Factory.CreateRibbonSplitButton();
             this.ParagraphShading = this.Factory.CreateRibbonButton();
             this.ParaShadingColorSet = this.Factory.CreateRibbonButton();
@@ -85,15 +84,14 @@ namespace WordAddIn1
             this.StyleShadeSplit = this.Factory.CreateRibbonSplitButton();
             this.styleShading = this.Factory.CreateRibbonButton();
             this.styleShadeClear = this.Factory.CreateRibbonButton();
-            this.TableColoring = this.Factory.CreateRibbonToggleButton();
+            this.TableColoring = this.Factory.CreateRibbonButton();
             this.ThreeLine = this.Factory.CreateRibbonButton();
             this.FileTabOnOff = this.Factory.CreateRibbonToggleButton();
-            this.changecharCE = this.Factory.CreateRibbonToggleButton();
-            this.checkCharMatch = this.Factory.CreateRibbonToggleButton();
+            this.changecharCE = this.Factory.CreateRibbonButton();
+            this.checkCharMatch = this.Factory.CreateRibbonButton();
             this.del_header_line = this.Factory.CreateRibbonButton();
-            this.ControlActive = this.Factory.CreateRibbonButton();
-            this.hide = this.Factory.CreateRibbonButton();
-            this.showHidden = this.Factory.CreateRibbonButton();
+            this.control = this.Factory.CreateRibbonGroup();
+            this.SettingBt = this.Factory.CreateRibbonButton();
             this.About = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
@@ -132,62 +130,6 @@ namespace WordAddIn1
             this.group_tuisong.Label = "文案";
             this.group_tuisong.Name = "group_tuisong";
             this.group_tuisong.Visible = false;
-            // 
-            // code
-            // 
-            this.code.Items.Add(this.CodeFormat);
-            this.code.Items.Add(this.CodeTabSetting);
-            this.code.Items.Add(this.CodeTabSetting2);
-            this.code.Items.Add(this.BorderLine);
-            this.code.Items.Add(this.ResetCodeBGcolor);
-            this.code.Items.Add(this.TableWidthSet);
-            this.code.Items.Add(this.PresetCode);
-            this.code.Items.Add(this.CodeListNum);
-            this.code.Items.Add(this.CodeBoderLineFun);
-            this.code.Items.Add(this.CodeControl);
-            this.code.Label = "代码排版";
-            this.code.Name = "code";
-            this.code.Tag = "";
-            this.code.Visible = false;
-            // 
-            // CodeLatex
-            // 
-            this.CodeLatex.Items.Add(this.CodeFormatLatex);
-            this.CodeLatex.Label = "代码排版2";
-            this.CodeLatex.Name = "CodeLatex";
-            this.CodeLatex.Visible = false;
-            // 
-            // Code2
-            // 
-            this.Code2.Items.Add(this.CodeFormat2);
-            this.Code2.Items.Add(this.SetCode3CurrentColor);
-            this.Code2.Items.Add(this.saveCode3Color);
-            this.Code2.Label = "代码排版3";
-            this.Code2.Name = "Code2";
-            this.Code2.Visible = false;
-            // 
-            // ToolsBox
-            // 
-            this.ToolsBox.Items.Add(this.ParaShadeSplit);
-            this.ToolsBox.Items.Add(this.StyleShadeSplit);
-            this.ToolsBox.Items.Add(this.TableColoring);
-            this.ToolsBox.Items.Add(this.ThreeLine);
-            this.ToolsBox.Items.Add(this.FileTabOnOff);
-            this.ToolsBox.Items.Add(this.changecharCE);
-            this.ToolsBox.Items.Add(this.checkCharMatch);
-            this.ToolsBox.Items.Add(this.del_header_line);
-            this.ToolsBox.Label = "工具箱";
-            this.ToolsBox.Name = "ToolsBox";
-            this.ToolsBox.Visible = false;
-            // 
-            // control
-            // 
-            this.control.Items.Add(this.ControlActive);
-            this.control.Items.Add(this.hide);
-            this.control.Items.Add(this.showHidden);
-            this.control.Items.Add(this.About);
-            this.control.Label = "控制";
-            this.control.Name = "control";
             // 
             // button_tuisong
             // 
@@ -341,6 +283,23 @@ namespace WordAddIn1
             this.author_new.ShowImage = true;
             this.author_new.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.author_new_Click);
             // 
+            // code
+            // 
+            this.code.Items.Add(this.CodeFormat);
+            this.code.Items.Add(this.CodeTabSetting);
+            this.code.Items.Add(this.CodeTabSetting2);
+            this.code.Items.Add(this.BorderLine);
+            this.code.Items.Add(this.ResetCodeBGcolor);
+            this.code.Items.Add(this.TableWidthSet);
+            this.code.Items.Add(this.PresetCode);
+            this.code.Items.Add(this.CodeListNum);
+            this.code.Items.Add(this.CodeBoderLineFun);
+            this.code.Items.Add(this.CodeControl);
+            this.code.Label = "代码排版";
+            this.code.Name = "code";
+            this.code.Tag = "";
+            this.code.Visible = false;
+            // 
             // CodeFormat
             // 
             this.CodeFormat.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -458,6 +417,13 @@ namespace WordAddIn1
             this.CodeControl.ScreenTip = "代码排版的所有设置";
             this.CodeControl.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CodeControl_Click);
             // 
+            // CodeLatex
+            // 
+            this.CodeLatex.Items.Add(this.CodeFormatLatex);
+            this.CodeLatex.Label = "代码排版2";
+            this.CodeLatex.Name = "CodeLatex";
+            this.CodeLatex.Visible = false;
+            // 
             // CodeFormatLatex
             // 
             this.CodeFormatLatex.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -468,6 +434,15 @@ namespace WordAddIn1
             this.CodeFormatLatex.ShowImage = true;
             this.CodeFormatLatex.SuperTip = "样式2";
             this.CodeFormatLatex.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CodeFormatLatex_Click);
+            // 
+            // Code2
+            // 
+            this.Code2.Items.Add(this.CodeFormat2);
+            this.Code2.Items.Add(this.SetCode3CurrentColor);
+            this.Code2.Items.Add(this.saveCode3Color);
+            this.Code2.Label = "代码排版3";
+            this.Code2.Name = "Code2";
+            this.Code2.Visible = false;
             // 
             // CodeFormat2
             // 
@@ -495,6 +470,20 @@ namespace WordAddIn1
             this.saveCode3Color.ScreenTip = "保存颜色";
             this.saveCode3Color.SuperTip = "将本文档使用的代码排版3的底纹颜色保存至预设文件";
             this.saveCode3Color.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.saveCode3Color_Click);
+            // 
+            // ToolsBox
+            // 
+            this.ToolsBox.Items.Add(this.ParaShadeSplit);
+            this.ToolsBox.Items.Add(this.StyleShadeSplit);
+            this.ToolsBox.Items.Add(this.TableColoring);
+            this.ToolsBox.Items.Add(this.ThreeLine);
+            this.ToolsBox.Items.Add(this.FileTabOnOff);
+            this.ToolsBox.Items.Add(this.changecharCE);
+            this.ToolsBox.Items.Add(this.checkCharMatch);
+            this.ToolsBox.Items.Add(this.del_header_line);
+            this.ToolsBox.Label = "工具箱";
+            this.ToolsBox.Name = "ToolsBox";
+            this.ToolsBox.Visible = false;
             // 
             // ParaShadeSplit
             // 
@@ -574,8 +563,9 @@ namespace WordAddIn1
             this.TableColoring.Image = global::WordAddIn1.Properties.Resources.表格着色;
             this.TableColoring.Label = "表格着色";
             this.TableColoring.Name = "TableColoring";
-            this.TableColoring.ScreenTip = "打开表格颜色设置面板";
+            this.TableColoring.ScreenTip = "表格着色";
             this.TableColoring.ShowImage = true;
+            this.TableColoring.SuperTip = "打开\\关闭表格颜色设置面板";
             this.TableColoring.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.TableColoring_Click);
             // 
             // ThreeLine
@@ -595,7 +585,7 @@ namespace WordAddIn1
             this.FileTabOnOff.Name = "FileTabOnOff";
             this.FileTabOnOff.ScreenTip = "标签栏";
             this.FileTabOnOff.ShowImage = true;
-            this.FileTabOnOff.SuperTip = "请注意及时保存文档";
+            this.FileTabOnOff.SuperTip = "在多个文档间切换（请注意及时保存文档）";
             this.FileTabOnOff.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.FileTabOnOff_Click);
             // 
             // changecharCE
@@ -605,7 +595,7 @@ namespace WordAddIn1
             this.changecharCE.Name = "changecharCE";
             this.changecharCE.ScreenTip = "替换符号";
             this.changecharCE.ShowImage = true;
-            this.changecharCE.SuperTip = "将英文标点换成中文标点";
+            this.changecharCE.SuperTip = "打开\\关闭面板、将英文标点换成中文标点";
             this.changecharCE.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.changecharCE_Click);
             // 
             // checkCharMatch
@@ -615,7 +605,7 @@ namespace WordAddIn1
             this.checkCharMatch.Name = "checkCharMatch";
             this.checkCharMatch.ScreenTip = "符号匹配";
             this.checkCharMatch.ShowImage = true;
-            this.checkCharMatch.SuperTip = "检查符号是否配对";
+            this.checkCharMatch.SuperTip = "打开\\关闭面板，检查符号是否配对";
             this.checkCharMatch.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.checkCharMatch_Click);
             // 
             // del_header_line
@@ -627,26 +617,22 @@ namespace WordAddIn1
             this.del_header_line.ShowImage = true;
             this.del_header_line.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.del_header_line_Click);
             // 
-            // ControlActive
+            // control
             // 
-            this.ControlActive.Label = "增加";
-            this.ControlActive.Name = "ControlActive";
-            this.ControlActive.ScreenTip = "增加功能";
-            this.ControlActive.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ControlActive_Click);
+            this.control.Items.Add(this.SettingBt);
+            this.control.Items.Add(this.About);
+            this.control.Label = "控制";
+            this.control.Name = "control";
             // 
-            // hide
+            // SettingBt
             // 
-            this.hide.Label = "隐藏";
-            this.hide.Name = "hide";
-            this.hide.ScreenTip = "隐藏功能";
-            this.hide.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Hide_Click);
-            // 
-            // showHidden
-            // 
-            this.showHidden.Label = "展示";
-            this.showHidden.Name = "showHidden";
-            this.showHidden.ScreenTip = "显示隐藏的功能";
-            this.showHidden.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ShowHidden_Click);
+            this.SettingBt.Image = ((System.Drawing.Image)(resources.GetObject("SettingBt.Image")));
+            this.SettingBt.Label = "设置";
+            this.SettingBt.Name = "SettingBt";
+            this.SettingBt.ScreenTip = "插件设置";
+            this.SettingBt.ShowImage = true;
+            this.SettingBt.SuperTip = "打开插件设置";
+            this.SettingBt.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SettingBt_Click);
             // 
             // About
             // 
@@ -688,7 +674,6 @@ namespace WordAddIn1
         #endregion
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_tuisong;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_tuisong;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_header;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_footer;
@@ -701,7 +686,6 @@ namespace WordAddIn1
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup code;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton CodeFormat;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup control;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton ControlActive;
         internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton author;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton author_o;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton author_wps;
@@ -714,8 +698,6 @@ namespace WordAddIn1
         internal Microsoft.Office.Tools.Ribbon.RibbonButton ResetCodeBGcolor;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton BorderLine;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton TableWidth;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton hide;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton showHidden;
         internal Microsoft.Office.Tools.Ribbon.RibbonMenu PresetCode;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton CodeOpenPreset;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton CodeSavePreset;
@@ -735,11 +717,11 @@ namespace WordAddIn1
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup CodeLatex;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton CodeFormatLatex;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton FileTabOnOff;
-        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton TableColoring;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton TableColoring;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton TimeHeader;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton author_new;
-        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton changecharCE;
-        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton checkCharMatch;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton changecharCE;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton checkCharMatch;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton del_header_line;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton SetCode3CurrentColor;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton saveCode3Color;
@@ -747,6 +729,8 @@ namespace WordAddIn1
         internal Microsoft.Office.Tools.Ribbon.RibbonSplitButton StyleShadeSplit;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton styleShading;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton styleShadeClear;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton SettingBt;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_tuisong;
     }
 
     partial class ThisRibbonCollection

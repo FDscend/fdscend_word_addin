@@ -19,7 +19,7 @@ namespace WordAddIn1
     {
         //全局路径
         string latest_info = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\latest.json";
-        string url = "https://api.github.com/repos/FDscend/fdscend_word_addin/releases/latest";
+        string url = Properties.Resources.latest_info_url;
 #if DEBUG
         string doc_path = "D:\\code\\WordAddIn1\\Resources\\说明文档.pdf";
 #endif
@@ -47,7 +47,7 @@ namespace WordAddIn1
 
         private void git_web_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/FDscend/fdscend_word_addin");
+            System.Diagnostics.Process.Start(Properties.Resources.github_code_url);
         }
 
         private void check_ver_Click(object sender, EventArgs e)

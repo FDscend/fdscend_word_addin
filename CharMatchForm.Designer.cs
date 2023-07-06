@@ -40,7 +40,7 @@ namespace WordAddIn1
             this.checkedListBox1.BackColor = System.Drawing.Color.OldLace;
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Location = new System.Drawing.Point(0, 39);
-            this.checkedListBox1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.checkedListBox1.Margin = new System.Windows.Forms.Padding(5);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(180, 724);
             this.checkedListBox1.TabIndex = 0;
@@ -53,7 +53,7 @@ namespace WordAddIn1
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(124, 28);
             this.label1.TabIndex = 1;
-            this.label1.Text = "匹配符号";
+            this.label1.Text = "符号匹配";
             // 
             // button1
             // 
@@ -85,7 +85,7 @@ namespace WordAddIn1
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkedListBox1);
             this.Font = new System.Drawing.Font("宋体", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "CharMatchForm";
             this.Size = new System.Drawing.Size(180, 1073);
             this.ResumeLayout(false);

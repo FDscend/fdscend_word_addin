@@ -17,8 +17,7 @@ using System.Net;
 
 
 namespace WordAddIn1
-{   
-
+{
     public partial class Ribbon1
     {
         Word.Application app;
@@ -49,13 +48,13 @@ namespace WordAddIn1
 
 
         //全局常量
-        const string KeyDefault = "default";
-        const string KeyXMT = "xmt";
-        const string KeyCode = "code";
-        const string KeyCode2 = "codeB";
-        const string KeyCodeLatex = "codeL";
-        const string KeyToolsBox = "tools";
-        const string KeyAdmin = "admin";
+        public const string KeyDefault = "default";
+        public const string KeyXMT = "xmt";
+        public const string KeyCode = "code";
+        public const string KeyCode2 = "codeB";
+        public const string KeyCodeLatex = "codeL";
+        public const string KeyToolsBox = "tools";
+        public const string KeyAdmin = "admin";
 
 
         //全局变量        
@@ -68,11 +67,14 @@ namespace WordAddIn1
         Word.WdColor codeMD_CurrentColor;
 
         ColorDialog MyColorDialog = new ColorDialog();
-        TableColoringForm tableColoringForm;
-        ChangeCharForm changeCharForm;
-        CharMatchForm charMatchForm;
 
-        private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };//窗体句柄字典
+
+        //窗体句柄字典
+        private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_tab = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
+        private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_tableColor = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
+        private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_ChangeChar = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
+        private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_CharMatch = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
+
         Microsoft.Office.Tools.CustomTaskPane FileTabPane;
         Microsoft.Office.Tools.CustomTaskPane tableColoringPane;
         Microsoft.Office.Tools.CustomTaskPane changCharPane;
@@ -87,6 +89,7 @@ namespace WordAddIn1
 
         int paraShandingChoice = 1;
         int styleShadingChoice = 1;
+
 
 
         public static JObject ImportJSON(string jsonfile)
@@ -246,21 +249,15 @@ namespace WordAddIn1
 
             
             //全局变量实例化
-            tableColoringForm = new TableColoringForm(PresetToolsBoxTable);
-            tableColoringPane = Globals.ThisAddIn.CustomTaskPanes.Add(tableColoringForm, "设置表格颜色");
-
-            changeCharForm = new ChangeCharForm();
-            changCharPane = Globals.ThisAddIn.CustomTaskPanes.Add(changeCharForm, "设置替换字符");
-
-            charMatchForm = new CharMatchForm();
-            charMatchPane = Globals.ThisAddIn.CustomTaskPanes.Add(charMatchForm, "设置匹配字符");
+            
 
             //颜色对话框自定义颜色集
             MyColorDialog.CustomColors = new int[] { 14282722, 13684944, 13298939, 14869500 };
-            
+
             //
 #if DEBUG
             KeyAllTrue();
+            //KeyStateLoad();
 #endif
 #if !DEBUG
             KeyStateLoad();
@@ -308,7 +305,7 @@ namespace WordAddIn1
                     File.Delete(latest_info);
                 }
 
-                string url = "https://api.github.com/repos/FDscend/fdscend_word_addin/releases/latest";
+                string url = Properties.Resources.latest_info_url;
                 WebClient webClient = new WebClient();
                 webClient.Headers.Add("user-agent", "Mozilla/4.0 ((compatible; MSIE 8.0; Windows NT 6.1;.NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;)");
 
@@ -330,7 +327,7 @@ namespace WordAddIn1
 
                     if (dr == DialogResult.OK)
                     {
-                        System.Diagnostics.Process.Start("https://github.com/FDscend/fdscend_word_addin");
+                        System.Diagnostics.Process.Start(Properties.Resources.github_code_url);
                     }
 
                     js["latest_date"] = dt_now.ToString("d");
@@ -350,7 +347,7 @@ namespace WordAddIn1
             ToolsBox.Visible = true;
         }
 
-        void KeyStateLoad()
+        public void KeyStateLoad()
         {
             //string key;
             JObject jstemp = ImportJSON(ControlKey);
@@ -992,21 +989,6 @@ namespace WordAddIn1
             Globals.ThisAddIn.Application.Selection.ClearFormatting();
         }
 
-        private void ControlActive_Click(object sender, RibbonControlEventArgs e)
-        {            
-            string key;
-            key = Interaction.InputBox("输入操作码","功能控制台").ToString();
-            //MessageBox.Show(key);
-            if (key == KeyAdmin) KeyAllTrue();//管理员命令不写进配置
-            else if (BoolKey(key) == true)
-            {
-                JObject Jtemp = ImportJSON(ControlKey);
-                Jtemp["key_" + key]= key;
-                Jtemp["state_" + key] = "1";
-                SetjsonFun(ControlKey, Jtemp);
-            }
-        }
-
         
         public string CodeFontFunN()
         {
@@ -1378,51 +1360,6 @@ namespace WordAddIn1
             //MessageBox.Show(tables[1].Columns[2].Width.ToString());
         }
 
-        private void Hide_Click(object sender, RibbonControlEventArgs e)
-        {
-            JObject js = ImportJSON(ControlKey);
-            string sentence = "请输入要隐藏的功能的编号：\r\n编号  功能";
-            string IDname = "";
-            for(int i=1;i<js.Count;i++)
-            {
-                if (js.Properties().ToList()[i].Value.ToString()=="1")
-                {
-                    if (js.Properties().ToList()[i].Name.ToString() == "state_" + KeyXMT) IDname = group_tuisong.Label;
-                    if (js.Properties().ToList()[i].Name.ToString() == "state_" + KeyCode) IDname = code.Label;
-                    if (js.Properties().ToList()[i].Name.ToString() == "state_" + KeyCode2) IDname = Code2.Label;
-                    if (js.Properties().ToList()[i].Name.ToString() == "state_" + KeyCodeLatex) IDname = CodeLatex.Label;
-                    if (js.Properties().ToList()[i].Name.ToString() == "state_" + KeyToolsBox) IDname = ToolsBox.Label;
-                    sentence = sentence + "\r\n  " + i + "   " + IDname;
-                }
-            }
-            string choice = Interaction.InputBox(sentence, "功能隐藏").ToString();
-            js[js.Properties().ToList()[int.Parse(choice)].Name.ToString()] = "0";
-            SetjsonFun(ControlKey, js);
-            KeyStateLoad();
-        }
-
-        private void ShowHidden_Click(object sender, RibbonControlEventArgs e)
-        {
-            JObject js = ImportJSON(ControlKey);
-            string sentence = "请输入要显示的功能的编号：\r\n编号  功能";
-            string IDname = "";
-            for (int i = 1; i < js.Count; i++)
-            {
-                if (js.Properties().ToList()[i].Value.ToString() == "0")
-                {
-                    if (js.Properties().ToList()[i].Name.ToString() == "state_" + KeyXMT) IDname = group_tuisong.Label;
-                    if (js.Properties().ToList()[i].Name.ToString() == "state_" + KeyCode) IDname = code.Label;
-                    if (js.Properties().ToList()[i].Name.ToString() == "state_" + KeyCode2) IDname = Code2.Label;
-                    if (js.Properties().ToList()[i].Name.ToString() == "state_" + KeyCodeLatex) IDname = CodeLatex.Label;
-                    if (js.Properties().ToList()[i].Name.ToString() == "state_" + KeyToolsBox) IDname = ToolsBox.Label;
-                    sentence = sentence + "\r\n  " + i + "   " + IDname;
-                }
-            }
-            string choice = Interaction.InputBox(sentence, "功能隐藏").ToString();
-            js[js.Properties().ToList()[int.Parse(choice)].Name.ToString()] = "1";
-            SetjsonFun(ControlKey, js);
-            KeyStateLoad();
-        }
 
         private void CodeOpenPreset_Click(object sender, RibbonControlEventArgs e)
         {
@@ -1850,18 +1787,29 @@ namespace WordAddIn1
         {
             //面板开关
 
-            //标签栏
-            int TempInt = Globals.ThisAddIn.Application.ActiveWindow.Hwnd;
-            RefreshFileTabPane(TempInt);
+            if (FileTabOnOff.Checked == false)
+            {
+                FileTabOnOff.Label = "标签栏";
+
+                foreach (var tempPane in HwndPaneDic_tab)
+                {
+                    HwndPaneDic_tab[tempPane.Key].Visible = false;
+                    HwndPaneDic_tab[tempPane.Key].Dispose();
+                    Globals.ThisAddIn.CustomTaskPanes.Remove(HwndPaneDic_tab[tempPane.Key]);
+                }
+            }
+            else
+            {
+                FileTabOnOff.Label = "关闭标签栏";
+
+                //标签栏
+                int TempInt = Globals.ThisAddIn.Application.ActiveWindow.Hwnd;
+                RefreshFileTabPane(TempInt);
+            }
 
             //设置面板可见性
             FileTabPane.Visible = FileTabOnOff.Checked;
-            //MessageBox.Show("1:"+FileTabPane.Width.ToString());
-            //MessageBox.Show(app.Documents.Count.ToString());
-            //MessageBox.Show(FileTabOnOff.Checked.ToString());
 
-            if (FileTabOnOff.Checked == false) FileTabOnOff.Label = "标签栏";
-            else FileTabOnOff.Label = "关闭标签栏";
         }
 
         private void RefreshFileTabPane(int HwndInt)
@@ -1869,12 +1817,12 @@ namespace WordAddIn1
             //重新绑定面板
             //MessageBox.Show(app.Documents[1].Name);
             
-            if (HwndPaneDic.ContainsKey(HwndInt))
+            if (HwndPaneDic_tab.ContainsKey(HwndInt))
             {
                 //FileTabPane = HwndPaneDic[HwndInt];
 
                 //HwndPaneDic[HwndInt].Visible = false;
-                Globals.ThisAddIn.CustomTaskPanes.Remove(HwndPaneDic[HwndInt]);
+                Globals.ThisAddIn.CustomTaskPanes.Remove(HwndPaneDic_tab[HwndInt]);
                 //HwndPaneDic.Remove(HwndInt);
 
                 //创建控件
@@ -1898,11 +1846,11 @@ namespace WordAddIn1
                     //MessageBox.Show("FileTabPane.Width< 129* app.Documents.Count");
                 }
                 //事件
-                FileTabPane.Visible = true;
-                //FileTabPane.VisibleChanged += new EventHandler(CustomPane_VisibleChanged);
+                //FileTabPane.Visible = true;
+                FileTabPane.VisibleChanged -= new EventHandler(CustomPane_VisibleChanged);
                 //添加到字典
                 //HwndPaneDic.Add(HwndInt, FileTabPane);
-                HwndPaneDic[HwndInt] = FileTabPane;
+                HwndPaneDic_tab[HwndInt] = FileTabPane;
             }
             else
             {
@@ -1926,9 +1874,10 @@ namespace WordAddIn1
                     //MessageBox.Show("FileTabPane.Width< 129* app.Documents.Count");
                 }
                 //事件
+                //FileTabPane.Visible = false;
                 FileTabPane.VisibleChanged += new EventHandler(CustomPane_VisibleChanged);
                 //添加到字典
-                HwndPaneDic.Add(HwndInt, FileTabPane);
+                HwndPaneDic_tab.Add(HwndInt, FileTabPane);
             }
         }
 
@@ -1936,22 +1885,20 @@ namespace WordAddIn1
         {
             //保持按钮与面板状态一致
 
-            //MessageBox.Show(FileTabPane.Visible.ToString());
-
             int TempInt = Globals.ThisAddIn.Application.ActiveWindow.Hwnd;
             FileTabOnOff.Checked = FileTabPane.Visible;
+
             if (!FileTabOnOff.Checked)
             {
-                FileTabOnOff.Label = "标签栏";
                 app.WindowActivate -= new Word.ApplicationEvents4_WindowActivateEventHandler(CustomPane_WindowActivate);
                 app.WindowDeactivate -= new Word.ApplicationEvents4_WindowDeactivateEventHandler(CustomPane_WindowDeactivate);
             }
             else
-            {                
-                FileTabOnOff.Label = "关闭标签栏";
+            {
                 app.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(CustomPane_WindowActivate);
                 app.WindowDeactivate += new Word.ApplicationEvents4_WindowDeactivateEventHandler(CustomPane_WindowDeactivate);
             }
+
         }
 
         private void CustomPane_WindowActivate(Word.Document Doc, Word.Window WD)
@@ -1959,14 +1906,13 @@ namespace WordAddIn1
             //窗体激活事件
             
             app.WindowActivate -= new Word.ApplicationEvents4_WindowActivateEventHandler(CustomPane_WindowActivate);
-            app = Globals.ThisAddIn.Application;
-            string DocName = Doc.Name;
+            //app = Globals.ThisAddIn.Application;
+            //string DocName = Doc.Name;
 
             int TempHwnd = WD.Hwnd;
             RefreshFileTabPane(TempHwnd);
             //设置面板可见性
             FileTabPane.Visible = true;
-
         }
 
         private void CustomPane_WindowDeactivate(Word.Document Doc, Word.Window WD)
@@ -1974,23 +1920,35 @@ namespace WordAddIn1
             //窗体取消激活事件
 
             int TempHwnd = WD.Hwnd;
-            if (HwndPaneDic.ContainsKey(TempHwnd))
+
+            if (HwndPaneDic_tab.ContainsKey(TempHwnd))
             {
-                HwndPaneDic[TempHwnd].Visible = false;
+                HwndPaneDic_tab[TempHwnd].Visible = false;
                 app.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(CustomPane_WindowActivate);
+                //app.WindowDeactivate -= new Word.ApplicationEvents4_WindowDeactivateEventHandler(CustomPane_WindowDeactivate);
             }
         }
+        
 
         private void TableColoring_Click(object sender, RibbonControlEventArgs e)
         {
-            if (!TableColoring.Checked)
+            int TempInt = Globals.ThisAddIn.Application.ActiveWindow.Hwnd;
+
+            if (HwndPaneDic_tableColor.ContainsKey(TempInt))
             {
-                tableColoringPane.Visible = false;
+                HwndPaneDic_tableColor[TempInt].Visible = false;
+                HwndPaneDic_tableColor[TempInt].Dispose();
+                Globals.ThisAddIn.CustomTaskPanes.Remove(HwndPaneDic_tableColor[TempInt]); 
+                HwndPaneDic_tableColor.Remove(TempInt);
             }
             else
             {
+                TableColoringForm tableColoringForm = new TableColoringForm(PresetToolsBoxTable);
+
+                tableColoringPane = Globals.ThisAddIn.CustomTaskPanes.Add(tableColoringForm, "设置表格颜色");
                 tableColoringPane.Width = 333;
                 tableColoringPane.Visible = true;
+                HwndPaneDic_tableColor.Add(TempInt, tableColoringPane);
             }
         }
 
@@ -2073,14 +2031,23 @@ namespace WordAddIn1
         {
             //将英文标点换成中文标点
 
-            if (!changecharCE.Checked)
+            int TempInt = Globals.ThisAddIn.Application.ActiveWindow.Hwnd;
+
+            if (HwndPaneDic_ChangeChar.ContainsKey(TempInt))
             {
-                changCharPane.Visible = false;
+                HwndPaneDic_ChangeChar[TempInt].Visible = false;
+                HwndPaneDic_ChangeChar[TempInt].Dispose();
+                Globals.ThisAddIn.CustomTaskPanes.Remove(HwndPaneDic_ChangeChar[TempInt]);
+                HwndPaneDic_ChangeChar.Remove(TempInt);
             }
             else
             {
+                ChangeCharForm changeCharForm = new ChangeCharForm();
+
+                changCharPane = Globals.ThisAddIn.CustomTaskPanes.Add(changeCharForm, "设置替换字符");
                 changCharPane.Width = 140;
                 changCharPane.Visible = true;
+                HwndPaneDic_ChangeChar.Add(TempInt, changCharPane);
             }
         }
 
@@ -2090,14 +2057,23 @@ namespace WordAddIn1
         {
             //检查符号是否配对
 
-            if (!checkCharMatch.Checked)
+            int TempInt = Globals.ThisAddIn.Application.ActiveWindow.Hwnd;
+
+            if (HwndPaneDic_CharMatch.ContainsKey(TempInt))
             {
-                charMatchPane.Visible = false;
+                HwndPaneDic_CharMatch[TempInt].Visible = false;
+                HwndPaneDic_CharMatch[TempInt].Dispose();
+                Globals.ThisAddIn.CustomTaskPanes.Remove(HwndPaneDic_CharMatch[TempInt]);
+                HwndPaneDic_CharMatch.Remove(TempInt);
             }
             else
             {
+                CharMatchForm charMatchForm = new CharMatchForm();
+
+                charMatchPane = Globals.ThisAddIn.CustomTaskPanes.Add(charMatchForm, "设置匹配字符");
                 charMatchPane.Width = 190;
                 charMatchPane.Visible = true;
+                HwndPaneDic_CharMatch.Add(TempInt, charMatchPane);
             }
         }
 
@@ -2292,6 +2268,22 @@ namespace WordAddIn1
                     MessageBox.Show("样式底纹错误！", "样式底纹");
                     break;
             }
+        }
+
+        private void SettingBt_Click(object sender, RibbonControlEventArgs e)
+        {
+            SettingForm settingForm = new SettingForm();
+            settingForm.ShowDialog();
+            bool boolKeyAllTrue = settingForm.boolKeyAllTrue;
+            if(boolKeyAllTrue==true)
+            {
+                KeyAllTrue();
+            }
+            else
+            {
+                KeyStateLoad();
+            }
+
         }
     }
 }
