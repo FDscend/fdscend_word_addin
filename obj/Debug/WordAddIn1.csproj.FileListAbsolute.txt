@@ -41,3 +41,4 @@ D:\code\WordAddIn1\obj\Debug\WordAddIn1.ChangeCharForm.resources
 D:\code\WordAddIn1\obj\Debug\WordAddIn1.CharMatchForm.resources
 D:\code\WordAddIn1\obj\Debug\WordAddIn1.PatternSelectForm.resources
 D:\code\WordAddIn1\obj\Debug\WordAddIn1.SettingForm.resources
+D:\code\WordAddIn1\obj\Debug\WordAddIn1.csproj.AssemblyReference.cache
