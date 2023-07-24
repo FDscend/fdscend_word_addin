@@ -75,6 +75,7 @@ namespace WordAddIn1
         private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_ChangeChar = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
         private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_CharMatch = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
 
+        //侧面板
         Microsoft.Office.Tools.CustomTaskPane FileTabPane;
         Microsoft.Office.Tools.CustomTaskPane tableColoringPane;
         Microsoft.Office.Tools.CustomTaskPane changCharPane;
@@ -90,6 +91,9 @@ namespace WordAddIn1
         int paraShandingChoice = 1;
         int styleShadingChoice = 1;
 
+        //标签栏
+        static int fileTabPaneHeight = 83;
+        public List<string> DocNamesList = new List<string>();
 
 
         public static JObject ImportJSON(string jsonfile)
@@ -1816,7 +1820,13 @@ namespace WordAddIn1
         {
             //重新绑定面板
             //MessageBox.Show(app.Documents[1].Name);
-            
+
+
+            //保持标签顺序
+            DocNamesList = TabForm.DocNamesList_pane;
+            Doc2List();
+
+
             if (HwndPaneDic_tab.ContainsKey(HwndInt))
             {
                 //FileTabPane = HwndPaneDic[HwndInt];
@@ -1826,7 +1836,7 @@ namespace WordAddIn1
                 //HwndPaneDic.Remove(HwndInt);
 
                 //创建控件
-                UserControl FileTabPane2 = new TabForm(app.Documents);
+                TabForm FileTabPane2 = new TabForm(DocNamesList);
                 //添加控件
                 FileTabPane = Globals.ThisAddIn.CustomTaskPanes.Add(FileTabPane2, "分点标签栏");               
                 //设置在上方显示
@@ -1837,7 +1847,7 @@ namespace WordAddIn1
                 //MessageBox.Show("2:"+Globals.ThisAddIn.Application.ActiveWindow.Width.ToString());
                 if (2* Globals.ThisAddIn.Application.ActiveWindow.Width > 129* app.Documents.Count)//放大倍数，窗口尺寸和实际不符
                 {
-                    FileTabPane.Height = 83;
+                    FileTabPane.Height = fileTabPaneHeight;
                     //MessageBox.Show("FileTabPane.Width> 129* app.Documents.Count");
                 }                   
                 else
@@ -1855,7 +1865,7 @@ namespace WordAddIn1
             else
             {
                 //创建控件
-                UserControl FileTabPane2 = new TabForm(app.Documents);
+                TabForm FileTabPane2 = new TabForm(DocNamesList);
                 //添加控件
                 FileTabPane = Globals.ThisAddIn.CustomTaskPanes.Add(FileTabPane2, "分点标签栏");
                 //设置在上方显示
@@ -1865,7 +1875,7 @@ namespace WordAddIn1
                 //设置高度
                 if (2* Globals.ThisAddIn.Application.ActiveWindow.Width > 129 * app.Documents.Count)
                 {
-                    FileTabPane.Height = 83;
+                    FileTabPane.Height = fileTabPaneHeight;
                     //MessageBox.Show("FileTabPane.Width> 129* app.Documents.Count");
                 }
                 else
@@ -1908,6 +1918,11 @@ namespace WordAddIn1
             app.WindowActivate -= new Word.ApplicationEvents4_WindowActivateEventHandler(CustomPane_WindowActivate);
             //app = Globals.ThisAddIn.Application;
             //string DocName = Doc.Name;
+
+
+            //保持标签栏高度
+            fileTabPaneHeight = FileTabPane.Height;
+
 
             int TempHwnd = WD.Hwnd;
             RefreshFileTabPane(TempHwnd);
@@ -2285,6 +2300,46 @@ namespace WordAddIn1
             }
 
         }
+
+        private void Doc2List()
+        {
+            //文档列表转列表，以及更新列表内容
+
+            int DocNums = app.Documents.Count;
+            for (int i = 1; i <= DocNums; i++)
+            {
+                if (!DocNamesList.Contains(app.Documents[i].Path + "\\" + app.Documents[i].Name))
+                {
+                    DocNamesList.Add(app.Documents[i].Path + "\\" + app.Documents[i].Name);
+                } 
+            }
+
+            foreach (string docname in DocNamesList)
+            {
+                if (!boolDocsContain(docname))
+                {
+                    DocNamesList.Remove(docname);
+                }
+            }
+        }
+
+        private bool boolDocsContain(string doc_name)
+        {
+            //判断是否含有某个文档
+
+            int DocNums = app.Documents.Count;
+            for (int i = 1; i <= DocNums; i++)
+            {
+                if (doc_name == (app.Documents[i].Path + "\\" + app.Documents[i].Name))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        
     }
 }
 

@@ -188,6 +188,8 @@ namespace WordAddIn1
 
                 checkedListBox1.Items.Clear();
                 loadList();
+
+                textBox1.Text = "";
             }
         }
 
