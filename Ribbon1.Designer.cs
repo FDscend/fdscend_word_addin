@@ -54,6 +54,8 @@ namespace WordAddIn1
             this.author_doc = this.Factory.CreateRibbonButton();
             this.author_c = this.Factory.CreateRibbonButton();
             this.author_new = this.Factory.CreateRibbonButton();
+            this.WeixinPic = this.Factory.CreateRibbonButton();
+            this.bilibiliPic = this.Factory.CreateRibbonButton();
             this.code = this.Factory.CreateRibbonGroup();
             this.CodeFormat = this.Factory.CreateRibbonButton();
             this.CodeTabSetting = this.Factory.CreateRibbonButton();
@@ -76,6 +78,10 @@ namespace WordAddIn1
             this.CodeFormat2 = this.Factory.CreateRibbonButton();
             this.SetCode3CurrentColor = this.Factory.CreateRibbonButton();
             this.saveCode3Color = this.Factory.CreateRibbonButton();
+            this.CodeGroup4 = this.Factory.CreateRibbonGroup();
+            this.CodeFormat4 = this.Factory.CreateRibbonButton();
+            this.SetCode4CurrentColor = this.Factory.CreateRibbonButton();
+            this.saveCode4Color = this.Factory.CreateRibbonButton();
             this.ToolsBox = this.Factory.CreateRibbonGroup();
             this.ParaShadeSplit = this.Factory.CreateRibbonSplitButton();
             this.ParagraphShading = this.Factory.CreateRibbonButton();
@@ -90,6 +96,7 @@ namespace WordAddIn1
             this.changecharCE = this.Factory.CreateRibbonButton();
             this.checkCharMatch = this.Factory.CreateRibbonButton();
             this.del_header_line = this.Factory.CreateRibbonButton();
+            this.inlineCode = this.Factory.CreateRibbonButton();
             this.control = this.Factory.CreateRibbonGroup();
             this.SettingBt = this.Factory.CreateRibbonButton();
             this.About = this.Factory.CreateRibbonButton();
@@ -99,6 +106,7 @@ namespace WordAddIn1
             this.code.SuspendLayout();
             this.CodeLatex.SuspendLayout();
             this.Code2.SuspendLayout();
+            this.CodeGroup4.SuspendLayout();
             this.ToolsBox.SuspendLayout();
             this.control.SuspendLayout();
             this.SuspendLayout();
@@ -109,6 +117,7 @@ namespace WordAddIn1
             this.tab1.Groups.Add(this.code);
             this.tab1.Groups.Add(this.CodeLatex);
             this.tab1.Groups.Add(this.Code2);
+            this.tab1.Groups.Add(this.CodeGroup4);
             this.tab1.Groups.Add(this.ToolsBox);
             this.tab1.Groups.Add(this.control);
             this.tab1.Label = "分点";
@@ -127,6 +136,8 @@ namespace WordAddIn1
             this.group_tuisong.Items.Add(this.button_clearFont);
             this.group_tuisong.Items.Add(this.TimeHeader);
             this.group_tuisong.Items.Add(this.author);
+            this.group_tuisong.Items.Add(this.WeixinPic);
+            this.group_tuisong.Items.Add(this.bilibiliPic);
             this.group_tuisong.Label = "文案";
             this.group_tuisong.Name = "group_tuisong";
             this.group_tuisong.Visible = false;
@@ -282,6 +293,26 @@ namespace WordAddIn1
             this.author_new.ScreenTip = "使用自定义署名";
             this.author_new.ShowImage = true;
             this.author_new.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.author_new_Click);
+            // 
+            // WeixinPic
+            // 
+            this.WeixinPic.Image = global::WordAddIn1.Properties.Resources.weixin_logo;
+            this.WeixinPic.Label = "获取封面";
+            this.WeixinPic.Name = "WeixinPic";
+            this.WeixinPic.ScreenTip = "微信推送封面";
+            this.WeixinPic.ShowImage = true;
+            this.WeixinPic.SuperTip = "输入微信推送连接，插入封面图至文档选中处";
+            this.WeixinPic.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.WeixinPic_Click);
+            // 
+            // bilibiliPic
+            // 
+            this.bilibiliPic.Image = global::WordAddIn1.Properties.Resources.bilibili_logo;
+            this.bilibiliPic.Label = "获取封面";
+            this.bilibiliPic.Name = "bilibiliPic";
+            this.bilibiliPic.ScreenTip = "B站视频封面";
+            this.bilibiliPic.ShowImage = true;
+            this.bilibiliPic.SuperTip = "输入B站视频连接，插入封面图至文档选中处";
+            this.bilibiliPic.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.bilibiliPic_Click);
             // 
             // code
             // 
@@ -471,6 +502,42 @@ namespace WordAddIn1
             this.saveCode3Color.SuperTip = "将本文档使用的代码排版3的底纹颜色保存至预设文件";
             this.saveCode3Color.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.saveCode3Color_Click);
             // 
+            // CodeGroup4
+            // 
+            this.CodeGroup4.Items.Add(this.CodeFormat4);
+            this.CodeGroup4.Items.Add(this.SetCode4CurrentColor);
+            this.CodeGroup4.Items.Add(this.saveCode4Color);
+            this.CodeGroup4.Label = "代码排版4";
+            this.CodeGroup4.Name = "CodeGroup4";
+            this.CodeGroup4.Visible = false;
+            // 
+            // CodeFormat4
+            // 
+            this.CodeFormat4.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.CodeFormat4.Image = global::WordAddIn1.Properties.Resources._2;
+            this.CodeFormat4.Label = "一键排版";
+            this.CodeFormat4.Name = "CodeFormat4";
+            this.CodeFormat4.ScreenTip = "代码一键排版";
+            this.CodeFormat4.ShowImage = true;
+            this.CodeFormat4.SuperTip = "样式4";
+            this.CodeFormat4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CodeFormat4_Click);
+            // 
+            // SetCode4CurrentColor
+            // 
+            this.SetCode4CurrentColor.Label = "颜色";
+            this.SetCode4CurrentColor.Name = "SetCode4CurrentColor";
+            this.SetCode4CurrentColor.ScreenTip = "设置底纹颜色";
+            this.SetCode4CurrentColor.SuperTip = "先选中代码块。再选择颜色。更改只会应用到本文档，不会修改预设文件。";
+            this.SetCode4CurrentColor.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.SetCode4CurrentColor_Click);
+            // 
+            // saveCode4Color
+            // 
+            this.saveCode4Color.Label = "保存";
+            this.saveCode4Color.Name = "saveCode4Color";
+            this.saveCode4Color.ScreenTip = "保存颜色";
+            this.saveCode4Color.SuperTip = "将本文档使用的代码排版4的底纹颜色保存至预设文件";
+            this.saveCode4Color.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.saveCode4Color_Click);
+            // 
             // ToolsBox
             // 
             this.ToolsBox.Items.Add(this.ParaShadeSplit);
@@ -481,6 +548,7 @@ namespace WordAddIn1
             this.ToolsBox.Items.Add(this.changecharCE);
             this.ToolsBox.Items.Add(this.checkCharMatch);
             this.ToolsBox.Items.Add(this.del_header_line);
+            this.ToolsBox.Items.Add(this.inlineCode);
             this.ToolsBox.Label = "工具箱";
             this.ToolsBox.Name = "ToolsBox";
             this.ToolsBox.Visible = false;
@@ -615,7 +683,18 @@ namespace WordAddIn1
             this.del_header_line.Name = "del_header_line";
             this.del_header_line.ScreenTip = "去除页眉横线";
             this.del_header_line.ShowImage = true;
+            this.del_header_line.SuperTip = "去除页眉横线";
             this.del_header_line.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.del_header_line_Click);
+            // 
+            // inlineCode
+            // 
+            this.inlineCode.Image = global::WordAddIn1.Properties.Resources.code;
+            this.inlineCode.Label = "行内代码";
+            this.inlineCode.Name = "inlineCode";
+            this.inlineCode.ScreenTip = "行内代码";
+            this.inlineCode.ShowImage = true;
+            this.inlineCode.SuperTip = "选中文字，按照行内代码样式排版";
+            this.inlineCode.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.inlineCode_Click);
             // 
             // control
             // 
@@ -663,6 +742,8 @@ namespace WordAddIn1
             this.CodeLatex.PerformLayout();
             this.Code2.ResumeLayout(false);
             this.Code2.PerformLayout();
+            this.CodeGroup4.ResumeLayout(false);
+            this.CodeGroup4.PerformLayout();
             this.ToolsBox.ResumeLayout(false);
             this.ToolsBox.PerformLayout();
             this.control.ResumeLayout(false);
@@ -731,6 +812,13 @@ namespace WordAddIn1
         internal Microsoft.Office.Tools.Ribbon.RibbonButton styleShadeClear;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton SettingBt;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group_tuisong;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton WeixinPic;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton bilibiliPic;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup CodeGroup4;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton CodeFormat4;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton SetCode4CurrentColor;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton saveCode4Color;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton inlineCode;
     }
 
     partial class ThisRibbonCollection

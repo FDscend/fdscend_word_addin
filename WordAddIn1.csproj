@@ -297,6 +297,7 @@
     <None Include="Resources\Preset_Code">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\Preset_Code4" />
     <None Include="Resources\Preset_CodeL" />
     <None Include="Resources\ToolsBox">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -317,7 +318,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico.ico" />
+    <Content Include="Resources\bilibili_logo.png" />
+    <Content Include="Resources\code.png" />
     <Content Include="Resources\settings.png" />
+    <Content Include="Resources\weixin_logo.png" />
     <None Include="Resources\样式底纹清除.png" />
     <None Include="Resources\样式底纹.png" />
     <None Include="Resources\页眉横线.png" />

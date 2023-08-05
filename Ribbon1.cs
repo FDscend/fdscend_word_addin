@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net;
-
+using System.Runtime.InteropServices;
 
 
 namespace WordAddIn1
@@ -25,24 +25,29 @@ namespace WordAddIn1
 
         //全局路径
         string latest_info = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\latest.json";
+        string temp_websource_txt = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\temp_websource_txt";
+        string temp_pic_path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\temp_pic_path";
+
 #if DEBUG
         string ControlKey = "D:\\code\\WordAddIn1\\Resources\\ControlKey";
         string PresetCodeFile = "D:\\code\\WordAddIn1\\Resources\\Preset_Code";
         string PresetCodeLatexFile = "D:\\code\\WordAddIn1\\Resources\\Preset_CodeL";
+        string PresetCodeMDFile = "D:\\code\\WordAddIn1\\Resources\\Preset_CodeMD";
+        string PresetCode4File = "D:\\code\\WordAddIn1\\Resources\\Preset_Code4";
         string PresetToolsBoxShadeColor = "D:\\code\\WordAddIn1\\Resources\\ToolsBox";
         string PresetToolsBoxTable = "D:\\code\\WordAddIn1\\Resources\\ToolsBox_TablePreset";
         string XMTsetting = "D:\\code\\WordAddIn1\\Resources\\XMT";
-        string PresetCodeMDFile = "D:\\code\\WordAddIn1\\Resources\\Preset_CodeMD";
         string CheckUpdateFile = "D:\\code\\WordAddIn1\\Resources\\CheckUpdate";
 #endif
 #if !DEBUG
         string ControlKey = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Config\\ControlKey";
         string PresetCodeFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\Preset_Code";
         string PresetCodeLatexFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\Preset_CodeL";
+        string PresetCodeMDFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\Preset_CodeMD";
+        string PresetCode4File = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\Preset_Code4";
         string PresetToolsBoxShadeColor = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\ToolsBox";
         string PresetToolsBoxTable = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\ToolsBox_TablePreset";
         string XMTsetting = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\XMT";
-        string PresetCodeMDFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\Preset_CodeMD";
         string CheckUpdateFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Config\\CheckUpdate";
 #endif
 
@@ -53,6 +58,7 @@ namespace WordAddIn1
         public const string KeyCode = "code";
         public const string KeyCode2 = "codeB";
         public const string KeyCodeLatex = "codeL";
+        public const string KeyCode4 = "code4";
         public const string KeyToolsBox = "tools";
         public const string KeyAdmin = "admin";
 
@@ -65,6 +71,7 @@ namespace WordAddIn1
         //string CodeFontName = "新宋体";
         //double CodeFontSize = 9.5;
         Word.WdColor codeMD_CurrentColor;
+        Word.WdColor code4_CurrentColor;
 
         ColorDialog MyColorDialog = new ColorDialog();
 
@@ -162,6 +169,9 @@ namespace WordAddIn1
                 case KeyCodeLatex:
                     CodeLatex.Visible = true;
                     break;
+                case KeyCode4:
+                    CodeGroup4.Visible = true;
+                    break;
                 case KeyToolsBox:
                     ToolsBox.Visible = true;
                     break;
@@ -179,8 +189,8 @@ namespace WordAddIn1
             switch (key)
             {
                 case KeyDefault:
-                    group_tuisong.Visible = false;
-                    code.Visible = false;
+                    //group_tuisong.Visible = false;
+                    //code.Visible = false;
                     break;
                 case KeyXMT:
                     if (ReadjsonFun(jsonfile, "state_"+ KeyXMT) == "1")
@@ -217,6 +227,15 @@ namespace WordAddIn1
                     }
                     else
                         CodeLatex.Visible = false;
+                    break;
+                case KeyCode4:
+                    if (ReadjsonFun(jsonfile, "state_" + KeyCode4) == "1")
+                    {
+                        CodeGroup4.Visible = true;
+                        return true;
+                    }
+                    else
+                        CodeGroup4.Visible = false;
                     break;
                 case KeyToolsBox:
                     if (ReadjsonFun(jsonfile, "state_" + KeyToolsBox) == "1")
@@ -266,6 +285,7 @@ namespace WordAddIn1
 #if !DEBUG
             KeyStateLoad();
             button_tuisong.Visible = false;
+            bilibiliPic.Visible = false;
 #endif
 
             //代码相关颜色初始化
@@ -280,12 +300,19 @@ namespace WordAddIn1
             int b = int.Parse(js_codeMD["ParaShadingColor_b"].ToString());
             codeMD_CurrentColor = GetColor(Color.FromArgb(r, g, b));
 
+            JObject js_code4 = ImportJSON(PresetCode4File);
+            r = int.Parse(js_code4["DefaultShadingColor_r"].ToString());
+            g = int.Parse(js_code4["DefaultShadingColor_g"].ToString());
+            b = int.Parse(js_code4["DefaultShadingColor_b"].ToString());
+            code4_CurrentColor = GetColor(Color.FromArgb(r, g, b));
+
             //check update
             JObject js_update = ImportJSON(CheckUpdateFile);
             if (js_update["auto_check"].ToString() == "yes")
             {
                 AutoUpdate();
             }
+
         }
 
         void AutoUpdate()
@@ -348,6 +375,7 @@ namespace WordAddIn1
             code.Visible = true;
             Code2.Visible = true;
             CodeLatex.Visible = true;
+            CodeGroup4.Visible = true;
             ToolsBox.Visible = true;
         }
 
@@ -1845,7 +1873,7 @@ namespace WordAddIn1
                 FileTabPane.DockPositionRestrict = Microsoft.Office.Core.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
                 //设置高度
                 //MessageBox.Show("2:"+Globals.ThisAddIn.Application.ActiveWindow.Width.ToString());
-                if (2* Globals.ThisAddIn.Application.ActiveWindow.Width > 129* app.Documents.Count)//放大倍数，窗口尺寸和实际不符
+                if (GetWinScaling() * Globals.ThisAddIn.Application.ActiveWindow.Width > 129* app.Documents.Count)//放大倍数，窗口尺寸和实际不符
                 {
                     FileTabPane.Height = fileTabPaneHeight;
                     //MessageBox.Show("FileTabPane.Width> 129* app.Documents.Count");
@@ -1857,7 +1885,7 @@ namespace WordAddIn1
                 }
                 //事件
                 //FileTabPane.Visible = true;
-                FileTabPane.VisibleChanged -= new EventHandler(CustomPane_VisibleChanged);
+                //FileTabPane.VisibleChanged -= new EventHandler(CustomPane_VisibleChanged);
                 //添加到字典
                 //HwndPaneDic.Add(HwndInt, FileTabPane);
                 HwndPaneDic_tab[HwndInt] = FileTabPane;
@@ -1873,7 +1901,7 @@ namespace WordAddIn1
                 //禁止用户修改位置
                 FileTabPane.DockPositionRestrict = Microsoft.Office.Core.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
                 //设置高度
-                if (2* Globals.ThisAddIn.Application.ActiveWindow.Width > 129 * app.Documents.Count)
+                if (GetWinScaling() * Globals.ThisAddIn.Application.ActiveWindow.Width > 129 * app.Documents.Count)
                 {
                     FileTabPane.Height = fileTabPaneHeight;
                     //MessageBox.Show("FileTabPane.Width> 129* app.Documents.Count");
@@ -1940,7 +1968,7 @@ namespace WordAddIn1
             {
                 HwndPaneDic_tab[TempHwnd].Visible = false;
                 app.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(CustomPane_WindowActivate);
-                //app.WindowDeactivate -= new Word.ApplicationEvents4_WindowDeactivateEventHandler(CustomPane_WindowDeactivate);
+                //app.WindowDeactivate += new Word.ApplicationEvents4_WindowDeactivateEventHandler(CustomPane_WindowDeactivate);
             }
         }
         
@@ -2339,7 +2367,292 @@ namespace WordAddIn1
             return false;
         }
 
-        
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetDC(IntPtr ptr);
+
+        [DllImport("gdi32.dll")]
+        public static extern int GetDeviceCaps(
+            IntPtr hdc, // handle to DC
+            int nIndex // index of capability
+        );
+
+        [DllImport("user32.dll", EntryPoint = "ReleaseDC")]
+        public static extern IntPtr ReleaseDC(IntPtr hWnd, IntPtr hDc);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetDesktopWindow();
+
+        /// <summary>
+        /// 获取屏幕缩放系数
+        /// </summary>
+        public float GetWinScaling()
+        {
+            // 获取屏幕缩放
+            var hdc = GetDC(GetDesktopWindow());
+            int nWidth = GetDeviceCaps(hdc, 117);
+            ReleaseDC(IntPtr.Zero, hdc);
+            float f_Scale = (float)nWidth / (float)Screen.PrimaryScreen.Bounds.Width;
+            return 1 / f_Scale;
+        }
+
+        private void WeixinPic_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (File.Exists(temp_websource_txt))
+            {
+                File.Delete(temp_websource_txt);
+            }
+
+            string url = Interaction.InputBox("输入微信推送链接","获取封面").ToString();
+
+            if (url != "")
+            {
+                if (url.Contains("mp.weixin.qq.com"))
+                {
+                    WebClient webClient = new WebClient();
+                    webClient.Headers.Add("user-agent", "Mozilla/4.0 ((compatible; MSIE 8.0; Windows NT 6.1;.NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;)");
+
+                    ServicePointManager.SecurityProtocol = (SecurityProtocolType)48
+                                                    | (SecurityProtocolType)192
+                                                    | (SecurityProtocolType)768
+                                                    | (SecurityProtocolType)3072;
+
+                    webClient.Encoding = Encoding.UTF8;
+
+                    webClient.DownloadFile(url, temp_websource_txt);
+                    //string html_string = webClient.DownloadString(url);
+                }
+                else
+                {
+                    MessageBox.Show("不是微信公众号链接！");
+                }
+            }
+
+            if (File.Exists(temp_websource_txt))
+            {
+                StreamReader reader = File.OpenText(temp_websource_txt);
+                string strhtml = reader.ReadToEnd();
+
+                //提取图片连接
+
+                int index_1 = strhtml.IndexOf("var msg_cdn_url = ");
+                int index_2 = strhtml.IndexOf("var cdn_url_1_1 = ");
+
+                strhtml = strhtml.Remove(index_2);
+                strhtml = strhtml.Substring(index_1);
+                // var msg_cdn_url = "https...jpeg"; // 首图idx=0时2.35:1 ， 次图idx!=0时1:1
+
+                index_1 = strhtml.IndexOf("\"");
+                index_2 = strhtml.IndexOf(";");
+
+                strhtml = strhtml.Remove(index_2);
+                strhtml = strhtml.Substring(index_1);
+                // "https...jpeg"
+
+                strhtml = strhtml.Substring(1, strhtml.Length - 2);
+                // https...jpeg
+
+                index_1 = strhtml.IndexOf("=");
+                string pic_format = strhtml.Substring(index_1 + 1);
+                string pic_name = temp_pic_path + "." + pic_format;
+
+                //MessageBox.Show(pic_format);
+
+
+                //下载图片
+
+                WebClient webClient = new WebClient();
+                webClient.Headers.Add("user-agent", "Mozilla/4.0 ((compatible; MSIE 8.0; Windows NT 6.1;.NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;)");
+
+                ServicePointManager.SecurityProtocol = (SecurityProtocolType)48
+                                                | (SecurityProtocolType)192
+                                                | (SecurityProtocolType)768
+                                                | (SecurityProtocolType)3072;
+
+                webClient.Encoding = Encoding.UTF8;
+
+                webClient.DownloadFile(strhtml, pic_name);
+
+
+                //图片插入至文档
+                Globals.ThisAddIn.Application.Selection.InlineShapes.AddPicture(pic_name, false, true);
+
+                //删除临时文件
+                File.Delete(temp_websource_txt);
+                File.Delete(pic_name);
+            }
+
+        }
+
+        private void bilibiliPic_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (File.Exists(temp_websource_txt))
+            {
+                File.Delete(temp_websource_txt);
+            }
+
+            string url = Interaction.InputBox("输入B站视频链接", "获取封面").ToString();
+
+            if (url != "")
+            {
+                if (url.Contains("bilibili.com"))
+                {
+                    if (url.Contains("bilibili.com/video"))
+                    {
+                        WebClient webClient = new WebClient();
+                        webClient.Headers.Add("user-agent", "Mozilla/4.0 ((compatible; MSIE 8.0; Windows NT 6.1;.NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;)");
+
+                        ServicePointManager.SecurityProtocol = (SecurityProtocolType)48
+                                                        | (SecurityProtocolType)192
+                                                        | (SecurityProtocolType)768
+                                                        | (SecurityProtocolType)3072;
+
+                        webClient.Encoding = Encoding.UTF8;
+
+                        webClient.DownloadFile(url, temp_websource_txt);
+                        //string html_string = webClient.DownloadString(url);
+                    }
+                    else
+                    {
+                        MessageBox.Show("不是视频链接！");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("不是B站链接！");
+                }
+
+                
+            }
+
+            if (File.Exists(temp_websource_txt))
+            {
+                StreamReader reader = File.OpenText(temp_websource_txt);
+                //string strhtml = reader.ReadToEnd();
+
+                string strhtml = reader.ReadLine();
+
+                //提取图片连接
+
+                //int index_1 = strhtml.IndexOf("bilibili.com");
+                //int index_2 = strhtml.IndexOf("@");
+                //
+                //strhtml = strhtml.Remove(index_2);
+                //strhtml = strhtml.Substring(index_1);
+
+                MessageBox.Show(strhtml.Substring(0));
+                /*
+                //下载图片
+
+                WebClient webClient = new WebClient();
+                webClient.Headers.Add("user-agent", "Mozilla/4.0 ((compatible; MSIE 8.0; Windows NT 6.1;.NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;)");
+
+                ServicePointManager.SecurityProtocol = (SecurityProtocolType)48
+                                                | (SecurityProtocolType)192
+                                                | (SecurityProtocolType)768
+                                                | (SecurityProtocolType)3072;
+
+                webClient.Encoding = Encoding.UTF8;
+
+                webClient.DownloadFile(strhtml, pic_name);
+
+
+                //图片插入至文档
+                Globals.ThisAddIn.Application.Selection.InlineShapes.AddPicture(pic_name, false, true);
+
+                //删除临时文件
+                File.Delete(temp_websource_txt);
+                File.Delete(pic_name);
+                */
+            }
+
+        }
+
+        private void CodeFormat4_Click(object sender, RibbonControlEventArgs e)
+        {
+            Globals.ThisAddIn.Application.Selection.ParagraphFormat.Shading.BackgroundPatternColor = Word.WdColor.wdColorAutomatic;
+
+            object Replace_String = "^l";       //要替换的字符
+            object ms = System.Type.Missing;
+            object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
+            object ReplaceWith = "^p";             //最终替换成的字符
+            //执行Word自带的查找/替换功能函数
+            Globals.ThisAddIn.Application.Selection.Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
+
+
+            Word.Table table = Globals.ThisAddIn.Application.Selection.ConvertToTable(Separator: Word.WdTableFieldSeparator.wdSeparateByParagraphs);
+
+            JObject js = ImportJSON(PresetCode4File);
+
+            table.Range.Font.NameFarEast = js["DefaultFontC"].ToString();
+            table.Range.Font.NameAscii = js["DefaultFontE"].ToString();
+            table.Range.Font.NameOther = js["DefaultFontE"].ToString();
+            table.Range.Font.Name = "";
+            table.Range.Font.Size = float.Parse(js["DefaultFontSize"].ToString());
+            float NoSize = float.Parse(js["DefaultNoFontSize"].ToString());
+
+            float width1 = float.Parse(js["DefaultNoWidth"].ToString());
+            float width2 = Globals.ThisAddIn.Application.Selection.PageSetup.PageWidth - Globals.ThisAddIn.Application.Selection.PageSetup.LeftMargin - Globals.ThisAddIn.Application.Selection.PageSetup.RightMargin;
+            width2 = width2 - width1;
+
+            table.Columns.Add(table.Columns[1]);
+            table.Columns[1].Width = width1;
+            table.Columns[2].Width = width2;
+
+            int row = table.Range.Rows.Count;
+            for (int i = 1; i <= row; i++)
+            {
+                table.Cell(i, 1).Range.Text = "" + i;
+                table.Cell(i, 1).Range.Font.Color = Word.WdColor.wdColorBlack;
+                table.Cell(i, 1).Range.Font.Size = NoSize;
+            }
+
+            table.Range.Shading.BackgroundPatternColor = code4_CurrentColor;
+        }
+
+        private void SetCode4CurrentColor_Click(object sender, RibbonControlEventArgs e)
+        {
+            MyColorDialog.Color = Wdcolor2Color(code4_CurrentColor);
+            MyColorDialog.FullOpen = true;
+
+            DialogResult dr = MyColorDialog.ShowDialog();
+            if (dr == DialogResult.OK) 
+            {
+                code4_CurrentColor = GetColor(MyColorDialog.Color);
+
+                int table_select_end = Globals.ThisAddIn.Application.Selection.End;
+                Word.Tables tables = Globals.ThisAddIn.Application.ActiveDocument.Range(0, table_select_end).Tables;
+                int LevelOfTables = tables.Count;//从文档开始数表格数，相当于表格排序等级
+                                                 //MessageBox.Show(LevelOfTables.ToString());
+                Word.Table tables_select = Globals.ThisAddIn.Application.ActiveDocument.Tables[LevelOfTables];
+
+                tables_select.Range.Shading.BackgroundPatternColor = code4_CurrentColor;
+            }
+
+        }
+
+        private void saveCode4Color_Click(object sender, RibbonControlEventArgs e)
+        {
+            JObject js_code4 = ImportJSON(PresetCode4File);
+            js_code4["DefaultShadingColor_r"] = Wdcolor2Color(code4_CurrentColor).R.ToString();
+            js_code4["DefaultShadingColor_g"] = Wdcolor2Color(code4_CurrentColor).G.ToString();
+            js_code4["DefaultShadingColor_b"] = Wdcolor2Color(code4_CurrentColor).B.ToString();
+
+            SetjsonFun(PresetCode4File, js_code4);
+        }
+
+        private void inlineCode_Click(object sender, RibbonControlEventArgs e)
+        {
+            Globals.ThisAddIn.Application.Selection.Font.Shading.BackgroundPatternColor = GetColor(Color.FromArgb(242, 242, 242));
+            
+            Globals.ThisAddIn.Application.Selection.Font.NameFarEast = "宋体";
+            Globals.ThisAddIn.Application.Selection.Font.NameAscii = "Consolas";
+            Globals.ThisAddIn.Application.Selection.Font.NameOther = "Consolas";
+            Globals.ThisAddIn.Application.Selection.Font.Name = "";
+
+            Globals.ThisAddIn.Application.Selection.Font.Shrink();
+            Globals.ThisAddIn.Application.Selection.Font.Shrink();
+        }
     }
 }
 

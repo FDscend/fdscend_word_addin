@@ -140,6 +140,16 @@ namespace WordAddIn1
                 {
                     Globals.ThisAddIn.Application.Quit(Type.Missing, Type.Missing, Type.Missing);
                 }
+                else
+                {
+                    foreach (Word.Window wd in Globals.ThisAddIn.Application.Windows)
+                    {
+                        if (wd.Document.Path + "\\" + wd.Document.Name == DocNamesList_pane[0])
+                        {
+                            wd.Activate();
+                        }
+                    }
+                }
             }
         }
 
@@ -188,7 +198,6 @@ namespace WordAddIn1
             }
        
         }
-
 
 
     }

@@ -28,6 +28,7 @@ namespace WordAddIn1
         const string KeyCode = Ribbon1.KeyCode;
         const string KeyCode2 = Ribbon1.KeyCode2;
         const string KeyCodeLatex = Ribbon1.KeyCodeLatex;
+        const string KeyCode4 = Ribbon1.KeyCode4;
         const string KeyToolsBox = Ribbon1.KeyToolsBox;
         const string KeyAdmin = Ribbon1.KeyAdmin;
 
@@ -35,6 +36,7 @@ namespace WordAddIn1
         const string NameCode = "代码排版";
         const string NameCode2 = "代码排版3";
         const string NameCodeLatex = "代码排版2";
+        const string NameCode4 = "代码排版4";
         const string NameToolsBox = "工具箱";
 
         public bool boolKeyAllTrue;
@@ -114,6 +116,9 @@ namespace WordAddIn1
                 case KeyCodeLatex:
                     output = NameCodeLatex;
                     break;
+                case KeyCode4:
+                    output = NameCode4;
+                    break;
                 case KeyToolsBox:
                     output = NameToolsBox;
                     break;
@@ -142,6 +147,9 @@ namespace WordAddIn1
                     break;
                 case NameCodeLatex:
                     output = KeyCodeLatex;
+                    break;
+                case NameCode4:
+                    output = KeyCode4;
                     break;
                 case NameToolsBox:
                     output = KeyToolsBox;
@@ -206,6 +214,8 @@ namespace WordAddIn1
                 case KeyCode2:
                     break;
                 case KeyCodeLatex:
+                    break;
+                case KeyCode4:
                     break;
                 case KeyToolsBox:
                     break;
