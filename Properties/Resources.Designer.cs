@@ -83,6 +83,26 @@ namespace WordAddIn1.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap bilibili_logo {
+            get {
+                object obj = ResourceManager.GetObject("bilibili_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap code {
+            get {
+                object obj = ResourceManager.GetObject("code", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap computer {
             get {
                 object obj = ResourceManager.GetObject("computer", resourceCulture);
@@ -91,7 +111,7 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.13.1 的本地化字符串。
+        ///   查找类似 0.14.0 的本地化字符串。
         /// </summary>
         public static string current_ver {
             get {
@@ -163,6 +183,16 @@ namespace WordAddIn1.Properties {
         public static System.Drawing.Bitmap tab {
             get {
                 object obj = ResourceManager.GetObject("tab", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap weixin_logo {
+            get {
+                object obj = ResourceManager.GetObject("weixin_logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
