@@ -1683,7 +1683,13 @@ namespace WordAddIn1
             int Selectend = Globals.ThisAddIn.Application.Selection.End;
 
             // 标记替换
-            wordReplace("^l", "^p");
+            object Replace_String = "^p";       //要替换的字符
+            object ms = System.Type.Missing;
+            object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
+            object ReplaceWith = "^l";             //最终替换成的字符
+            //执行Word自带的查找/替换功能函数
+            Globals.ThisAddIn.Application.ActiveDocument.Range(SelectStart, Selectend - 1).Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
+
 
             // 底纹样式
             for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
