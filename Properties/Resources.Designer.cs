@@ -91,11 +91,30 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
+        ///   查找类似 \Config\CheckUpdate 的本地化字符串。
+        /// </summary>
+        public static string CheckUpdateFile {
+            get {
+                return ResourceManager.GetString("CheckUpdateFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
         public static System.Drawing.Bitmap code {
             get {
                 object obj = ResourceManager.GetObject("code", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap codeRun {
+            get {
+                object obj = ResourceManager.GetObject("codeRun", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -111,7 +130,16 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.14.0 的本地化字符串。
+        ///   查找类似 \Config\ControlKey 的本地化字符串。
+        /// </summary>
+        public static string ControlKey {
+            get {
+                return ResourceManager.GetString("ControlKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 0.15.0 的本地化字符串。
         /// </summary>
         public static string current_ver {
             get {
@@ -173,6 +201,107 @@ namespace WordAddIn1.Properties {
         public static System.Drawing.Bitmap pair {
             get {
                 object obj = ResourceManager.GetObject("pair", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Presets\ChangeCharList 的本地化字符串。
+        /// </summary>
+        public static string PresetChangeCharList {
+            get {
+                return ResourceManager.GetString("PresetChangeCharList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Presets\CharMatchList 的本地化字符串。
+        /// </summary>
+        public static string PresetCharMatchList {
+            get {
+                return ResourceManager.GetString("PresetCharMatchList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Presets\Preset_Code4 的本地化字符串。
+        /// </summary>
+        public static string PresetCode4File {
+            get {
+                return ResourceManager.GetString("PresetCode4File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Presets\Preset_Code 的本地化字符串。
+        /// </summary>
+        public static string PresetCodeFile {
+            get {
+                return ResourceManager.GetString("PresetCodeFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Presets\Preset_CodeL 的本地化字符串。
+        /// </summary>
+        public static string PresetCodeLatexFile {
+            get {
+                return ResourceManager.GetString("PresetCodeLatexFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Presets\Preset_CodeMD 的本地化字符串。
+        /// </summary>
+        public static string PresetCodeMDFile {
+            get {
+                return ResourceManager.GetString("PresetCodeMDFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Presets\ToolsBox 的本地化字符串。
+        /// </summary>
+        public static string PresetToolsBoxShadeColor {
+            get {
+                return ResourceManager.GetString("PresetToolsBoxShadeColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Presets\ToolsBox_TablePreset 的本地化字符串。
+        /// </summary>
+        public static string PresetToolsBoxTable {
+            get {
+                return ResourceManager.GetString("PresetToolsBoxTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Presets\XMT 的本地化字符串。
+        /// </summary>
+        public static string PresetXMTsetting {
+            get {
+                return ResourceManager.GetString("PresetXMTsetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap python {
+            get {
+                object obj = ResourceManager.GetObject("python", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap R {
+            get {
+                object obj = ResourceManager.GetObject("R", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

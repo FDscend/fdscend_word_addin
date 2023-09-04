@@ -14,13 +14,9 @@ namespace WordAddIn1
 {
     public partial class SettingForm : Form
     {
-        // global path
-#if DEBUG
-        string ControlKey = "D:\\code\\WordAddIn1\\Resources\\ControlKey";
-#endif
-#if !DEBUG
-        string ControlKey = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Config\\ControlKey";
-#endif
+        
+        string ControlKey = Ribbon1.ControlKey;
+
 
         //全局常量
         const string KeyDefault = Ribbon1.KeyDefault;
@@ -30,6 +26,7 @@ namespace WordAddIn1
         const string KeyCodeLatex = Ribbon1.KeyCodeLatex;
         const string KeyCode4 = Ribbon1.KeyCode4;
         const string KeyToolsBox = Ribbon1.KeyToolsBox;
+        const string KeyRunCode = Ribbon1.KeyRunCode;
         const string KeyAdmin = Ribbon1.KeyAdmin;
 
         const string NameXMT = "文案";
@@ -38,6 +35,7 @@ namespace WordAddIn1
         const string NameCodeLatex = "代码排版2";
         const string NameCode4 = "代码排版4";
         const string NameToolsBox = "工具箱";
+        const string NameRunCode = "运行代码";
 
         public bool boolKeyAllTrue;
 
@@ -122,6 +120,9 @@ namespace WordAddIn1
                 case KeyToolsBox:
                     output = NameToolsBox;
                     break;
+                case KeyRunCode:
+                    output = NameRunCode;
+                    break;
                 default:
                     MessageBox.Show("加载错误name", "操作码");
                     break;
@@ -153,6 +154,9 @@ namespace WordAddIn1
                     break;
                 case NameToolsBox:
                     output = KeyToolsBox;
+                    break;
+                case NameRunCode:
+                    output = KeyRunCode;
                     break;
                 default:
                     MessageBox.Show("加载错误state", "操作码");
@@ -218,6 +222,8 @@ namespace WordAddIn1
                 case KeyCode4:
                     break;
                 case KeyToolsBox:
+                    break;
+                case KeyRunCode:
                     break;
                 default:
                     return false;

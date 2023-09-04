@@ -14,6 +14,11 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;  //正则表达式
+using System.Diagnostics;
+//using RDotNet;
+using System.Threading.Tasks;
+using System.Net.NetworkInformation;
 
 
 namespace WordAddIn1
@@ -24,32 +29,34 @@ namespace WordAddIn1
 
 
         //全局路径
-        string latest_info = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\latest.json";
-        string temp_websource_txt = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\temp_websource_txt";
-        string temp_pic_path = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\temp_pic_path";
-
 #if DEBUG
-        string ControlKey = "D:\\code\\WordAddIn1\\Resources\\ControlKey";
-        string PresetCodeFile = "D:\\code\\WordAddIn1\\Resources\\Preset_Code";
-        string PresetCodeLatexFile = "D:\\code\\WordAddIn1\\Resources\\Preset_CodeL";
-        string PresetCodeMDFile = "D:\\code\\WordAddIn1\\Resources\\Preset_CodeMD";
-        string PresetCode4File = "D:\\code\\WordAddIn1\\Resources\\Preset_Code4";
-        string PresetToolsBoxShadeColor = "D:\\code\\WordAddIn1\\Resources\\ToolsBox";
-        string PresetToolsBoxTable = "D:\\code\\WordAddIn1\\Resources\\ToolsBox_TablePreset";
-        string XMTsetting = "D:\\code\\WordAddIn1\\Resources\\XMT";
-        string CheckUpdateFile = "D:\\code\\WordAddIn1\\Resources\\CheckUpdate";
+        static string FDscendHome = "D:\\code\\WordAddIn1\\FDscend";
 #endif
 #if !DEBUG
-        string ControlKey = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Config\\ControlKey";
-        string PresetCodeFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\Preset_Code";
-        string PresetCodeLatexFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\Preset_CodeL";
-        string PresetCodeMDFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\Preset_CodeMD";
-        string PresetCode4File = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\Preset_Code4";
-        string PresetToolsBoxShadeColor = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\ToolsBox";
-        string PresetToolsBoxTable = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\ToolsBox_TablePreset";
-        string XMTsetting = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\XMT";
-        string CheckUpdateFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Config\\CheckUpdate";
+        static string FDscendHome = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend";
 #endif
+        public static string ControlKey = FDscendHome + Properties.Resources.ControlKey;
+        public static string CheckUpdateFile = FDscendHome + Properties.Resources.CheckUpdateFile;
+
+        public static string ChangeCharList = FDscendHome + Properties.Resources.PresetChangeCharList;
+        public static string CharMatchList = FDscendHome + Properties.Resources.PresetCharMatchList;
+        public static string PresetCodeFile = FDscendHome + Properties.Resources.PresetCodeFile;
+        public static string PresetCodeLatexFile = FDscendHome + Properties.Resources.PresetCodeLatexFile;
+        public static string PresetCodeMDFile = FDscendHome + Properties.Resources.PresetCodeMDFile;
+        public static string PresetCode4File = FDscendHome + Properties.Resources.PresetCode4File;
+        public static string PresetToolsBoxShadeColor = FDscendHome + Properties.Resources.PresetToolsBoxShadeColor;
+        public static string PresetToolsBoxTable = FDscendHome + Properties.Resources.PresetToolsBoxTable;
+        public static string XMTsetting = FDscendHome + Properties.Resources.PresetXMTsetting;
+
+        public static string tempFile = FDscendHome + "\\temp";
+        public static string scriptsDic = FDscendHome + "\\scripts";
+
+        public static string latest_info = FDscendHome + "\\latest.json";
+        public static string temp_websource_htm = FDscendHome + "\\temp\\temp.htm";
+        public static string temp_pic_path = FDscendHome + "\\temp\\temp_pic_path";
+
+        public static string pdf_path = FDscendHome + "\\说明文档.pdf";
+
 
 
         //全局常量
@@ -60,6 +67,7 @@ namespace WordAddIn1
         public const string KeyCodeLatex = "codeL";
         public const string KeyCode4 = "code4";
         public const string KeyToolsBox = "tools";
+        public const string KeyRunCode = "runCode";
         public const string KeyAdmin = "admin";
 
 
@@ -74,6 +82,12 @@ namespace WordAddIn1
         Word.WdColor code4_CurrentColor;
 
         ColorDialog MyColorDialog = new ColorDialog();
+
+        string pythonEnv;
+        int python_exit;
+        string codeChoice = "python";
+        static int codeOutputCount = 0;
+        static int codeOutputTotal = 0;
 
 
         //窗体句柄字典
@@ -175,6 +189,9 @@ namespace WordAddIn1
                 case KeyToolsBox:
                     ToolsBox.Visible = true;
                     break;
+                case KeyRunCode:
+                    runCodeGroup.Visible = true;
+                    break;
                 case KeyAdmin:
                     KeyAllTrue();
                     break;
@@ -246,18 +263,20 @@ namespace WordAddIn1
                     else
                         ToolsBox.Visible = false;
                     break;
+                case KeyRunCode:
+                    if (ReadjsonFun(jsonfile, "state_" + KeyToolsBox) == "1")
+                    {
+                        runCodeGroup.Visible = true;
+                        return true;
+                    }
+                    else
+                        runCodeGroup.Visible = false;
+                    break;
                 case KeyAdmin:
                     if (ReadjsonFun(jsonfile, "state_"+KeyAdmin) == "1")
                     {
                         KeyAllTrue();
                         return true;
-                    }
-                    else
-                    {
-                        group_tuisong.Visible = false;
-                        code.Visible = false;
-                        Code2.Visible = false;
-                        ToolsBox.Visible = false;
                     }
                     break;
                 default:
@@ -270,9 +289,15 @@ namespace WordAddIn1
         {
             app = Globals.ThisAddIn.Application;
 
-            
-            //全局变量实例化
-            
+            //重置临时文件夹
+            if (Directory.Exists(tempFile))
+            {
+                Directory.Delete(tempFile, true);
+                Directory.CreateDirectory(tempFile);
+            }
+            else Directory.CreateDirectory(tempFile);
+
+
 
             //颜色对话框自定义颜色集
             MyColorDialog.CustomColors = new int[] { 14282722, 13684944, 13298939, 14869500 };
@@ -285,7 +310,7 @@ namespace WordAddIn1
 #if !DEBUG
             KeyStateLoad();
             button_tuisong.Visible = false;
-            bilibiliPic.Visible = false;
+            chooseR.Visible = false;
 #endif
 
             //代码相关颜色初始化
@@ -306,14 +331,56 @@ namespace WordAddIn1
             b = int.Parse(js_code4["DefaultShadingColor_b"].ToString());
             code4_CurrentColor = GetColor(Color.FromArgb(r, g, b));
 
+
+            // 文案
+            JObject js_xmt = ImportJSON(XMTsetting);
+            string authorChoice = js_xmt["author"].ToString();
+            if (authorChoice == "1") author.Image = Properties.Resources.office;
+            if (authorChoice == "2") author.Image = Properties.Resources.wps;
+            if (authorChoice == "3") author.Image = Properties.Resources.document;
+            if (authorChoice == "4") author.Image = Properties.Resources.computer;
+            if (authorChoice == "5")
+            {
+                if (js_xmt["author_new"].ToString() == "") author.Image = Properties.Resources.add;
+                else
+                {
+                    author.Image = Properties.Resources.署名;
+                    author_new.Image = Properties.Resources.署名;
+                    author_new.Label = js_xmt["author_new"].ToString();
+                }
+            }
+
+
             //check update
             JObject js_update = ImportJSON(CheckUpdateFile);
             if (js_update["auto_check"].ToString() == "yes")
             {
-                AutoUpdate();
+                if (GetNetStatus("api.github.com")) AutoUpdate();
             }
 
         }
+
+        bool GetNetStatus(string ping_url)
+        {
+            Ping ping = new Ping();
+            try
+            {
+                PingReply pingReply = ping.Send(ping_url);
+                if (pingReply.Status == IPStatus.Success)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
 
         void AutoUpdate()
         {
@@ -360,11 +427,9 @@ namespace WordAddIn1
                     {
                         System.Diagnostics.Process.Start(Properties.Resources.github_code_url);
                     }
-
-                    js["latest_date"] = dt_now.ToString("d");
-                    SetjsonFun(CheckUpdateFile, js);
                 }
-
+                js["latest_date"] = dt_now.ToString("d");
+                SetjsonFun(CheckUpdateFile, js);
             }
         }
 
@@ -377,6 +442,7 @@ namespace WordAddIn1
             CodeLatex.Visible = true;
             CodeGroup4.Visible = true;
             ToolsBox.Visible = true;
+            runCodeGroup.Visible = true;
         }
 
         public void KeyStateLoad()
@@ -1065,13 +1131,7 @@ namespace WordAddIn1
             Globals.ThisAddIn.Application.Selection.ParagraphFormat.Shading.BackgroundPatternColor = Word.WdColor.wdColorAutomatic;
 
 
-            object Replace_String = "^l";       //要替换的字符
-            object ms = System.Type.Missing;
-            object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
-            object ReplaceWith = "^p";             //最终替换成的字符
-            //执行Word自带的查找/替换功能函数
-            Globals.ThisAddIn.Application.Selection.Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
-
+            wordReplace("^l", "^p");
 
             //Globals.ThisAddIn.Application.Selection.ConvertToTable(Separator: Word.WdTableFieldSeparator.wdSeparateByParagraphs, NumColumns: 1, NumRows: 10, AutoFitBehavior: Word.WdAutoFitBehavior.wdAutoFitFixed);            
             Word.Table table = Globals.ThisAddIn.Application.Selection.ConvertToTable(Separator: Word.WdTableFieldSeparator.wdSeparateByParagraphs);
@@ -1165,6 +1225,7 @@ namespace WordAddIn1
                 JObject js = ImportJSON(XMTsetting);
                 js["author"] = 1;
                 SetjsonFun(XMTsetting, js);
+                author.Image = Properties.Resources.office;
 
                 string userName_office;
                 RegistryKey security;
@@ -1189,6 +1250,7 @@ namespace WordAddIn1
                     JObject js = ImportJSON(XMTsetting);
                     js["author"] = 2;
                     SetjsonFun(XMTsetting, js);
+                    author.Image = Properties.Resources.wps;
 
                     string userName_wps;
                     RegistryKey security_wps;
@@ -1210,14 +1272,15 @@ namespace WordAddIn1
             JObject js = ImportJSON(XMTsetting);
             js["author"] = 3;
             SetjsonFun(XMTsetting, js);
+            author.Image = Properties.Resources.document;
 
             Microsoft.Office.Core.DocumentProperties properties;
             properties = (Microsoft.Office.Core.DocumentProperties)app.Application.ActiveDocument.BuiltInDocumentProperties;
             //Microsoft.Office.Core.DocumentProperty author;
-            string author;
-            author = properties["Author"].Value;
+            string author_doc;
+            author_doc = properties["Author"].Value;
             //MessageBox.Show(author);
-            app.Application.ActiveDocument.Content.InsertAfter("\r\n\r\n文案：" + author);
+            app.Application.ActiveDocument.Content.InsertAfter("\r\n\r\n文案：" + author_doc);
 
             Word.Document myDoc = Globals.ThisAddIn.Application.ActiveDocument;
             Word.Paragraphs paragraphs = myDoc.Paragraphs;
@@ -1231,6 +1294,7 @@ namespace WordAddIn1
             JObject js = ImportJSON(XMTsetting);
             js["author"] = 4;
             SetjsonFun(XMTsetting, js);
+            author.Image = Properties.Resources.computer;
 
             //string userName_computer = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             string userName_computer = Environment.UserName;
@@ -1619,12 +1683,7 @@ namespace WordAddIn1
             int Selectend = Globals.ThisAddIn.Application.Selection.End;
 
             // 标记替换
-            object Replace_String = "^p";       //要替换的字符
-            object ms = System.Type.Missing;
-            object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
-            object ReplaceWith = "^l";             //最终替换成的字符
-            //执行Word自带的查找/替换功能函数
-            Globals.ThisAddIn.Application.ActiveDocument.Range(SelectStart, Selectend - 1).Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
+            wordReplace("^l", "^p");
 
             // 底纹样式
             for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
@@ -1768,13 +1827,7 @@ namespace WordAddIn1
             //latex 样式排版
             Globals.ThisAddIn.Application.Selection.ParagraphFormat.Shading.BackgroundPatternColor = Word.WdColor.wdColorAutomatic;
 
-            object Replace_String = "^l";       //要替换的字符
-            object ms = System.Type.Missing;
-            object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
-            object ReplaceWith = "^p";             //最终替换成的字符
-            //执行Word自带的查找/替换功能函数
-            Globals.ThisAddIn.Application.Selection.Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
-
+            wordReplace("^l", "^p");
 
             Word.Table table = Globals.ThisAddIn.Application.Selection.ConvertToTable(Separator: Word.WdTableFieldSeparator.wdSeparateByParagraphs);
 
@@ -1832,7 +1885,7 @@ namespace WordAddIn1
             }
             else
             {
-                FileTabOnOff.Label = "关闭标签栏";
+                FileTabOnOff.Label = "关标签栏";
 
                 //标签栏
                 int TempInt = Globals.ThisAddIn.Application.ActiveWindow.Hwnd;
@@ -2052,6 +2105,8 @@ namespace WordAddIn1
                 else
                 {
                     js["author_new"] = key;
+                    author_new.Image = Properties.Resources.署名;
+                    author_new.Label = key;
                 }
             }
 
@@ -2066,6 +2121,7 @@ namespace WordAddIn1
 
                 js["author"] = 5;
                 SetjsonFun(XMTsetting, js);
+                author.Image = Properties.Resources.署名;
             }            
         }
 
@@ -2329,10 +2385,11 @@ namespace WordAddIn1
 
         }
 
+        /// <summary>
+        /// 文档列表转列表，以及更新列表内容
+        /// </summary>
         private void Doc2List()
         {
-            //文档列表转列表，以及更新列表内容
-
             int DocNums = app.Documents.Count;
             for (int i = 1; i <= DocNums; i++)
             {
@@ -2351,10 +2408,13 @@ namespace WordAddIn1
             }
         }
 
+        /// <summary>
+        /// 判断是否含有某个文档
+        /// </summary>
+        /// <param name="doc_name">文档名称</param>
+        /// <returns></returns>
         private bool boolDocsContain(string doc_name)
         {
-            //判断是否含有某个文档
-
             int DocNums = app.Documents.Count;
             for (int i = 1; i <= DocNums; i++)
             {
@@ -2398,39 +2458,43 @@ namespace WordAddIn1
 
         private void WeixinPic_Click(object sender, RibbonControlEventArgs e)
         {
-            if (File.Exists(temp_websource_txt))
+            if (GetNetStatus("mp.weixin.qq.com"))
             {
-                File.Delete(temp_websource_txt);
-            }
-
-            string url = Interaction.InputBox("输入微信推送链接","获取封面").ToString();
-
-            if (url != "")
-            {
-                if (url.Contains("mp.weixin.qq.com"))
+                if (File.Exists(temp_websource_htm))
                 {
-                    WebClient webClient = new WebClient();
-                    webClient.Headers.Add("user-agent", "Mozilla/4.0 ((compatible; MSIE 8.0; Windows NT 6.1;.NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;)");
-
-                    ServicePointManager.SecurityProtocol = (SecurityProtocolType)48
-                                                    | (SecurityProtocolType)192
-                                                    | (SecurityProtocolType)768
-                                                    | (SecurityProtocolType)3072;
-
-                    webClient.Encoding = Encoding.UTF8;
-
-                    webClient.DownloadFile(url, temp_websource_txt);
-                    //string html_string = webClient.DownloadString(url);
+                    File.Delete(temp_websource_htm);
                 }
-                else
+
+                string url = Interaction.InputBox("输入微信推送链接", "获取封面").ToString();
+
+                if (url != "")
                 {
-                    MessageBox.Show("不是微信公众号链接！");
+                    if (url.Contains("mp.weixin.qq.com"))
+                    {
+                        WebClient webClient = new WebClient();
+                        webClient.Headers.Add("user-agent", "Mozilla/4.0 ((compatible; MSIE 8.0; Windows NT 6.1;.NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;)");
+
+                        ServicePointManager.SecurityProtocol = (SecurityProtocolType)48
+                                                        | (SecurityProtocolType)192
+                                                        | (SecurityProtocolType)768
+                                                        | (SecurityProtocolType)3072;
+
+                        webClient.Encoding = Encoding.UTF8;
+
+                        webClient.DownloadFile(url, temp_websource_htm);
+                        //string html_string = webClient.DownloadString(url);
+                    }
+                    else
+                    {
+                        MessageBox.Show("不是微信公众号链接！");
+                    }
                 }
             }
+            else MessageBox.Show("network error");
 
-            if (File.Exists(temp_websource_txt))
+            if (File.Exists(temp_websource_htm))
             {
-                StreamReader reader = File.OpenText(temp_websource_txt);
+                StreamReader reader = File.OpenText(temp_websource_htm);
                 string strhtml = reader.ReadToEnd();
 
                 //提取图片连接
@@ -2478,7 +2542,7 @@ namespace WordAddIn1
                 Globals.ThisAddIn.Application.Selection.InlineShapes.AddPicture(pic_name, false, true);
 
                 //删除临时文件
-                File.Delete(temp_websource_txt);
+                File.Delete(temp_websource_htm);
                 File.Delete(pic_name);
             }
 
@@ -2486,99 +2550,163 @@ namespace WordAddIn1
 
         private void bilibiliPic_Click(object sender, RibbonControlEventArgs e)
         {
-            if (File.Exists(temp_websource_txt))
+            if (GetNetStatus("bilibili.com"))
             {
-                File.Delete(temp_websource_txt);
-            }
+                string pic_path = tempFile + "\\temp_pic_path";
 
-            string url = Interaction.InputBox("输入B站视频链接", "获取封面").ToString();
-
-            if (url != "")
-            {
-                if (url.Contains("bilibili.com"))
+                if (File.Exists(temp_websource_htm))
                 {
-                    if (url.Contains("bilibili.com/video"))
+                    File.Delete(temp_websource_htm);
+                }
+
+                if (File.Exists(pic_path))
+                {
+                    File.Delete(pic_path);
+                }
+
+                string url = Interaction.InputBox("输入B站视频or直播链接", "获取封面").ToString();
+
+                if (url != "")
+                {
+                    if (url.Contains("bilibili.com"))
                     {
-                        WebClient webClient = new WebClient();
-                        webClient.Headers.Add("user-agent", "Mozilla/4.0 ((compatible; MSIE 8.0; Windows NT 6.1;.NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;)");
+                        if (url.Contains("bilibili.com/video"))  // 视频封面
+                        {
+                            if (url.Substring(0, 8) == "https://")
+                            {
+                                runPythonScript_bilibili(url, tempFile, "bilibili_vid_cover.py");
 
-                        ServicePointManager.SecurityProtocol = (SecurityProtocolType)48
-                                                        | (SecurityProtocolType)192
-                                                        | (SecurityProtocolType)768
-                                                        | (SecurityProtocolType)3072;
+                                InsertPicAsync(pic_path);
+                            }
+                            else MessageBox.Show("请正确输入https链接");
+                        }
+                        else if (url.Contains("live.bilibili.com"))
+                        {
+                            int index = url.IndexOf('?');
+                            url = url.Remove(index);
+                            //MessageBox.Show(url);
+                            if (url.Substring(0, 8) == "https://")
+                            {
+                                runPythonScript_bilibili(url, tempFile, "bilibili_live_cover.py");
 
-                        webClient.Encoding = Encoding.UTF8;
-
-                        webClient.DownloadFile(url, temp_websource_txt);
-                        //string html_string = webClient.DownloadString(url);
+                                InsertPicAsync(pic_path);
+                            }
+                            else MessageBox.Show("请正确输入https链接");
+                        }
+                        else
+                        {
+                            MessageBox.Show("不是b站视频or直播链接");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("不是视频链接！");
+                        MessageBox.Show("不是B站链接！");
                     }
                 }
-                else
-                {
-                    MessageBox.Show("不是B站链接！");
-                }
-
-                
             }
-
-            if (File.Exists(temp_websource_txt))
-            {
-                StreamReader reader = File.OpenText(temp_websource_txt);
-                //string strhtml = reader.ReadToEnd();
-
-                string strhtml = reader.ReadLine();
-
-                //提取图片连接
-
-                //int index_1 = strhtml.IndexOf("bilibili.com");
-                //int index_2 = strhtml.IndexOf("@");
-                //
-                //strhtml = strhtml.Remove(index_2);
-                //strhtml = strhtml.Substring(index_1);
-
-                MessageBox.Show(strhtml.Substring(0));
-                /*
-                //下载图片
-
-                WebClient webClient = new WebClient();
-                webClient.Headers.Add("user-agent", "Mozilla/4.0 ((compatible; MSIE 8.0; Windows NT 6.1;.NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;)");
-
-                ServicePointManager.SecurityProtocol = (SecurityProtocolType)48
-                                                | (SecurityProtocolType)192
-                                                | (SecurityProtocolType)768
-                                                | (SecurityProtocolType)3072;
-
-                webClient.Encoding = Encoding.UTF8;
-
-                webClient.DownloadFile(strhtml, pic_name);
-
-
-                //图片插入至文档
-                Globals.ThisAddIn.Application.Selection.InlineShapes.AddPicture(pic_name, false, true);
-
-                //删除临时文件
-                File.Delete(temp_websource_txt);
-                File.Delete(pic_name);
-                */
-            }
+            else MessageBox.Show("network error");
 
         }
+
+        public static Task WhenFileCreated(string path)
+        {
+            //https://www.coder.work/article/959277
+
+            if (File.Exists(path))
+                return Task.FromResult(true);
+
+            var tcs = new TaskCompletionSource<bool>();
+            FileSystemWatcher watcher = new FileSystemWatcher(Path.GetDirectoryName(path));
+
+            FileSystemEventHandler createdHandler = null;
+            RenamedEventHandler renamedHandler = null;
+            createdHandler = (s, e) =>
+            {
+                if (e.Name == Path.GetFileName(path))
+                {
+                    tcs.TrySetResult(true);
+                    watcher.Created -= createdHandler;
+                    watcher.Dispose();
+                }
+            };
+
+            renamedHandler = (s, e) =>
+            {
+                if (e.Name == Path.GetFileName(path))
+                {
+                    tcs.TrySetResult(true);
+                    watcher.Renamed -= renamedHandler;
+                    watcher.Dispose();
+                }
+            };
+
+            watcher.Created += createdHandler;
+            watcher.Renamed += renamedHandler;
+
+            watcher.EnableRaisingEvents = true;
+
+            return tcs.Task;
+        }
+
+        /// <summary>
+        /// 当图片存在时插入图片
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static async Task InsertPicAsync(string filePath)
+        {
+            await WhenFileCreated(filePath);
+            //MessageBox.Show("It's aliiiiiive!!!");
+            Globals.ThisAddIn.Application.Selection.InlineShapes.AddPicture(filePath, false, true);
+        }
+
+
+        /// <summary>
+        /// 运行scripts文件夹的python脚本-bilibili
+        /// </summary>
+        /// <param name="url">b站资源链接</param>
+        /// <param name="DicPath">下载文件的存放文件夹</param>
+        /// <param name="pyscript">要运行的脚本</param>
+        private void runPythonScript_bilibili(string url, string DicPath, string pyscript)
+        {
+            getPythonLibPath();
+
+            string py_file = scriptsDic + "\\" + pyscript;
+
+            if (python_exit == 1)
+            {
+                string python_path = pythonEnv + "\\python.exe";
+
+                if (File.Exists(py_file))
+                {
+                    Process p = new Process();
+                    p.StartInfo.FileName = python_path;
+
+                    string sArguments = py_file + " " + url + " " + DicPath;
+
+                    p.StartInfo.Arguments = sArguments;
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.RedirectStandardInput = true;
+                    p.StartInfo.RedirectStandardError = true;
+                    p.StartInfo.CreateNoWindow = true;
+
+                    p.Start();
+                    //p.BeginOutputReadLine();
+                    //p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
+                }
+                else MessageBox.Show("python file not exist");
+
+            }
+            else MessageBox.Show("python_error");
+        }
+
 
         private void CodeFormat4_Click(object sender, RibbonControlEventArgs e)
         {
             Globals.ThisAddIn.Application.Selection.ParagraphFormat.Shading.BackgroundPatternColor = Word.WdColor.wdColorAutomatic;
 
-            object Replace_String = "^l";       //要替换的字符
-            object ms = System.Type.Missing;
-            object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
-            object ReplaceWith = "^p";             //最终替换成的字符
-            //执行Word自带的查找/替换功能函数
-            Globals.ThisAddIn.Application.Selection.Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
-
+            wordReplace("^l", "^p");
 
             Word.Table table = Globals.ThisAddIn.Application.Selection.ConvertToTable(Separator: Word.WdTableFieldSeparator.wdSeparateByParagraphs);
 
@@ -2652,6 +2780,257 @@ namespace WordAddIn1
 
             Globals.ThisAddIn.Application.Selection.Font.Shrink();
             Globals.ThisAddIn.Application.Selection.Font.Shrink();
+        }
+
+        private void runCode_Click(object sender, RibbonControlEventArgs e)
+        {
+            // 文字处理
+            wordReplace("^l", "^p");
+            wordReplace("^t", "    ");
+
+
+            foreach (Word.Paragraph para in Globals.ThisAddIn.Application.Selection.Paragraphs)
+            {
+                if (para.Format.FirstLineIndent != 0)
+                {
+                    para.Format.FirstLineIndent = 0;
+                    //string beforePara = new string(' ', 2 * Convert.ToInt32(para.FirstLineIndent));
+                    string beforePara = "    ";
+                    para.Range.Text = beforePara + para.Range.Text;
+                }
+            }
+
+
+            
+            string outputComment = ">>>输出结果\t" + System.DateTime.Now.ToString("G");
+
+            
+            // 代码语言
+            string code_file = "";
+            if (codeChoice == "python") code_file = tempFile + "\\runCode.py";
+            else if (codeChoice == "R") code_file = tempFile + "\\runCode.R";
+            else MessageBox.Show("代码语言错误");
+
+
+            // 转代码运行
+            string codetxt = Globals.ThisAddIn.Application.Selection.Text;
+            
+
+            if ((codetxt != "") && (code_file != ""))
+            {
+                if(!appendCodeMod.Checked)
+                {
+                    if (File.Exists(code_file)) File.Delete(code_file);
+
+                    FileStream fs = new FileStream(code_file, FileMode.Create, FileAccess.ReadWrite);
+                    StreamWriter sw = new StreamWriter(fs);
+                    sw.WriteLine(codetxt);
+                    sw.Flush();
+                    sw.Dispose();
+                    sw.Close();
+                    fs.Close();
+                }
+                else
+                {
+                    if (File.Exists(code_file))
+                    {
+                        StreamWriter sw = File.AppendText(code_file);
+                        sw.WriteLine("\r\n" + codetxt);
+                        sw.Close();
+                    }
+                    else
+                    {
+                        FileStream fs = new FileStream(code_file, FileMode.Create, FileAccess.ReadWrite);
+                        StreamWriter sw = new StreamWriter(fs);
+                        sw.WriteLine(codetxt);
+                        sw.Flush();
+                        sw.Dispose();
+                        sw.Close();
+                        fs.Close();
+                    }
+                }
+
+
+                codeOutputTotal = codeOutputCount;
+                codeOutputCount = 0;
+
+
+                Globals.ThisAddIn.Application.Selection.InsertAfter("\r\n" + outputComment + "\r\n");
+
+                if (codeChoice == "python") runCode_python();
+                else if (codeChoice == "R") runCode_R();
+                else MessageBox.Show("代码语言错误");
+
+                Globals.ThisAddIn.Application.Selection.Range.HighlightColorIndex = Word.WdColorIndex.wdNoHighlight;
+
+                Globals.ThisAddIn.Application.Selection.Find.ClearFormatting();
+                Globals.ThisAddIn.Application.Selection.Find.Replacement.ClearFormatting();
+                Globals.ThisAddIn.Application.Selection.Find.Replacement.Highlight = 1;
+                //Globals.ThisAddIn.Application.Selection.Find.Replacement.Font.Color = Word.WdColor.wdColorRed;
+                Globals.ThisAddIn.Application.Selection.Find.Text = outputComment;
+                Globals.ThisAddIn.Application.Selection.Find.Replacement.Text = "^&";
+                Globals.ThisAddIn.Application.Selection.Find.Execute(Replace: Word.WdReplace.wdReplaceAll);
+            }
+
+        }
+
+        /// <summary>
+        /// 运行python代码
+        /// </summary>
+        private void runCode_python()
+        {
+            getPythonLibPath();
+
+            string py_file = tempFile + "\\runCode.py";
+
+            if (python_exit == 1)
+            {
+                string python_path = pythonEnv + "\\python.exe";
+
+                if (File.Exists(py_file))
+                {
+                    Process p = new Process();
+                    p.StartInfo.FileName = python_path;
+
+                    string sArguments = py_file;
+
+                    p.StartInfo.Arguments = sArguments;
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.RedirectStandardInput = true;
+                    p.StartInfo.RedirectStandardError = true;
+                    p.StartInfo.CreateNoWindow = true;
+
+                    p.Start();
+                    p.BeginOutputReadLine();
+                    p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
+                }
+                else MessageBox.Show("python file not exist");
+
+            }
+            else MessageBox.Show("python_error");
+        }
+
+        //输出打印的信息
+        static void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Data))
+            {
+                AppendText(e.Data);
+            }
+        }
+        public delegate void AppendTextCallback(string text);
+        public static void AppendText(string text)
+        {
+            if (codeOutputCount >= codeOutputTotal) Globals.ThisAddIn.Application.Selection.InsertAfter("> " + text + "\r\n");
+            codeOutputCount++;
+            //MessageBox.Show("codeOutputTotal " + codeOutputTotal.ToString() + "\r\ncodeOutputCount " + codeOutputCount.ToString());
+        }
+
+        /// <summary>
+        /// 获得python安装路径
+        /// </summary>
+        private void getPythonLibPath()
+        {
+            string pathExt = "lib\\site-packages";
+            string environment = Environment.GetEnvironmentVariable("Path");
+            string[] paths = environment.Split(';');
+            string pathWithOutSlash = null;
+            foreach (string path in paths)
+            {
+                bool foundMatch = false;
+                try
+                {
+                    foundMatch = Regex.IsMatch(path, @"\\Python\d{0,2}\-{0,1}\d{0,2}", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                }
+                catch (ArgumentException ex)
+                {
+                    MessageBox.Show(ex.Message, "异常消息提示：", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                pathWithOutSlash = path.TrimEnd(new char[] { '\\' });
+
+                if (foundMatch)
+                {
+                    if (File.Exists(path + "python.exe"))
+                    {
+                        if (Directory.Exists(Path.Combine(pathWithOutSlash, pathExt)))
+                        {
+                            python_exit = 1;
+                            pythonEnv = pathWithOutSlash;
+                            //pythonLibPath = Path.Combine(pathWithOutSlash, "lib\\");
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 选中部分进行替换
+        /// </summary>
+        /// <param name="ReplaceRrom">要替换的字符</param>
+        /// <param name="ReplaceTo">最终替换成的字符</param>
+        private void wordReplace(string ReplaceRrom, string ReplaceTo)
+        {
+            object Replace_String = ReplaceRrom;       //要替换的字符
+            object ms = System.Type.Missing;
+            object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
+            object ReplaceWith = ReplaceTo;             //最终替换成的字符
+            //执行Word自带的查找/替换功能函数
+            Globals.ThisAddIn.Application.Selection.Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
+        }
+
+        private void choosePython_Click(object sender, RibbonControlEventArgs e)
+        {
+            codeChoice = "python";
+            chooseCode.Image = Properties.Resources.python;
+        }
+
+        /// <summary>
+        /// 运行R代码
+        /// </summary>
+        private void runCode_R()
+        {
+
+            //string R_file = tempFile + "\\runCode.R";
+            //
+            //if (File.Exists(R_file))
+            //{
+            //    REngine.SetEnvironmentVariables();
+            //    REngine engine = REngine.GetInstance();
+            //    engine.Initialize();
+            //
+            //    var result = engine.Evaluate("source('" + R_file + "')").AsNumeric();
+            //    
+            //    //Console.ReadKey();
+            //    engine.Dispose();
+            //    //
+            //    MessageBox.Show(string.Join(", ", result));
+            //
+            //    
+            //}
+            //else MessageBox.Show("R file not exist");
+        }
+
+        private void chooseR_Click(object sender, RibbonControlEventArgs e)
+        {
+            codeChoice = "R";
+            chooseCode.Image = Properties.Resources.R;
+        }
+
+        private void appendCodeMod_Click(object sender, RibbonControlEventArgs e)
+        {
+            codeOutputCount = 0;
+            codeOutputTotal = 0;
+
+            if (appendCodeMod.Checked)
+            {
+                string code_file = "";
+                if (codeChoice == "python") code_file = tempFile + "\\runCode.py";
+                else if (codeChoice == "R") code_file = tempFile + "\\runCode.R";
+                else MessageBox.Show("代码语言错误");
+                if (File.Exists(code_file)) File.Delete(code_file);
+            }
         }
     }
 }

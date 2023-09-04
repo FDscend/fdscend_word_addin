@@ -25,8 +25,8 @@
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>WordAddIn1</RootNamespace>
-    <AssemblyName>WordAddIn1</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AssemblyName>FDscend_WordAddIn</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>False</IsWebBootstrapper>
@@ -89,6 +89,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <!--
     This section defines properties that are set when the "Release" configuration is selected.
@@ -113,6 +114,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <!--
     This section specifies references for the project.
@@ -180,13 +182,11 @@
   -->
   <ItemGroup>
     <Compile Include="AboutForm.cs">
-      <SubType>Form</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CustomToolNamespace>AboutForm</CustomToolNamespace>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ChangeCharForm.cs">
       <SubType>UserControl</SubType>
@@ -290,20 +290,6 @@
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="Resources\ControlKey">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <None Include="Resources\CheckUpdate" />
-    <None Include="Resources\Preset_Code">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\Preset_Code4" />
-    <None Include="Resources\Preset_CodeL" />
-    <None Include="Resources\ToolsBox">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\ToolsBox_TablePreset" />
-    <None Include="Resources\说明文档.pdf" />
     <None Include="ThisAddIn.Designer.xml">
       <DependentUpon>ThisAddIn.cs</DependentUpon>
     </None>
@@ -320,15 +306,15 @@
     <Content Include="ico.ico" />
     <Content Include="Resources\bilibili_logo.png" />
     <Content Include="Resources\code.png" />
+    <Content Include="Resources\codeRun.png" />
+    <Content Include="Resources\python.png" />
+    <Content Include="Resources\R.png" />
     <Content Include="Resources\settings.png" />
     <Content Include="Resources\weixin_logo.png" />
     <None Include="Resources\样式底纹清除.png" />
     <None Include="Resources\样式底纹.png" />
     <None Include="Resources\页眉横线.png" />
-    <None Include="Resources\Preset_CodeMD" />
     <Content Include="Resources\pair.png" />
-    <None Include="Resources\CharMatchList" />
-    <None Include="Resources\ChangeCharList" />
     <None Include="Resources\替换.png" />
     <None Include="Resources\署名.png" />
     <None Include="Resources\wps.png" />
@@ -340,7 +326,6 @@
     <None Include="Resources\二级标题.png" />
     <None Include="Resources\一级标题.png" />
     <None Include="Resources\主标题.png" />
-    <None Include="Resources\XMT" />
     <EmbeddedResource Include="Resources\tab.png" />
     <EmbeddedResource Include="Resources\word.png" />
     <EmbeddedResource Include="Resources\三线表.png" />

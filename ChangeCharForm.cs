@@ -16,12 +16,8 @@ namespace WordAddIn1
     public partial class ChangeCharForm : UserControl
     {
         //全局路径
-#if DEBUG
-        const string PresetFile = "D:\\code\\WordAddIn1\\Resources\\ChangeCharList";
-#endif
-#if !DEBUG
-        string PresetFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\ChangeCharList";
-#endif
+        string PresetFile = Ribbon1.ChangeCharList;
+
 
         public ChangeCharForm()
         {

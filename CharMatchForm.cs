@@ -16,12 +16,9 @@ namespace WordAddIn1
     public partial class CharMatchForm : UserControl
     {
         //全局路径
-#if DEBUG
-        const string PresetFile = "D:\\code\\WordAddIn1\\Resources\\CharMatchList";
-#endif
-#if !DEBUG
-        string PresetFile = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend\\Presets\\CharMatchList";
-#endif
+        string PresetFile = Ribbon1.CharMatchList;
+
+
 
         //全局变量
         List<string> charLeft = new List<string>();

@@ -133,17 +133,23 @@
   <data name="office" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\office.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="python" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\python.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="github_code_url" xml:space="preserve">
     <value>https://github.com/FDscend/fdscend_word_addin</value>
-  </data>
-  <data name="表格着色" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\表格着色.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="二级标题" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\二级标题.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="computer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\computer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="weixin_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\weixin_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="codeRun" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\codeRun.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="署名" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\署名.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -152,7 +158,7 @@
     <value>..\Resources\主标题.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="current_ver" xml:space="preserve">
-    <value>0.14.0</value>
+    <value>0.15.0</value>
   </data>
   <data name="样式底纹清除" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\样式底纹清除.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,14 +181,23 @@
   <data name="正文" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\正文.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="code" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\code.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ico.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bilibili_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bilibili_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="删除底纹" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\删除底纹.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pair" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pair.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="表格着色" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\表格着色.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tab" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -199,13 +214,40 @@
   <data name="替换" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\替换.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="weixin_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\weixin_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="R" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\R.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bilibili_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bilibili_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="CheckUpdateFile" xml:space="preserve">
+    <value>\Config\CheckUpdate</value>
   </data>
-  <data name="code" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\code.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ControlKey" xml:space="preserve">
+    <value>\Config\ControlKey</value>
+  </data>
+  <data name="PresetChangeCharList" xml:space="preserve">
+    <value>\Presets\ChangeCharList</value>
+  </data>
+  <data name="PresetCharMatchList" xml:space="preserve">
+    <value>\Presets\CharMatchList</value>
+  </data>
+  <data name="PresetCode4File" xml:space="preserve">
+    <value>\Presets\Preset_Code4</value>
+  </data>
+  <data name="PresetCodeFile" xml:space="preserve">
+    <value>\Presets\Preset_Code</value>
+  </data>
+  <data name="PresetCodeLatexFile" xml:space="preserve">
+    <value>\Presets\Preset_CodeL</value>
+  </data>
+  <data name="PresetCodeMDFile" xml:space="preserve">
+    <value>\Presets\Preset_CodeMD</value>
+  </data>
+  <data name="PresetToolsBoxShadeColor" xml:space="preserve">
+    <value>\Presets\ToolsBox</value>
+  </data>
+  <data name="PresetToolsBoxTable" xml:space="preserve">
+    <value>\Presets\ToolsBox_TablePreset</value>
+  </data>
+  <data name="PresetXMTsetting" xml:space="preserve">
+    <value>\Presets\XMT</value>
   </data>
 </root>

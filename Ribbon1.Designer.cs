@@ -38,6 +38,14 @@ namespace WordAddIn1
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group_tuisong = this.Factory.CreateRibbonGroup();
+            this.code = this.Factory.CreateRibbonGroup();
+            this.CodeLatex = this.Factory.CreateRibbonGroup();
+            this.Code2 = this.Factory.CreateRibbonGroup();
+            this.CodeGroup4 = this.Factory.CreateRibbonGroup();
+            this.ToolsBox = this.Factory.CreateRibbonGroup();
+            this.runCodeGroup = this.Factory.CreateRibbonGroup();
+            this.control = this.Factory.CreateRibbonGroup();
+            this.appendCodeMod = this.Factory.CreateRibbonCheckBox();
             this.button_tuisong = this.Factory.CreateRibbonButton();
             this.button_MainTitle = this.Factory.CreateRibbonButton();
             this.button_title_1 = this.Factory.CreateRibbonButton();
@@ -56,7 +64,6 @@ namespace WordAddIn1
             this.author_new = this.Factory.CreateRibbonButton();
             this.WeixinPic = this.Factory.CreateRibbonButton();
             this.bilibiliPic = this.Factory.CreateRibbonButton();
-            this.code = this.Factory.CreateRibbonGroup();
             this.CodeFormat = this.Factory.CreateRibbonButton();
             this.CodeTabSetting = this.Factory.CreateRibbonButton();
             this.CodeTabSetting2 = this.Factory.CreateRibbonButton();
@@ -72,17 +79,13 @@ namespace WordAddIn1
             this.CodeListNum = this.Factory.CreateRibbonButton();
             this.CodeBoderLineFun = this.Factory.CreateRibbonButton();
             this.CodeControl = this.Factory.CreateRibbonButton();
-            this.CodeLatex = this.Factory.CreateRibbonGroup();
             this.CodeFormatLatex = this.Factory.CreateRibbonButton();
-            this.Code2 = this.Factory.CreateRibbonGroup();
             this.CodeFormat2 = this.Factory.CreateRibbonButton();
             this.SetCode3CurrentColor = this.Factory.CreateRibbonButton();
             this.saveCode3Color = this.Factory.CreateRibbonButton();
-            this.CodeGroup4 = this.Factory.CreateRibbonGroup();
             this.CodeFormat4 = this.Factory.CreateRibbonButton();
             this.SetCode4CurrentColor = this.Factory.CreateRibbonButton();
             this.saveCode4Color = this.Factory.CreateRibbonButton();
-            this.ToolsBox = this.Factory.CreateRibbonGroup();
             this.ParaShadeSplit = this.Factory.CreateRibbonSplitButton();
             this.ParagraphShading = this.Factory.CreateRibbonButton();
             this.ParaShadingColorSet = this.Factory.CreateRibbonButton();
@@ -97,7 +100,10 @@ namespace WordAddIn1
             this.checkCharMatch = this.Factory.CreateRibbonButton();
             this.del_header_line = this.Factory.CreateRibbonButton();
             this.inlineCode = this.Factory.CreateRibbonButton();
-            this.control = this.Factory.CreateRibbonGroup();
+            this.runCode = this.Factory.CreateRibbonButton();
+            this.chooseCode = this.Factory.CreateRibbonMenu();
+            this.choosePython = this.Factory.CreateRibbonButton();
+            this.chooseR = this.Factory.CreateRibbonButton();
             this.SettingBt = this.Factory.CreateRibbonButton();
             this.About = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
@@ -108,6 +114,7 @@ namespace WordAddIn1
             this.Code2.SuspendLayout();
             this.CodeGroup4.SuspendLayout();
             this.ToolsBox.SuspendLayout();
+            this.runCodeGroup.SuspendLayout();
             this.control.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,6 +126,7 @@ namespace WordAddIn1
             this.tab1.Groups.Add(this.Code2);
             this.tab1.Groups.Add(this.CodeGroup4);
             this.tab1.Groups.Add(this.ToolsBox);
+            this.tab1.Groups.Add(this.runCodeGroup);
             this.tab1.Groups.Add(this.control);
             this.tab1.Label = "分点";
             this.tab1.Name = "tab1";
@@ -142,10 +150,91 @@ namespace WordAddIn1
             this.group_tuisong.Name = "group_tuisong";
             this.group_tuisong.Visible = false;
             // 
+            // code
+            // 
+            this.code.Items.Add(this.CodeFormat);
+            this.code.Items.Add(this.CodeTabSetting);
+            this.code.Items.Add(this.CodeTabSetting2);
+            this.code.Items.Add(this.BorderLine);
+            this.code.Items.Add(this.ResetCodeBGcolor);
+            this.code.Items.Add(this.TableWidthSet);
+            this.code.Items.Add(this.PresetCode);
+            this.code.Items.Add(this.CodeListNum);
+            this.code.Items.Add(this.CodeBoderLineFun);
+            this.code.Items.Add(this.CodeControl);
+            this.code.Label = "代码排版";
+            this.code.Name = "code";
+            this.code.Tag = "";
+            this.code.Visible = false;
+            // 
+            // CodeLatex
+            // 
+            this.CodeLatex.Items.Add(this.CodeFormatLatex);
+            this.CodeLatex.Label = "代码排版2";
+            this.CodeLatex.Name = "CodeLatex";
+            this.CodeLatex.Visible = false;
+            // 
+            // Code2
+            // 
+            this.Code2.Items.Add(this.CodeFormat2);
+            this.Code2.Items.Add(this.SetCode3CurrentColor);
+            this.Code2.Items.Add(this.saveCode3Color);
+            this.Code2.Label = "代码排版3";
+            this.Code2.Name = "Code2";
+            this.Code2.Visible = false;
+            // 
+            // CodeGroup4
+            // 
+            this.CodeGroup4.Items.Add(this.CodeFormat4);
+            this.CodeGroup4.Items.Add(this.SetCode4CurrentColor);
+            this.CodeGroup4.Items.Add(this.saveCode4Color);
+            this.CodeGroup4.Label = "代码排版4";
+            this.CodeGroup4.Name = "CodeGroup4";
+            this.CodeGroup4.Visible = false;
+            // 
+            // ToolsBox
+            // 
+            this.ToolsBox.Items.Add(this.ParaShadeSplit);
+            this.ToolsBox.Items.Add(this.StyleShadeSplit);
+            this.ToolsBox.Items.Add(this.TableColoring);
+            this.ToolsBox.Items.Add(this.ThreeLine);
+            this.ToolsBox.Items.Add(this.FileTabOnOff);
+            this.ToolsBox.Items.Add(this.changecharCE);
+            this.ToolsBox.Items.Add(this.checkCharMatch);
+            this.ToolsBox.Items.Add(this.del_header_line);
+            this.ToolsBox.Items.Add(this.inlineCode);
+            this.ToolsBox.Label = "工具箱";
+            this.ToolsBox.Name = "ToolsBox";
+            this.ToolsBox.Visible = false;
+            // 
+            // runCodeGroup
+            // 
+            this.runCodeGroup.Items.Add(this.runCode);
+            this.runCodeGroup.Items.Add(this.chooseCode);
+            this.runCodeGroup.Items.Add(this.appendCodeMod);
+            this.runCodeGroup.Label = "运行代码";
+            this.runCodeGroup.Name = "runCodeGroup";
+            this.runCodeGroup.Visible = false;
+            // 
+            // control
+            // 
+            this.control.Items.Add(this.SettingBt);
+            this.control.Items.Add(this.About);
+            this.control.Label = "控制";
+            this.control.Name = "control";
+            // 
+            // appendCodeMod
+            // 
+            this.appendCodeMod.Label = "追加模式";
+            this.appendCodeMod.Name = "appendCodeMod";
+            this.appendCodeMod.ScreenTip = "追加模式";
+            this.appendCodeMod.SuperTip = "勾选后，代码将会追加到上次的运行内容之后";
+            this.appendCodeMod.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.appendCodeMod_Click);
+            // 
             // button_tuisong
             // 
             this.button_tuisong.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_tuisong.Image = global::WordAddIn1.Properties.Resources._2;
+            this.button_tuisong.Image = ((System.Drawing.Image)(resources.GetObject("button_tuisong.Image")));
             this.button_tuisong.Label = "一键排版";
             this.button_tuisong.Name = "button_tuisong";
             this.button_tuisong.ShowImage = true;
@@ -154,7 +243,7 @@ namespace WordAddIn1
             // button_MainTitle
             // 
             this.button_MainTitle.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_MainTitle.Image = global::WordAddIn1.Properties.Resources.主标题;
+            this.button_MainTitle.Image = ((System.Drawing.Image)(resources.GetObject("button_MainTitle.Image")));
             this.button_MainTitle.Label = "文章标题";
             this.button_MainTitle.Name = "button_MainTitle";
             this.button_MainTitle.ScreenTip = "文章标题";
@@ -165,7 +254,7 @@ namespace WordAddIn1
             // button_title_1
             // 
             this.button_title_1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_title_1.Image = global::WordAddIn1.Properties.Resources.一级标题;
+            this.button_title_1.Image = ((System.Drawing.Image)(resources.GetObject("button_title_1.Image")));
             this.button_title_1.Label = "一级标题";
             this.button_title_1.Name = "button_title_1";
             this.button_title_1.ScreenTip = "一级标题";
@@ -176,7 +265,7 @@ namespace WordAddIn1
             // button_title_2
             // 
             this.button_title_2.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_title_2.Image = global::WordAddIn1.Properties.Resources.二级标题;
+            this.button_title_2.Image = ((System.Drawing.Image)(resources.GetObject("button_title_2.Image")));
             this.button_title_2.Label = "二级标题";
             this.button_title_2.Name = "button_title_2";
             this.button_title_2.ScreenTip = "二级标题";
@@ -187,7 +276,7 @@ namespace WordAddIn1
             // button_MainText
             // 
             this.button_MainText.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_MainText.Image = global::WordAddIn1.Properties.Resources.正文;
+            this.button_MainText.Image = ((System.Drawing.Image)(resources.GetObject("button_MainText.Image")));
             this.button_MainText.Label = "正文格式";
             this.button_MainText.Name = "button_MainText";
             this.button_MainText.ScreenTip = "正文格式";
@@ -251,7 +340,7 @@ namespace WordAddIn1
             // 
             // author_o
             // 
-            this.author_o.Image = global::WordAddIn1.Properties.Resources.office;
+            this.author_o.Image = ((System.Drawing.Image)(resources.GetObject("author_o.Image")));
             this.author_o.Label = "Office账户";
             this.author_o.Name = "author_o";
             this.author_o.ScreenTip = "使用Office账户名称";
@@ -260,7 +349,7 @@ namespace WordAddIn1
             // 
             // author_wps
             // 
-            this.author_wps.Image = global::WordAddIn1.Properties.Resources.wps;
+            this.author_wps.Image = ((System.Drawing.Image)(resources.GetObject("author_wps.Image")));
             this.author_wps.Label = "WPS账户";
             this.author_wps.Name = "author_wps";
             this.author_wps.ScreenTip = "使用WPS账户名称";
@@ -269,7 +358,7 @@ namespace WordAddIn1
             // 
             // author_doc
             // 
-            this.author_doc.Image = global::WordAddIn1.Properties.Resources.document;
+            this.author_doc.Image = ((System.Drawing.Image)(resources.GetObject("author_doc.Image")));
             this.author_doc.Label = "文档创建者";
             this.author_doc.Name = "author_doc";
             this.author_doc.ScreenTip = "使用文档创建者名称";
@@ -278,7 +367,7 @@ namespace WordAddIn1
             // 
             // author_c
             // 
-            this.author_c.Image = global::WordAddIn1.Properties.Resources.computer;
+            this.author_c.Image = ((System.Drawing.Image)(resources.GetObject("author_c.Image")));
             this.author_c.Label = "计算机账户";
             this.author_c.Name = "author_c";
             this.author_c.ScreenTip = "使用计算机账户名称";
@@ -287,7 +376,7 @@ namespace WordAddIn1
             // 
             // author_new
             // 
-            this.author_new.Image = global::WordAddIn1.Properties.Resources.add;
+            this.author_new.Image = ((System.Drawing.Image)(resources.GetObject("author_new.Image")));
             this.author_new.Label = "自定义名称";
             this.author_new.Name = "author_new";
             this.author_new.ScreenTip = "使用自定义署名";
@@ -296,7 +385,7 @@ namespace WordAddIn1
             // 
             // WeixinPic
             // 
-            this.WeixinPic.Image = global::WordAddIn1.Properties.Resources.weixin_logo;
+            this.WeixinPic.Image = ((System.Drawing.Image)(resources.GetObject("WeixinPic.Image")));
             this.WeixinPic.Label = "获取封面";
             this.WeixinPic.Name = "WeixinPic";
             this.WeixinPic.ScreenTip = "微信推送封面";
@@ -306,35 +395,18 @@ namespace WordAddIn1
             // 
             // bilibiliPic
             // 
-            this.bilibiliPic.Image = global::WordAddIn1.Properties.Resources.bilibili_logo;
+            this.bilibiliPic.Image = ((System.Drawing.Image)(resources.GetObject("bilibiliPic.Image")));
             this.bilibiliPic.Label = "获取封面";
             this.bilibiliPic.Name = "bilibiliPic";
             this.bilibiliPic.ScreenTip = "B站视频封面";
             this.bilibiliPic.ShowImage = true;
-            this.bilibiliPic.SuperTip = "输入B站视频连接，插入封面图至文档选中处";
+            this.bilibiliPic.SuperTip = "输入B站视频连接，插入封面图至文档选中处。注意：此功能需要python环境";
             this.bilibiliPic.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.bilibiliPic_Click);
-            // 
-            // code
-            // 
-            this.code.Items.Add(this.CodeFormat);
-            this.code.Items.Add(this.CodeTabSetting);
-            this.code.Items.Add(this.CodeTabSetting2);
-            this.code.Items.Add(this.BorderLine);
-            this.code.Items.Add(this.ResetCodeBGcolor);
-            this.code.Items.Add(this.TableWidthSet);
-            this.code.Items.Add(this.PresetCode);
-            this.code.Items.Add(this.CodeListNum);
-            this.code.Items.Add(this.CodeBoderLineFun);
-            this.code.Items.Add(this.CodeControl);
-            this.code.Label = "代码排版";
-            this.code.Name = "code";
-            this.code.Tag = "";
-            this.code.Visible = false;
             // 
             // CodeFormat
             // 
             this.CodeFormat.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.CodeFormat.Image = global::WordAddIn1.Properties.Resources._2;
+            this.CodeFormat.Image = ((System.Drawing.Image)(resources.GetObject("CodeFormat.Image")));
             this.CodeFormat.Label = "一键排版";
             this.CodeFormat.Name = "CodeFormat";
             this.CodeFormat.ScreenTip = "代码一键排版";
@@ -448,17 +520,10 @@ namespace WordAddIn1
             this.CodeControl.ScreenTip = "代码排版的所有设置";
             this.CodeControl.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CodeControl_Click);
             // 
-            // CodeLatex
-            // 
-            this.CodeLatex.Items.Add(this.CodeFormatLatex);
-            this.CodeLatex.Label = "代码排版2";
-            this.CodeLatex.Name = "CodeLatex";
-            this.CodeLatex.Visible = false;
-            // 
             // CodeFormatLatex
             // 
             this.CodeFormatLatex.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.CodeFormatLatex.Image = global::WordAddIn1.Properties.Resources._2;
+            this.CodeFormatLatex.Image = ((System.Drawing.Image)(resources.GetObject("CodeFormatLatex.Image")));
             this.CodeFormatLatex.Label = "一键排版";
             this.CodeFormatLatex.Name = "CodeFormatLatex";
             this.CodeFormatLatex.ScreenTip = "代码一键排版";
@@ -466,19 +531,10 @@ namespace WordAddIn1
             this.CodeFormatLatex.SuperTip = "样式2";
             this.CodeFormatLatex.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CodeFormatLatex_Click);
             // 
-            // Code2
-            // 
-            this.Code2.Items.Add(this.CodeFormat2);
-            this.Code2.Items.Add(this.SetCode3CurrentColor);
-            this.Code2.Items.Add(this.saveCode3Color);
-            this.Code2.Label = "代码排版3";
-            this.Code2.Name = "Code2";
-            this.Code2.Visible = false;
-            // 
             // CodeFormat2
             // 
             this.CodeFormat2.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.CodeFormat2.Image = global::WordAddIn1.Properties.Resources._2;
+            this.CodeFormat2.Image = ((System.Drawing.Image)(resources.GetObject("CodeFormat2.Image")));
             this.CodeFormat2.Label = "一键排版";
             this.CodeFormat2.Name = "CodeFormat2";
             this.CodeFormat2.ScreenTip = "代码一键排版";
@@ -502,19 +558,10 @@ namespace WordAddIn1
             this.saveCode3Color.SuperTip = "将本文档使用的代码排版3的底纹颜色保存至预设文件";
             this.saveCode3Color.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.saveCode3Color_Click);
             // 
-            // CodeGroup4
-            // 
-            this.CodeGroup4.Items.Add(this.CodeFormat4);
-            this.CodeGroup4.Items.Add(this.SetCode4CurrentColor);
-            this.CodeGroup4.Items.Add(this.saveCode4Color);
-            this.CodeGroup4.Label = "代码排版4";
-            this.CodeGroup4.Name = "CodeGroup4";
-            this.CodeGroup4.Visible = false;
-            // 
             // CodeFormat4
             // 
             this.CodeFormat4.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.CodeFormat4.Image = global::WordAddIn1.Properties.Resources._2;
+            this.CodeFormat4.Image = ((System.Drawing.Image)(resources.GetObject("CodeFormat4.Image")));
             this.CodeFormat4.Label = "一键排版";
             this.CodeFormat4.Name = "CodeFormat4";
             this.CodeFormat4.ScreenTip = "代码一键排版";
@@ -538,24 +585,9 @@ namespace WordAddIn1
             this.saveCode4Color.SuperTip = "将本文档使用的代码排版4的底纹颜色保存至预设文件";
             this.saveCode4Color.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.saveCode4Color_Click);
             // 
-            // ToolsBox
-            // 
-            this.ToolsBox.Items.Add(this.ParaShadeSplit);
-            this.ToolsBox.Items.Add(this.StyleShadeSplit);
-            this.ToolsBox.Items.Add(this.TableColoring);
-            this.ToolsBox.Items.Add(this.ThreeLine);
-            this.ToolsBox.Items.Add(this.FileTabOnOff);
-            this.ToolsBox.Items.Add(this.changecharCE);
-            this.ToolsBox.Items.Add(this.checkCharMatch);
-            this.ToolsBox.Items.Add(this.del_header_line);
-            this.ToolsBox.Items.Add(this.inlineCode);
-            this.ToolsBox.Label = "工具箱";
-            this.ToolsBox.Name = "ToolsBox";
-            this.ToolsBox.Visible = false;
-            // 
             // ParaShadeSplit
             // 
-            this.ParaShadeSplit.Image = global::WordAddIn1.Properties.Resources.底纹;
+            this.ParaShadeSplit.Image = ((System.Drawing.Image)(resources.GetObject("ParaShadeSplit.Image")));
             this.ParaShadeSplit.Items.Add(this.ParagraphShading);
             this.ParaShadeSplit.Items.Add(this.ParaShadingColorSet);
             this.ParaShadeSplit.Items.Add(this.DeleteShading);
@@ -567,7 +599,7 @@ namespace WordAddIn1
             // 
             // ParagraphShading
             // 
-            this.ParagraphShading.Image = global::WordAddIn1.Properties.Resources.底纹;
+            this.ParagraphShading.Image = ((System.Drawing.Image)(resources.GetObject("ParagraphShading.Image")));
             this.ParagraphShading.Label = "段落着色";
             this.ParagraphShading.Name = "ParagraphShading";
             this.ParagraphShading.ScreenTip = "段落着色";
@@ -587,7 +619,7 @@ namespace WordAddIn1
             // 
             // DeleteShading
             // 
-            this.DeleteShading.Image = global::WordAddIn1.Properties.Resources.删除底纹;
+            this.DeleteShading.Image = ((System.Drawing.Image)(resources.GetObject("DeleteShading.Image")));
             this.DeleteShading.Label = "清除底纹";
             this.DeleteShading.Name = "DeleteShading";
             this.DeleteShading.ScreenTip = "清除底纹";
@@ -597,7 +629,7 @@ namespace WordAddIn1
             // 
             // StyleShadeSplit
             // 
-            this.StyleShadeSplit.Image = global::WordAddIn1.Properties.Resources.样式底纹;
+            this.StyleShadeSplit.Image = ((System.Drawing.Image)(resources.GetObject("StyleShadeSplit.Image")));
             this.StyleShadeSplit.Items.Add(this.styleShading);
             this.StyleShadeSplit.Items.Add(this.styleShadeClear);
             this.StyleShadeSplit.Label = "样式底纹";
@@ -608,7 +640,7 @@ namespace WordAddIn1
             // 
             // styleShading
             // 
-            this.styleShading.Image = global::WordAddIn1.Properties.Resources.样式底纹;
+            this.styleShading.Image = ((System.Drawing.Image)(resources.GetObject("styleShading.Image")));
             this.styleShading.Label = "底纹颜色";
             this.styleShading.Name = "styleShading";
             this.styleShading.ScreenTip = "底纹颜色";
@@ -618,7 +650,7 @@ namespace WordAddIn1
             // 
             // styleShadeClear
             // 
-            this.styleShadeClear.Image = global::WordAddIn1.Properties.Resources.样式底纹清除;
+            this.styleShadeClear.Image = ((System.Drawing.Image)(resources.GetObject("styleShadeClear.Image")));
             this.styleShadeClear.Label = "清除底纹";
             this.styleShadeClear.Name = "styleShadeClear";
             this.styleShadeClear.ScreenTip = "清除底纹";
@@ -628,7 +660,7 @@ namespace WordAddIn1
             // 
             // TableColoring
             // 
-            this.TableColoring.Image = global::WordAddIn1.Properties.Resources.表格着色;
+            this.TableColoring.Image = ((System.Drawing.Image)(resources.GetObject("TableColoring.Image")));
             this.TableColoring.Label = "表格着色";
             this.TableColoring.Name = "TableColoring";
             this.TableColoring.ScreenTip = "表格着色";
@@ -638,7 +670,7 @@ namespace WordAddIn1
             // 
             // ThreeLine
             // 
-            this.ThreeLine.Image = global::WordAddIn1.Properties.Resources.三线表;
+            this.ThreeLine.Image = ((System.Drawing.Image)(resources.GetObject("ThreeLine.Image")));
             this.ThreeLine.Label = "三线表";
             this.ThreeLine.Name = "ThreeLine";
             this.ThreeLine.ScreenTip = "将表格转为三线表";
@@ -648,7 +680,7 @@ namespace WordAddIn1
             // 
             // FileTabOnOff
             // 
-            this.FileTabOnOff.Image = global::WordAddIn1.Properties.Resources.tab;
+            this.FileTabOnOff.Image = ((System.Drawing.Image)(resources.GetObject("FileTabOnOff.Image")));
             this.FileTabOnOff.Label = "标签栏";
             this.FileTabOnOff.Name = "FileTabOnOff";
             this.FileTabOnOff.ScreenTip = "标签栏";
@@ -658,7 +690,7 @@ namespace WordAddIn1
             // 
             // changecharCE
             // 
-            this.changecharCE.Image = global::WordAddIn1.Properties.Resources.替换;
+            this.changecharCE.Image = ((System.Drawing.Image)(resources.GetObject("changecharCE.Image")));
             this.changecharCE.Label = "替换符号";
             this.changecharCE.Name = "changecharCE";
             this.changecharCE.ScreenTip = "替换符号";
@@ -668,7 +700,7 @@ namespace WordAddIn1
             // 
             // checkCharMatch
             // 
-            this.checkCharMatch.Image = global::WordAddIn1.Properties.Resources.pair;
+            this.checkCharMatch.Image = ((System.Drawing.Image)(resources.GetObject("checkCharMatch.Image")));
             this.checkCharMatch.Label = "符号匹配";
             this.checkCharMatch.Name = "checkCharMatch";
             this.checkCharMatch.ScreenTip = "符号匹配";
@@ -678,7 +710,7 @@ namespace WordAddIn1
             // 
             // del_header_line
             // 
-            this.del_header_line.Image = global::WordAddIn1.Properties.Resources.页眉横线;
+            this.del_header_line.Image = ((System.Drawing.Image)(resources.GetObject("del_header_line.Image")));
             this.del_header_line.Label = "页眉横线";
             this.del_header_line.Name = "del_header_line";
             this.del_header_line.ScreenTip = "去除页眉横线";
@@ -688,7 +720,7 @@ namespace WordAddIn1
             // 
             // inlineCode
             // 
-            this.inlineCode.Image = global::WordAddIn1.Properties.Resources.code;
+            this.inlineCode.Image = ((System.Drawing.Image)(resources.GetObject("inlineCode.Image")));
             this.inlineCode.Label = "行内代码";
             this.inlineCode.Name = "inlineCode";
             this.inlineCode.ScreenTip = "行内代码";
@@ -696,12 +728,45 @@ namespace WordAddIn1
             this.inlineCode.SuperTip = "选中文字，按照行内代码样式排版";
             this.inlineCode.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.inlineCode_Click);
             // 
-            // control
+            // runCode
             // 
-            this.control.Items.Add(this.SettingBt);
-            this.control.Items.Add(this.About);
-            this.control.Label = "控制";
-            this.control.Name = "control";
+            this.runCode.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.runCode.Image = ((System.Drawing.Image)(resources.GetObject("runCode.Image")));
+            this.runCode.Label = "运行代码";
+            this.runCode.Name = "runCode";
+            this.runCode.ScreenTip = "运行代码";
+            this.runCode.ShowImage = true;
+            this.runCode.SuperTip = "选中代码，点击运行。打印结果到选段下方。注意：需要相应编译环境";
+            this.runCode.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.runCode_Click);
+            // 
+            // chooseCode
+            // 
+            this.chooseCode.Image = ((System.Drawing.Image)(resources.GetObject("chooseCode.Image")));
+            this.chooseCode.Items.Add(this.choosePython);
+            this.chooseCode.Items.Add(this.chooseR);
+            this.chooseCode.Label = "当前语言";
+            this.chooseCode.Name = "chooseCode";
+            this.chooseCode.ScreenTip = "选择代码语言";
+            this.chooseCode.ShowImage = true;
+            this.chooseCode.SuperTip = "在下拉列表中选择需要的代码语言";
+            // 
+            // choosePython
+            // 
+            this.choosePython.Image = ((System.Drawing.Image)(resources.GetObject("choosePython.Image")));
+            this.choosePython.Label = "python";
+            this.choosePython.Name = "choosePython";
+            this.choosePython.ScreenTip = "python";
+            this.choosePython.ShowImage = true;
+            this.choosePython.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.choosePython_Click);
+            // 
+            // chooseR
+            // 
+            this.chooseR.Image = global::WordAddIn1.Properties.Resources.R;
+            this.chooseR.Label = "R";
+            this.chooseR.Name = "chooseR";
+            this.chooseR.ScreenTip = "R";
+            this.chooseR.ShowImage = true;
+            this.chooseR.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.chooseR_Click);
             // 
             // SettingBt
             // 
@@ -715,7 +780,7 @@ namespace WordAddIn1
             // 
             // About
             // 
-            this.About.Image = global::WordAddIn1.Properties.Resources.关于;
+            this.About.Image = ((System.Drawing.Image)(resources.GetObject("About.Image")));
             this.About.Label = "关于";
             this.About.Name = "About";
             this.About.ShowImage = true;
@@ -746,6 +811,8 @@ namespace WordAddIn1
             this.CodeGroup4.PerformLayout();
             this.ToolsBox.ResumeLayout(false);
             this.ToolsBox.PerformLayout();
+            this.runCodeGroup.ResumeLayout(false);
+            this.runCodeGroup.PerformLayout();
             this.control.ResumeLayout(false);
             this.control.PerformLayout();
             this.ResumeLayout(false);
@@ -819,6 +886,12 @@ namespace WordAddIn1
         internal Microsoft.Office.Tools.Ribbon.RibbonButton SetCode4CurrentColor;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton saveCode4Color;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton inlineCode;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup runCodeGroup;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton runCode;
+        internal Microsoft.Office.Tools.Ribbon.RibbonMenu chooseCode;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton choosePython;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton chooseR;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox appendCodeMod;
     }
 
     partial class ThisRibbonCollection
