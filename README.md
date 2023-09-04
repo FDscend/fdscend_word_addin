@@ -40,7 +40,7 @@
 ![代码样式1](doc/代码样式1.gif)
 [实现原理](https://www.bilibili.com/video/BV1Br4y1u748)
 
-## 代码样式1
+## 代码样式2
 ![代码样式2](doc/代码样式2.gif)
 [实现原理](https://www.bilibili.com/video/BV1Fe4y1P7RV)
 
