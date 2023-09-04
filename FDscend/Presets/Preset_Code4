@@ -1,0 +1,12 @@
+{
+  "version": "20230805",
+  "encoding": "UTF-8",
+  "DefaultFontC": "宋体",
+  "DefaultFontE": "Consolas",
+  "DefaultFontSize": 10,
+  "DefaultNoFontSize": 10,
+  "DefaultNoWidth": "22.7",
+  "DefaultShadingColor_r": "255",
+  "DefaultShadingColor_g": "231",
+  "DefaultShadingColor_b": "219"
+}
