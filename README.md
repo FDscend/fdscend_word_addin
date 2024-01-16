@@ -102,7 +102,8 @@
 
 # 一些特性
 - v0.16.0
-  - 【工具箱->BibTeX】功能需要python 3.10+环境，运行 `FDscend/scripts/` 文件夹下的python文件。（等代码较为稳定后，再用 C# 重写）此功能的更多信息参见 [FDscend/bibtex2gbt7714: 使用 Python 将 BibTeX 文件转换为 GB/T7714-2015 格式，支持可视操作、单一命令行、批量命令行](https://github.com/FDscend/bibtex2gbt7714)
+  - 【文案】 中的“文章标题”“一级标题”“二级标题”“正文格式”功能开放自定义，在 `FDscend\Presets\XMT_style.docx` 中修改样式即可。（注意此功能不能在未创建的文档中使用）
+  - 【工具箱->BibTeX】功能需要python 3.10+环境，运行 `FDscend/scripts/` 文件夹下的python文件。（等代码较为稳定后，再用 C# 重写）此功能的更多信息参见 [GitHub - FDscend/bibtex2gbt7714: 使用 Python 将 BibTeX 文件转换为 GB/T7714-2015 格式，支持可视操作、单一命令行、批量命令行](https://github.com/FDscend/bibtex2gbt7714)
 
 - v0.15.0+
   - 【文案->获取封面（b站）】功能需要python环境，运行 `FDscend/scripts/` 文件夹下的python文件。（由于未知原因，用c#写的代码给出乱码，所以只好先用python实现一下）
