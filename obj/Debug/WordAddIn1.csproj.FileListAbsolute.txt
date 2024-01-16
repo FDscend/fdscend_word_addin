@@ -36,3 +36,4 @@ D:\code\WordAddIn1\bin\Debug\FDscend_WordAddIn.dll.manifest
 D:\code\WordAddIn1\bin\Debug\FDscend_WordAddIn.vsto
 D:\code\WordAddIn1\obj\Debug\FDscend_WordAddIn.dll
 D:\code\WordAddIn1\obj\Debug\FDscend_WordAddIn.pdb
+D:\code\WordAddIn1\obj\Debug\WordAddIn1.csproj.AssemblyReference.cache
