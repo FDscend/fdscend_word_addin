@@ -158,7 +158,7 @@
     <value>..\Resources\主标题.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="current_ver" xml:space="preserve">
-    <value>0.15.0</value>
+    <value>0.16.0</value>
   </data>
   <data name="样式底纹清除" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\样式底纹清除.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -249,5 +249,14 @@
   </data>
   <data name="PresetXMTsetting" xml:space="preserve">
     <value>\Presets\XMT</value>
+  </data>
+  <data name="PresetXMTstyle" xml:space="preserve">
+    <value>\Presets\XMT_style.docx</value>
+  </data>
+  <data name="settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bib2gbt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bib2gbt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

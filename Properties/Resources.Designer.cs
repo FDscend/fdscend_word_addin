@@ -83,6 +83,16 @@ namespace WordAddIn1.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap bib2gbt {
+            get {
+                object obj = ResourceManager.GetObject("bib2gbt", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap bilibili_logo {
             get {
                 object obj = ResourceManager.GetObject("bilibili_logo", resourceCulture);
@@ -139,7 +149,7 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.15.0 的本地化字符串。
+        ///   查找类似 0.16.0 的本地化字符串。
         /// </summary>
         public static string current_ver {
             get {
@@ -287,6 +297,15 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
+        ///   查找类似 \Presets\XMT_style.docx 的本地化字符串。
+        /// </summary>
+        public static string PresetXMTstyle {
+            get {
+                return ResourceManager.GetString("PresetXMTstyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
         public static System.Drawing.Bitmap python {
@@ -302,6 +321,16 @@ namespace WordAddIn1.Properties {
         public static System.Drawing.Bitmap R {
             get {
                 object obj = ResourceManager.GetObject("R", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap settings {
+            get {
+                object obj = ResourceManager.GetObject("settings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
