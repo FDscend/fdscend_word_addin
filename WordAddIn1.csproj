@@ -268,6 +268,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Ribbon.cs">
+      <XmlRibbon>true</XmlRibbon>
+    </Compile>
     <Compile Include="Ribbon1.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -309,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico.ico" />
+    <Content Include="Resources\bib2gbt.png" />
     <Content Include="Resources\bilibili_logo.png" />
     <Content Include="Resources\code.png" />
     <Content Include="Resources\codeRun.png" />
@@ -316,6 +320,7 @@
     <Content Include="Resources\R.png" />
     <Content Include="Resources\settings.png" />
     <Content Include="Resources\weixin_logo.png" />
+    <EmbeddedResource Include="Ribbon.xml" />
     <None Include="Resources\样式底纹清除.png" />
     <None Include="Resources\样式底纹.png" />
     <None Include="Resources\页眉横线.png" />

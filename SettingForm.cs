@@ -29,13 +29,8 @@ namespace WordAddIn1
         const string KeyRunCode = Ribbon1.KeyRunCode;
         const string KeyAdmin = Ribbon1.KeyAdmin;
 
-        const string NameXMT = "文案";
-        const string NameCode = "代码排版";
-        const string NameCode2 = "代码排版3";
-        const string NameCodeLatex = "代码排版2";
-        const string NameCode4 = "代码排版4";
-        const string NameToolsBox = "工具箱";
-        const string NameRunCode = "运行代码";
+        string[] keyArray = new string[] { KeyXMT, KeyCode, KeyCode2, KeyCodeLatex, KeyCode4, KeyToolsBox, KeyRunCode };
+        string[] nameArray = new string[] { "文案", "代码排版", "代码排版3", "代码排版2", "代码排版4", "工具箱", "运行代码" };
 
         public bool boolKeyAllTrue;
 
@@ -100,32 +95,14 @@ namespace WordAddIn1
         {
             string output = "";
 
-            switch (input)
+            if(keyArray.Contains(input))
             {
-                case KeyXMT:
-                    output = NameXMT;
-                    break;
-                case KeyCode:
-                    output = NameCode;
-                    break;
-                case KeyCode2:
-                    output = NameCode2;
-                    break;
-                case KeyCodeLatex:
-                    output = NameCodeLatex;
-                    break;
-                case KeyCode4:
-                    output = NameCode4;
-                    break;
-                case KeyToolsBox:
-                    output = NameToolsBox;
-                    break;
-                case KeyRunCode:
-                    output = NameRunCode;
-                    break;
-                default:
-                    MessageBox.Show("加载错误name", "操作码");
-                    break;
+                int index_1 = Array.IndexOf(keyArray, input);
+                output = nameArray[index_1];
+            }
+            else
+            {
+                MessageBox.Show("加载错误name", "操作码");
             }
 
             return output;
@@ -135,32 +112,14 @@ namespace WordAddIn1
         {
             string output = "";
 
-            switch (input)
+            if (nameArray.Contains(input))
             {
-                case NameXMT:
-                    output = KeyXMT;
-                    break;
-                case NameCode:
-                    output = KeyCode;
-                    break;
-                case NameCode2:
-                    output = KeyCode2;
-                    break;
-                case NameCodeLatex:
-                    output = KeyCodeLatex;
-                    break;
-                case NameCode4:
-                    output = KeyCode4;
-                    break;
-                case NameToolsBox:
-                    output = KeyToolsBox;
-                    break;
-                case NameRunCode:
-                    output = KeyRunCode;
-                    break;
-                default:
-                    MessageBox.Show("加载错误state", "操作码");
-                    break;
+                int index_1 = Array.IndexOf(nameArray, input);
+                output = keyArray[index_1];
+            }
+            else
+            {
+                MessageBox.Show("加载错误state", "操作码");
             }
 
             return output;

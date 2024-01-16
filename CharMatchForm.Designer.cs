@@ -38,11 +38,12 @@ namespace WordAddIn1
             // checkedListBox1
             // 
             this.checkedListBox1.BackColor = System.Drawing.Color.OldLace;
+            this.checkedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(0, 39);
+            this.checkedListBox1.Location = new System.Drawing.Point(0, 50);
             this.checkedListBox1.Margin = new System.Windows.Forms.Padding(5);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(180, 724);
+            this.checkedListBox1.Size = new System.Drawing.Size(200, 720);
             this.checkedListBox1.TabIndex = 0;
             // 
             // label1
@@ -61,7 +62,7 @@ namespace WordAddIn1
             this.button1.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button1.Location = new System.Drawing.Point(-1, 769);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(181, 60);
+            this.button1.Size = new System.Drawing.Size(200, 60);
             this.button1.TabIndex = 2;
             this.button1.Text = "查询";
             this.button1.UseVisualStyleBackColor = false;
@@ -87,7 +88,7 @@ namespace WordAddIn1
             this.Font = new System.Drawing.Font("宋体", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "CharMatchForm";
-            this.Size = new System.Drawing.Size(180, 1073);
+            this.Size = new System.Drawing.Size(200, 1073);
             this.ResumeLayout(false);
             this.PerformLayout();
 

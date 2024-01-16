@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI onLoad="Ribbon_Load" xmlns="http://schemas.microsoft.com/office/2006/01/customui">
+    <ribbon>
+        <tabs>
+            <tab id="tab1" label="分点">
+                <group id="group_tuisong" label="文案" visible="false">
+                    <button id="button_tuisong" onAction="button_tuisong_Click" label="一键排版" size="large" />
+                    <button id="button_MainTitle" onAction="button_MainTitle_Click" screentip="文章标题" supertip="将段落设置为主标题，并保存至文档信息" label="文章标题" size="large" />
+                    <button id="button_title_1" onAction="button_title_1_Click" screentip="一级标题" supertip="将段落设置为一级标题" label="一级标题" size="large" />
+                    <button id="button_title_2" onAction="button_title_2_Click" screentip="二级标题" supertip="将段落设置为二级标题" label="二级标题" size="large" />
+                    <button id="button_MainText" onAction="button_MainText_Click" screentip="正文格式" supertip="将段落设置为正文" label="正文格式" size="large" />
+                    <button id="button_header" onAction="button_header_Click" screentip="设置页眉" supertip="中间页眉文字" label="页眉" showImage="false" />
+                    <button id="button_footer" onAction="button_footer_Click" screentip="设置页脚" supertip="右下角添加页脚文字" label="页脚" showImage="false" />
+                    <button id="button_font" onAction="button_font_Click" screentip="全文字体" supertip="设置全文为宋体" label="字体" showImage="false" />
+                    <button id="button_clearFont" onAction="button_clearFont_Click" screentip="清除格式" supertip="只留下无格式文本" label="清除格式" showImage="false" />
+                    <button id="TimeHeader" onAction="TimeHeader_Click" screentip="设置页眉" supertip="右侧页眉显示上角当天日期（年/月/日）" label="时间页眉" showImage="false" />
+                    <splitButton id="author">
+                        <button id="author__btn" screentip="文章署名" supertip="文末显示作者，默认使用上次的选择" label="署名" />
+                        <menu id="author__mnu" screentip="文章署名" supertip="文末显示作者，默认使用上次的选择">
+                            <button id="author_o" onAction="author_o_Click" screentip="使用Office账户名称" label="Office账户" />
+                            <button id="author_wps" onAction="author_wps_Click" screentip="使用WPS账户名称" label="WPS账户" />
+                            <button id="author_doc" onAction="author_doc_Click" screentip="使用文档创建者名称" label="文档创建者" />
+                            <button id="author_c" onAction="author_c_Click" screentip="使用计算机账户名称" label="计算机账户" />
+                            <button id="author_new" onAction="author_new_Click" screentip="使用自定义署名" label="自定义名称" />
+                        </menu>
+                    </splitButton>
+                    <button id="WeixinPic" onAction="WeixinPic_Click" screentip="微信推送封面" supertip="输入微信推送连接，插入封面图至文档选中处" label="获取封面" />
+                    <button id="bilibiliPic" onAction="bilibiliPic_Click" screentip="B站视频or直播封面" supertip="输入B站视频or直播连接，插入封面图至文档选中处。注意：此功能需要python环境" label="获取封面" />
+                    <dialogBoxLauncher>
+                        <button id="group_tuisong__btn" />
+                    </dialogBoxLauncher>
+                </group>
+                <group id="code" label="代码排版" visible="false">
+                    <button id="CodeFormat" onAction="CodeFormat_Click" screentip="代码一键排版" supertip="样式1" label="一键排版" size="large" />
+                    <button id="CodeTabSetting" onAction="CodeTabSetting_Click" screentip="代码背景颜色1" label="颜色1" showImage="false" />
+                    <button id="CodeTabSetting2" onAction="CodeTabSetting2_Click" screentip="代码背景颜色2" label="颜色2" showImage="false" />
+                    <button id="BorderLine" onAction="BorderLine_Click" screentip="竖线颜色" supertip="一次选择一个表格" label="颜色3" showImage="false" />
+                    <button id="ResetCodeBGcolor" onAction="ResetCodeBGcolor_Click" screentip="设定代码背景颜色" supertip="请一次选择一个表格" label="着色" showImage="false" />
+                    <menu id="TableWidthSet" label="宽度" showImage="false">
+                        <button id="TableWidth" onAction="TableWidth_Click" screentip="统一所有代码块宽度，以最宽的为准" label="统一宽度" />
+                        <button id="CodeTableFullWidth" onAction="CodeTableFullWidth_Click" screentip="将选中的代码块左右拉到最大" label="左右平铺" />
+                        <button id="CodeNoWidthSet" onAction="CodeNoWidthSet_Click" screentip="设置选中的代码块的行号宽度(如果存在行号)为行号宽度的默认值" label="行号宽度" />
+                    </menu>
+                    <menu id="PresetCode" label="预设" showImage="false">
+                        <button id="CodeOpenPreset" onAction="CodeOpenPreset_Click" screentip="打开一个预设" label="打开预设" />
+                        <button id="CodeSavePreset" onAction="CodeSavePreset_Click" screentip="将目前格式保存为预设" label="保存预设" />
+                    </menu>
+                    <button id="CodeListNum" onAction="CodeListNum_Click" screentip="代码左侧增/减行号" label="行号" showImage="false" />
+                    <button id="CodeBoderLineFun" onAction="CodeBoderLineFun_Click" screentip="增加/删除代码编号分隔线" label="竖线" showImage="false" />
+                    <button id="CodeControl" onAction="CodeControl_Click" screentip="代码排版的所有设置" label="设置" showImage="false" />
+                </group>
+                <group id="CodeLatex" label="代码排版2" visible="false">
+                    <button id="CodeFormatLatex" onAction="CodeFormatLatex_Click" screentip="代码一键排版" supertip="样式2" label="一键排版" size="large" />
+                </group>
+                <group id="Code2" label="代码排版3" visible="false">
+                    <button id="CodeFormat2" onAction="CodeFormat2_Click" screentip="代码一键排版" supertip="样式3" label="一键排版" size="large" />
+                    <button id="SetCode3CurrentColor" onAction="SetCode3CurrentColor_Click" screentip="设置底纹颜色" supertip="选择颜色，并且应用到本文档。注意：不会修改预设文件。" label="颜色" showImage="false" />
+                    <button id="saveCode3Color" onAction="saveCode3Color_Click" screentip="保存颜色" supertip="将本文档使用的代码排版3的底纹颜色保存至预设文件" label="保存" showImage="false" />
+                </group>
+                <group id="CodeGroup4" label="代码排版4" visible="false">
+                    <button id="CodeFormat4" onAction="CodeFormat4_Click" screentip="代码一键排版" supertip="样式4" label="一键排版" size="large" />
+                    <button id="SetCode4CurrentColor" onAction="SetCode4CurrentColor_Click" screentip="设置底纹颜色" supertip="先选中代码块。再选择颜色。更改只会应用到本文档，不会修改预设文件。" label="颜色" showImage="false" />
+                    <button id="saveCode4Color" onAction="saveCode4Color_Click" screentip="保存颜色" supertip="将本文档使用的代码排版4的底纹颜色保存至预设文件" label="保存" showImage="false" />
+                </group>
+                <group id="ToolsBox" label="工具箱" visible="false">
+                    <splitButton id="ParaShadeSplit">
+                        <button id="ParaShadeSplit__btn" screentip="段落底纹" supertip="设置段落底纹的工具集" label="段落底纹" />
+                        <menu id="ParaShadeSplit__mnu" screentip="段落底纹" supertip="设置段落底纹的工具集">
+                            <button id="ParagraphShading" onAction="ParagraphShading_Click" screentip="段落着色" supertip="给段落加上底纹" label="段落着色" />
+                            <button id="ParaShadingColorSet" onAction="ParaShadingColorSet_Click" screentip="设置颜色" supertip="设置默认底纹颜色" label="设置颜色" />
+                            <button id="DeleteShading" onAction="DeleteShading_Click" screentip="清除底纹" supertip="清除选择段落的底纹" label="清除底纹" />
+                        </menu>
+                    </splitButton>
+                    <splitButton id="StyleShadeSplit">
+                        <button id="StyleShadeSplit__btn" screentip="样式底纹" supertip="设置样式底纹的工具集" label="样式底纹" />
+                        <menu id="StyleShadeSplit__mnu" screentip="样式底纹" supertip="设置样式底纹的工具集">
+                            <button id="styleShading" onAction="styleShading_Click" screentip="底纹颜色" supertip="设置样式底纹颜色" label="底纹颜色" />
+                            <button id="styleShadeClear" onAction="styleShadeClear_Click" screentip="清除底纹" supertip="删除样式中的底纹" label="清除底纹" />
+                        </menu>
+                    </splitButton>
+                    <button id="TableColoring" onAction="TableColoring_Click" screentip="表格着色" supertip="打开\关闭表格颜色设置面板" label="表格着色" />
+                    <button id="ThreeLine" onAction="ThreeLine_Click" screentip="将表格转为三线表" supertip="不能有合并单元格" label="三线表" />
+                    <toggleButton id="FileTabOnOff" onAction="FileTabOnOff_Click" screentip="标签栏" supertip="在多个文档间切换（请注意及时保存文档）" label="标签栏" />
+                    <button id="changecharCE" onAction="changecharCE_Click" screentip="替换符号" supertip="打开\关闭面板、将选中文字的英文标点换成中文标点" label="替换符号" />
+                    <button id="checkCharMatch" onAction="checkCharMatch_Click" screentip="符号匹配" supertip="打开\关闭面板，检查符号是否配对" label="符号匹配" />
+                    <button id="del_header_line" onAction="del_header_line_Click" screentip="去除页眉横线" supertip="去除页眉横线" label="页眉横线" />
+                    <button id="inlineCode" onAction="inlineCode_Click" screentip="行内代码" supertip="选中文字，按照行内代码样式排版" label="行内代码" />
+                </group>
+                <group id="runCodeGroup" label="运行代码" visible="false">
+                    <button id="runCode" onAction="runCode_Click" screentip="运行代码" supertip="选中代码，点击运行。打印结果到选段下方。注意：需要相应编译环境" label="运行代码" size="large" />
+                    <menu id="chooseCode" screentip="选择代码语言" supertip="在下拉列表中选择需要的代码语言" label="当前语言">
+                        <button id="choosePython" onAction="choosePython_Click" screentip="python" label="python" />
+                        <button id="chooseR" onAction="chooseR_Click" screentip="R" label="R" />
+                    </menu>
+                    <checkBox id="appendCodeMod" onAction="appendCodeMod_Click" screentip="追加模式" supertip="勾选后，代码将会追加到上次的运行内容之后" label="追加模式" />
+                </group>
+                <group id="control" label="控制">
+                    <button id="SettingBt" onAction="SettingBt_Click" screentip="插件设置" supertip="打开插件设置" label="设置" />
+                    <button id="About" onAction="About_Click" label="关于" />
+                </group>
+            </tab>
+        </tabs>
+    </ribbon>
+</customUI>

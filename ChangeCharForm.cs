@@ -18,19 +18,19 @@ namespace WordAddIn1
         //全局路径
         string PresetFile = Ribbon1.ChangeCharList;
 
-
         public ChangeCharForm()
         {
             InitializeComponent();
 
             JObject js = ImportJSON(PresetFile);
-            int PresetNum = js.Count - 2;
-            for (int i = 1; i <= PresetNum; i++)
+            foreach (JObject jsob in js["data"])
             {
+                //MessageBox.Show(jsob.ToString());
+
                 bool ck;
-                if (js[i.ToString()]["checked"].ToString() == "1") ck = true;
+                if (jsob["checked"].ToString() == "1") ck = true;
                 else ck = false;
-                checkedListBox1.Items.Add(js[i.ToString()]["from"] + " -> " + js[i.ToString()]["to"]["to1"], ck);
+                checkedListBox1.Items.Add(jsob["from"] + " -> " + jsob["to"], ck);
             }
         }
 
@@ -61,30 +61,23 @@ namespace WordAddIn1
                 if (checkedListBox1.GetItemChecked(i - 1))
                 {
                     //要替换的字符
-                    object Replace_String = js[i.ToString()]["from"];
-                    js[i.ToString()]["checked"] = 1;
+                    object Replace_String = js["data"][i - 1]["from"];
+                    js["data"][i - 1]["checked"] = 1;
 
 
                     //最终替换成的字符
-                    JObject js_to = (JObject)js[i.ToString()]["to"];
-                    int tocount = js_to.Count;
-
-                    if(tocount == 1)
-                    {
-                        object ReplaceWith = js_to["to" + 1].ToString();
+                    object ReplaceWith = js["data"][i - 1]["to"].ToString();
 
 
-                        object ms = System.Type.Missing;
-                        object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
+                    object ms = System.Type.Missing;
+                    object Replace = Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
 
-                        //执行Word自带的查找/替换功能函数
-                        Globals.ThisAddIn.Application.ActiveDocument.Content.Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
-
-                    }
+                    //执行Word自带的查找/替换功能函数
+                    Globals.ThisAddIn.Application.Selection.Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
                     
                 }
                 else
-                    js[i.ToString()]["checked"] = 0;
+                    js["data"][i - 1]["checked"] = 0;
             
             }
 

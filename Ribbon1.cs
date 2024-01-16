@@ -47,6 +47,7 @@ namespace WordAddIn1
         public static string PresetToolsBoxShadeColor = FDscendHome + Properties.Resources.PresetToolsBoxShadeColor;
         public static string PresetToolsBoxTable = FDscendHome + Properties.Resources.PresetToolsBoxTable;
         public static string XMTsetting = FDscendHome + Properties.Resources.PresetXMTsetting;
+        public static string XMTstyle = FDscendHome + Properties.Resources.PresetXMTstyle;
 
         public static string tempFile = FDscendHome + "\\temp";
         public static string scriptsDic = FDscendHome + "\\scripts";
@@ -311,6 +312,7 @@ namespace WordAddIn1
             KeyStateLoad();
             button_tuisong.Visible = false;
             chooseR.Visible = false;
+            //FileTabOnOff.Visible = false;
 #endif
 
             //代码相关颜色初始化
@@ -648,7 +650,9 @@ namespace WordAddIn1
 
             if (maintitle_bool == 0)
             {
-                CreatMainTitleStyle();
+                // CreatMainTitleStyle();
+                CopyStyle(XMTstyle, "标题_XMT");
+
                 maintitle_bool = 1;
             }
             
@@ -668,6 +672,12 @@ namespace WordAddIn1
 
             properties["Title"].Value = Globals.ThisAddIn.Application.Selection.Paragraphs[1].Range.Text;
             //MessageBox.Show(Globals.ThisAddIn.Application.Selection.Paragraphs[1].Range.Text);
+        }
+
+        void CopyStyle(string source, string styleName)
+        {
+            string activeDocPath = app.ActiveDocument.Path + "\\" + app.ActiveDocument.Name;
+            Globals.ThisAddIn.Application.OrganizerCopy(source, activeDocPath, styleName, Word.WdOrganizerObject.wdOrganizerObjectStyles);
         }
 
         void CreatMainTitleStyle()
@@ -1022,7 +1032,9 @@ namespace WordAddIn1
 
             if (title_1_bool == 0)
             {
-                CreatTitle1Style();
+                // CreatTitle1Style();
+                CopyStyle(XMTstyle, "标题1_XMT");
+
                 title_1_bool = 1;
             }
 
@@ -1046,7 +1058,9 @@ namespace WordAddIn1
 
             if (title_2_bool == 0)
             {
-                CreatTitle2Style();
+                //CreatTitle2Style();
+                CopyStyle(XMTstyle, "标题2_XMT");
+
                 title_2_bool = 1;
             }
 
@@ -1070,7 +1084,9 @@ namespace WordAddIn1
 
             if (maintext_bool == 0)
             {
-                CreatMainTextStyle();
+                // CreatMainTextStyle();
+                CopyStyle(XMTstyle, "正文_XMT");
+
                 maintext_bool = 1;
             }
 
@@ -2150,7 +2166,7 @@ namespace WordAddIn1
                 ChangeCharForm changeCharForm = new ChangeCharForm();
 
                 changCharPane = Globals.ThisAddIn.CustomTaskPanes.Add(changeCharForm, "设置替换字符");
-                changCharPane.Width = 140;
+                changCharPane.Width = 215;
                 changCharPane.Visible = true;
                 HwndPaneDic_ChangeChar.Add(TempInt, changCharPane);
             }
@@ -2176,7 +2192,7 @@ namespace WordAddIn1
                 CharMatchForm charMatchForm = new CharMatchForm();
 
                 charMatchPane = Globals.ThisAddIn.CustomTaskPanes.Add(charMatchForm, "设置匹配字符");
-                charMatchPane.Width = 190;
+                charMatchPane.Width = 220;
                 charMatchPane.Visible = true;
                 HwndPaneDic_CharMatch.Add(TempInt, charMatchPane);
             }
@@ -3036,6 +3052,59 @@ namespace WordAddIn1
                 else if (codeChoice == "R") code_file = tempFile + "\\runCode.R";
                 else MessageBox.Show("代码语言错误");
                 if (File.Exists(code_file)) File.Delete(code_file);
+            }
+        }
+
+        private void bib2gbt_Click(object sender, RibbonControlEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "选择BibTeX文件";
+            openFileDialog.Filter = "BibTeX文件(*.bib,*.txt)|*.bib;*.txt|BibTeX文件(*.bib)|*.bib|全部文件(*.*)|*.*";
+            DialogResult dr = openFileDialog.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                string InportFile = openFileDialog.FileName;
+                //MessageBox.Show(InportFile);
+
+
+                getPythonLibPath();
+
+                string py_file = scriptsDic + "\\bib2GBT.py";
+
+                if (python_exit == 1)
+                {
+                    string python_path = pythonEnv + "\\python.exe";
+
+                    if (File.Exists(py_file))
+                    {
+                        Process p = new Process();
+                        p.StartInfo.FileName = python_path;
+
+                        string sArguments = py_file + " " + InportFile;
+
+                        p.StartInfo.Arguments = sArguments;
+                        p.StartInfo.UseShellExecute = false;
+                        p.StartInfo.RedirectStandardOutput = true;
+                        p.StartInfo.RedirectStandardInput = true;
+                        p.StartInfo.RedirectStandardError = true;
+                        p.StartInfo.CreateNoWindow = true;
+
+                        p.Start();
+                        p.BeginOutputReadLine();
+                        p.OutputDataReceived += new DataReceivedEventHandler(p_OutputGBT);
+                    }
+                    else MessageBox.Show("python file not exist");
+
+                }
+                else MessageBox.Show("python_error");
+            }
+        }
+
+        static void p_OutputGBT(object sender, DataReceivedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Data))
+            {
+                Globals.ThisAddIn.Application.Selection.InsertAfter(e.Data);
             }
         }
     }

@@ -29,13 +29,15 @@ namespace WordAddIn1
             InitializeComponent();
 
             JObject js = ImportJSON(PresetFile);
-            int PresetNum = js.Count - 2;
-            for (int i = 1; i <= PresetNum; i++)
+
+            foreach (JObject jsob in js["data"])
             {
+                //MessageBox.Show(jsob.ToString());
+
                 bool ck;
-                if (js[i.ToString()]["checked"].ToString() == "1") ck = true;
+                if (jsob["checked"].ToString() == "1") ck = true;
                 else ck = false;
-                checkedListBox1.Items.Add(js[i.ToString()]["name"], ck);
+                checkedListBox1.Items.Add(jsob["name"], ck);
             }
         }
 
@@ -119,11 +121,11 @@ namespace WordAddIn1
             {
                 if (checkedListBox1.GetItemChecked(i - 1))
                 {                   
-                    charLeft.Add(js[i.ToString()]["left"].ToString());
-                    charRight.Add(js[i.ToString()]["right"].ToString());
+                    charLeft.Add(js["data"][i - 1]["left"].ToString());
+                    charRight.Add(js["data"][i - 1]["right"].ToString());
                 }
                 else
-                    js[i.ToString()]["checked"] = 0;
+                    js["data"][i - 1]["checked"] = 0;
             }
 
             //MessageBox.Show("charLeft: " + charLeft.Count.ToString());
