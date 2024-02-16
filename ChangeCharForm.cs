@@ -83,5 +83,33 @@ namespace WordAddIn1
 
             SetjsonFun(PresetFile, js);
         }
+
+        private void addListChar_Click(object sender, EventArgs e)
+        {
+            string textFrom = addFrom.Text;
+            string textTo = addTo.Text;
+
+            if (textFrom.Length == 0) MessageBox.Show("From 字符串不能为空");
+            else
+            {
+                JObject js = ImportJSON(PresetFile);
+                ((JArray)js["data"]).Add(
+                    new JObject()
+                    {
+                        { "from", textFrom},
+                        { "to", textTo },
+                        { "checked", 1 }
+                    }
+                    );
+
+                SetjsonFun(PresetFile, js);
+
+                checkedListBox1.Items.Add(textFrom + " -> " + textTo, true);
+
+                addFrom.Text = "";
+                addTo.Text = "";
+            }
+
+        }
     }
 }

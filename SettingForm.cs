@@ -16,6 +16,7 @@ namespace WordAddIn1
     {
         
         string ControlKey = Ribbon1.ControlKey;
+        string SettingsFile = Ribbon1.SettingsFile;
 
 
         //全局常量
@@ -43,6 +44,10 @@ namespace WordAddIn1
             boolKeyAllTrue = false;
 
             textBox1.KeyUp += new KeyEventHandler(textBox1_KeyUp);
+
+            JObject js_settings = ImportJSON(SettingsFile);
+            usePyScripts.Checked = (bool)js_settings["usePyScripts"];
+            toolTip1.SetToolTip(usePyScripts, "如勾选，则使用 FDscend/scripts 中的 Python 脚本;\r\n否则，使用 FDscend/scripts 中的同名exe文件");
         }
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
@@ -193,6 +198,13 @@ namespace WordAddIn1
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void usePyScripts_CheckedChanged(object sender, EventArgs e)
+        {
+            JObject js = ImportJSON(SettingsFile);
+            js["usePyScripts"] = usePyScripts.Checked;
+            SetjsonFun(SettingsFile, js);
         }
     }
 }

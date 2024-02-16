@@ -26,10 +26,12 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>WordAddIn1</RootNamespace>
     <AssemblyName>FDscend_WordAddIn</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>False</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>publish\</PublishUrl>
     <InstallUrl />
@@ -127,8 +129,17 @@
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -211,6 +222,12 @@
     <Compile Include="CodeControlForm.Designer.cs">
       <DependentUpon>CodeControlForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HighlightForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HighlightForm.Designer.cs">
+      <DependentUpon>HighlightForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PatternSelectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +248,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CodeControlForm.resx">
       <DependentUpon>CodeControlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HighlightForm.resx">
+      <DependentUpon>HighlightForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PatternSelectForm.resx">
       <DependentUpon>PatternSelectForm.cs</DependentUpon>
@@ -316,6 +336,8 @@
     <Content Include="Resources\bilibili_logo.png" />
     <Content Include="Resources\code.png" />
     <Content Include="Resources\codeRun.png" />
+    <Content Include="Resources\highlight.png" />
+    <Content Include="Resources\java.png" />
     <Content Include="Resources\python.png" />
     <Content Include="Resources\R.png" />
     <Content Include="Resources\settings.png" />
@@ -376,4 +398,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets" Condition="Exists('packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Web.WebView2.1.0.2277.86\build\Microsoft.Web.WebView2.targets'))" />
+  </Target>
 </Project>

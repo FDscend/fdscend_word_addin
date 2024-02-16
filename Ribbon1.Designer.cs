@@ -43,10 +43,10 @@ namespace WordAddIn1
             this.Code2 = this.Factory.CreateRibbonGroup();
             this.CodeGroup4 = this.Factory.CreateRibbonGroup();
             this.ToolsBox = this.Factory.CreateRibbonGroup();
+            this.separator1 = this.Factory.CreateRibbonSeparator();
             this.runCodeGroup = this.Factory.CreateRibbonGroup();
             this.appendCodeMod = this.Factory.CreateRibbonCheckBox();
             this.control = this.Factory.CreateRibbonGroup();
-            this.separator1 = this.Factory.CreateRibbonSeparator();
             this.button_tuisong = this.Factory.CreateRibbonButton();
             this.button_MainTitle = this.Factory.CreateRibbonButton();
             this.button_title_1 = this.Factory.CreateRibbonButton();
@@ -96,16 +96,18 @@ namespace WordAddIn1
             this.styleShadeClear = this.Factory.CreateRibbonButton();
             this.TableColoring = this.Factory.CreateRibbonButton();
             this.ThreeLine = this.Factory.CreateRibbonButton();
-            this.FileTabOnOff = this.Factory.CreateRibbonToggleButton();
             this.changecharCE = this.Factory.CreateRibbonButton();
             this.checkCharMatch = this.Factory.CreateRibbonButton();
             this.del_header_line = this.Factory.CreateRibbonButton();
             this.inlineCode = this.Factory.CreateRibbonButton();
+            this.FileTabOnOff = this.Factory.CreateRibbonToggleButton();
             this.bib2gbt = this.Factory.CreateRibbonButton();
+            this.highlight = this.Factory.CreateRibbonButton();
             this.runCode = this.Factory.CreateRibbonButton();
             this.chooseCode = this.Factory.CreateRibbonMenu();
             this.choosePython = this.Factory.CreateRibbonButton();
             this.chooseR = this.Factory.CreateRibbonButton();
+            this.chooseJava = this.Factory.CreateRibbonButton();
             this.SettingBt = this.Factory.CreateRibbonButton();
             this.About = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
@@ -204,12 +206,17 @@ namespace WordAddIn1
             this.ToolsBox.Items.Add(this.checkCharMatch);
             this.ToolsBox.Items.Add(this.del_header_line);
             this.ToolsBox.Items.Add(this.inlineCode);
+            this.ToolsBox.Items.Add(this.bib2gbt);
             this.ToolsBox.Items.Add(this.separator1);
             this.ToolsBox.Items.Add(this.FileTabOnOff);
-            this.ToolsBox.Items.Add(this.bib2gbt);
+            this.ToolsBox.Items.Add(this.highlight);
             this.ToolsBox.Label = "工具箱";
             this.ToolsBox.Name = "ToolsBox";
             this.ToolsBox.Visible = false;
+            // 
+            // separator1
+            // 
+            this.separator1.Name = "separator1";
             // 
             // runCodeGroup
             // 
@@ -234,10 +241,6 @@ namespace WordAddIn1
             this.control.Items.Add(this.About);
             this.control.Label = "控制";
             this.control.Name = "control";
-            // 
-            // separator1
-            // 
-            this.separator1.Name = "separator1";
             // 
             // button_tuisong
             // 
@@ -408,7 +411,7 @@ namespace WordAddIn1
             this.bilibiliPic.Name = "bilibiliPic";
             this.bilibiliPic.ScreenTip = "B站视频or直播封面";
             this.bilibiliPic.ShowImage = true;
-            this.bilibiliPic.SuperTip = "输入B站视频or直播连接，插入封面图至文档选中处。\n\n注意：此功能需要python环境";
+            this.bilibiliPic.SuperTip = "输入B站视频or直播连接，插入封面图至文档选中处";
             this.bilibiliPic.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.bilibiliPic_Click);
             // 
             // CodeFormat
@@ -686,16 +689,6 @@ namespace WordAddIn1
             this.ThreeLine.SuperTip = "不能有合并单元格";
             this.ThreeLine.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ThreeLine_Click);
             // 
-            // FileTabOnOff
-            // 
-            this.FileTabOnOff.Image = ((System.Drawing.Image)(resources.GetObject("FileTabOnOff.Image")));
-            this.FileTabOnOff.Label = "标签栏";
-            this.FileTabOnOff.Name = "FileTabOnOff";
-            this.FileTabOnOff.ScreenTip = "【实验性】标签栏";
-            this.FileTabOnOff.ShowImage = true;
-            this.FileTabOnOff.SuperTip = "在多个文档间切换（请注意及时保存文档）";
-            this.FileTabOnOff.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.FileTabOnOff_Click);
-            // 
             // changecharCE
             // 
             this.changecharCE.Image = ((System.Drawing.Image)(resources.GetObject("changecharCE.Image")));
@@ -736,6 +729,16 @@ namespace WordAddIn1
             this.inlineCode.SuperTip = "选中文字，按照行内代码样式排版";
             this.inlineCode.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.inlineCode_Click);
             // 
+            // FileTabOnOff
+            // 
+            this.FileTabOnOff.Image = ((System.Drawing.Image)(resources.GetObject("FileTabOnOff.Image")));
+            this.FileTabOnOff.Label = "标签栏";
+            this.FileTabOnOff.Name = "FileTabOnOff";
+            this.FileTabOnOff.ScreenTip = "【实验性】标签栏";
+            this.FileTabOnOff.ShowImage = true;
+            this.FileTabOnOff.SuperTip = "在多个文档间切换（请注意及时保存文档）";
+            this.FileTabOnOff.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.FileTabOnOff_Click);
+            // 
             // bib2gbt
             // 
             this.bib2gbt.Image = global::WordAddIn1.Properties.Resources.bib2gbt;
@@ -743,18 +746,28 @@ namespace WordAddIn1
             this.bib2gbt.Name = "bib2gbt";
             this.bib2gbt.ScreenTip = "【实验性】将BibTeX转换成GBT格式";
             this.bib2gbt.ShowImage = true;
-            this.bib2gbt.SuperTip = "将BibTeX转换成GBT7714-2015格式，并插入到选中位置.\n\n注意：此功能需要python 3.10+环境";
+            this.bib2gbt.SuperTip = "将BibTeX转换成GBT7714-2015格式，并插入到选中位置.";
             this.bib2gbt.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.bib2gbt_Click);
+            // 
+            // highlight
+            // 
+            this.highlight.Image = global::WordAddIn1.Properties.Resources.highlight;
+            this.highlight.Label = "代码高亮";
+            this.highlight.Name = "highlight";
+            this.highlight.ScreenTip = "【实验性】代码高亮";
+            this.highlight.ShowImage = true;
+            this.highlight.SuperTip = "打开代码高亮面板";
+            this.highlight.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.highlight_Click);
             // 
             // runCode
             // 
             this.runCode.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.runCode.Image = ((System.Drawing.Image)(resources.GetObject("runCode.Image")));
+            this.runCode.Image = global::WordAddIn1.Properties.Resources.codeRun;
             this.runCode.Label = "运行代码";
             this.runCode.Name = "runCode";
             this.runCode.ScreenTip = "运行代码";
             this.runCode.ShowImage = true;
-            this.runCode.SuperTip = "选中代码，点击运行。打印结果到选段下方。注意：需要相应编译环境";
+            this.runCode.SuperTip = "选中代码，点击运行。打印结果到选段下方。\n\n注意：需要相应编译环境";
             this.runCode.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.runCode_Click);
             // 
             // chooseCode
@@ -762,6 +775,7 @@ namespace WordAddIn1
             this.chooseCode.Image = ((System.Drawing.Image)(resources.GetObject("chooseCode.Image")));
             this.chooseCode.Items.Add(this.choosePython);
             this.chooseCode.Items.Add(this.chooseR);
+            this.chooseCode.Items.Add(this.chooseJava);
             this.chooseCode.Label = "当前语言";
             this.chooseCode.Name = "chooseCode";
             this.chooseCode.ScreenTip = "选择代码语言";
@@ -770,11 +784,12 @@ namespace WordAddIn1
             // 
             // choosePython
             // 
-            this.choosePython.Image = ((System.Drawing.Image)(resources.GetObject("choosePython.Image")));
+            this.choosePython.Image = global::WordAddIn1.Properties.Resources.python;
             this.choosePython.Label = "python";
             this.choosePython.Name = "choosePython";
-            this.choosePython.ScreenTip = "python";
+            this.choosePython.ScreenTip = "Python";
             this.choosePython.ShowImage = true;
+            this.choosePython.SuperTip = "需要 Python 环境";
             this.choosePython.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.choosePython_Click);
             // 
             // chooseR
@@ -784,7 +799,18 @@ namespace WordAddIn1
             this.chooseR.Name = "chooseR";
             this.chooseR.ScreenTip = "R";
             this.chooseR.ShowImage = true;
+            this.chooseR.SuperTip = "需要 R 环境";
             this.chooseR.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.chooseR_Click);
+            // 
+            // chooseJava
+            // 
+            this.chooseJava.Image = global::WordAddIn1.Properties.Resources.java;
+            this.chooseJava.Label = "java";
+            this.chooseJava.Name = "chooseJava";
+            this.chooseJava.ScreenTip = "Java";
+            this.chooseJava.ShowImage = true;
+            this.chooseJava.SuperTip = "需要 Java 环境";
+            this.chooseJava.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.chooseJava_Click);
             // 
             // SettingBt
             // 
@@ -912,6 +938,8 @@ namespace WordAddIn1
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox appendCodeMod;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton bib2gbt;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton chooseJava;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton highlight;
     }
 
     partial class ThisRibbonCollection

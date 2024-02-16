@@ -29,6 +29,7 @@ namespace WordAddIn1
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
             this.label1 = new System.Windows.Forms.Label();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
@@ -36,6 +37,8 @@ namespace WordAddIn1
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.usePyScripts = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,7 +90,7 @@ namespace WordAddIn1
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 361);
+            this.button2.Location = new System.Drawing.Point(12, 398);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(317, 39);
             this.button2.TabIndex = 3;
@@ -95,11 +98,22 @@ namespace WordAddIn1
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // usePyScripts
+            // 
+            this.usePyScripts.Location = new System.Drawing.Point(12, 360);
+            this.usePyScripts.Name = "usePyScripts";
+            this.usePyScripts.Size = new System.Drawing.Size(317, 32);
+            this.usePyScripts.TabIndex = 4;
+            this.usePyScripts.Text = "使用 Python 脚本";
+            this.usePyScripts.UseVisualStyleBackColor = true;
+            this.usePyScripts.CheckedChanged += new System.EventHandler(this.usePyScripts_CheckedChanged);
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(341, 600);
+            this.Controls.Add(this.usePyScripts);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.checkedListBox1);
@@ -126,5 +140,7 @@ namespace WordAddIn1
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox usePyScripts;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

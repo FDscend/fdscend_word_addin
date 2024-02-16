@@ -16,7 +16,6 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;  //正则表达式
 using System.Diagnostics;
-//using RDotNet;
 using System.Threading.Tasks;
 using System.Net.NetworkInformation;
 
@@ -30,13 +29,14 @@ namespace WordAddIn1
 
         //全局路径
 #if DEBUG
-        static string FDscendHome = "D:\\code\\WordAddIn1\\FDscend";
+        public static string FDscendHome = "D:\\code\\WordAddIn1\\FDscend";
 #endif
 #if !DEBUG
-        static string FDscendHome = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend";
+        public static string FDscendHome = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend";
 #endif
         public static string ControlKey = FDscendHome + Properties.Resources.ControlKey;
         public static string CheckUpdateFile = FDscendHome + Properties.Resources.CheckUpdateFile;
+        public static string SettingsFile = FDscendHome + Properties.Resources.SettingsFile;
 
         public static string ChangeCharList = FDscendHome + Properties.Resources.PresetChangeCharList;
         public static string CharMatchList = FDscendHome + Properties.Resources.PresetCharMatchList;
@@ -48,6 +48,7 @@ namespace WordAddIn1
         public static string PresetToolsBoxTable = FDscendHome + Properties.Resources.PresetToolsBoxTable;
         public static string XMTsetting = FDscendHome + Properties.Resources.PresetXMTsetting;
         public static string XMTstyle = FDscendHome + Properties.Resources.PresetXMTstyle;
+        public static string highlight_index = FDscendHome + Properties.Resources.highlight_index;
 
         public static string tempFile = FDscendHome + "\\temp";
         public static string scriptsDic = FDscendHome + "\\scripts";
@@ -84,11 +85,11 @@ namespace WordAddIn1
 
         ColorDialog MyColorDialog = new ColorDialog();
 
-        string pythonEnv;
-        int python_exit;
         string codeChoice = "python";
         static int codeOutputCount = 0;
         static int codeOutputTotal = 0;
+
+        static int gbtOutputCount = 1;
 
 
         //窗体句柄字典
@@ -96,12 +97,14 @@ namespace WordAddIn1
         private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_tableColor = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
         private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_ChangeChar = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
         private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_CharMatch = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
+        private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_highlight = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
 
         //侧面板
         Microsoft.Office.Tools.CustomTaskPane FileTabPane;
         Microsoft.Office.Tools.CustomTaskPane tableColoringPane;
         Microsoft.Office.Tools.CustomTaskPane changCharPane;
         Microsoft.Office.Tools.CustomTaskPane charMatchPane;
+        Microsoft.Office.Tools.CustomTaskPane highlightPane;
 
         // 样式是否存在 int 默认 0
         int maintitle_bool;
@@ -311,7 +314,6 @@ namespace WordAddIn1
 #if !DEBUG
             KeyStateLoad();
             button_tuisong.Visible = false;
-            chooseR.Visible = false;
             //FileTabOnOff.Visible = false;
 #endif
 
@@ -2192,7 +2194,7 @@ namespace WordAddIn1
                 CharMatchForm charMatchForm = new CharMatchForm();
 
                 charMatchPane = Globals.ThisAddIn.CustomTaskPanes.Add(charMatchForm, "设置匹配字符");
-                charMatchPane.Width = 220;
+                charMatchPane.Width = 335;
                 charMatchPane.Visible = true;
                 HwndPaneDic_CharMatch.Add(TempInt, charMatchPane);
             }
@@ -2590,10 +2592,14 @@ namespace WordAddIn1
 
                 if (url != "")
                 {
+
                     if (url.Contains("bilibili.com"))
                     {
                         if (url.Contains("bilibili.com/video"))  // 视频封面
                         {
+                            int index = url.IndexOf('?');
+                            url = url.Remove(index);
+
                             if (url.Substring(0, 8) == "https://")
                             {
                                 runPythonScript_bilibili(url, tempFile, "bilibili_vid_cover.py");
@@ -2606,7 +2612,7 @@ namespace WordAddIn1
                         {
                             int index = url.IndexOf('?');
                             url = url.Remove(index);
-                            //MessageBox.Show(url);
+                            
                             if (url.Substring(0, 8) == "https://")
                             {
                                 runPythonScript_bilibili(url, tempFile, "bilibili_live_cover.py");
@@ -2691,20 +2697,33 @@ namespace WordAddIn1
         /// <param name="pyscript">要运行的脚本</param>
         private void runPythonScript_bilibili(string url, string DicPath, string pyscript)
         {
-            getPythonLibPath();
-
+            string startFile = "";
             string py_file = scriptsDic + "\\" + pyscript;
-
-            if (python_exit == 1)
+            string sArg = "";
+            string catchError = "";
+            JObject js_settings = ImportJSON(SettingsFile);
+            if ((bool)js_settings["usePyScripts"])
             {
-                string python_path = pythonEnv + "\\python.exe";
+                startFile = @"python.exe";
+                sArg = py_file + " ";
+                catchError = "Python Environment Error";
+            }
+            else
+            {
+                startFile = scriptsDic + $"\\{pyscript.Substring(0, pyscript.Length - 3)}.exe";
+                catchError = $"{startFile}.exe Error";
+            }
+
+
+            try
+            {
 
                 if (File.Exists(py_file))
                 {
                     Process p = new Process();
-                    p.StartInfo.FileName = python_path;
+                    p.StartInfo.FileName = startFile;
 
-                    string sArguments = py_file + " " + url + " " + DicPath;
+                    string sArguments = sArg + url + " " + DicPath;
 
                     p.StartInfo.Arguments = sArguments;
                     p.StartInfo.UseShellExecute = false;
@@ -2720,7 +2739,10 @@ namespace WordAddIn1
                 else MessageBox.Show("python file not exist");
 
             }
-            else MessageBox.Show("python_error");
+            catch
+            { 
+                MessageBox.Show(catchError);
+            }
         }
 
 
@@ -2824,18 +2846,19 @@ namespace WordAddIn1
 
 
             
-            string outputComment = ">>>输出结果\t" + System.DateTime.Now.ToString("G");
+            string outputComment = ">>>  lang=" + codeChoice + "  " + System.DateTime.Now.ToString("G");
 
             
             // 代码语言
             string code_file = "";
             if (codeChoice == "python") code_file = tempFile + "\\runCode.py";
             else if (codeChoice == "R") code_file = tempFile + "\\runCode.R";
+            else if (codeChoice == "java") code_file = tempFile + "\\runCode.java";
             else MessageBox.Show("代码语言错误");
 
 
             // 转代码运行
-            string codetxt = Globals.ThisAddIn.Application.Selection.Text;
+            string codetxt = Globals.ThisAddIn.Application.Selection.Text.Replace('\r', '\n');
             
 
             if ((codetxt != "") && (code_file != ""))
@@ -2857,7 +2880,7 @@ namespace WordAddIn1
                     if (File.Exists(code_file))
                     {
                         StreamWriter sw = File.AppendText(code_file);
-                        sw.WriteLine("\r\n" + codetxt);
+                        sw.WriteLine("\n" + codetxt);
                         sw.Close();
                     }
                     else
@@ -2881,6 +2904,7 @@ namespace WordAddIn1
 
                 if (codeChoice == "python") runCode_python();
                 else if (codeChoice == "R") runCode_R();
+                else if (codeChoice == "java") runCode_java();
                 else MessageBox.Show("代码语言错误");
 
                 Globals.ThisAddIn.Application.Selection.Range.HighlightColorIndex = Word.WdColorIndex.wdNoHighlight;
@@ -2901,13 +2925,12 @@ namespace WordAddIn1
         /// </summary>
         private void runCode_python()
         {
-            getPythonLibPath();
 
             string py_file = tempFile + "\\runCode.py";
 
-            if (python_exit == 1)
+            try
             {
-                string python_path = pythonEnv + "\\python.exe";
+                string python_path = @"python.exe";
 
                 if (File.Exists(py_file))
                 {
@@ -2930,7 +2953,10 @@ namespace WordAddIn1
                 else MessageBox.Show("python file not exist");
 
             }
-            else MessageBox.Show("python_error");
+            catch
+            {
+                MessageBox.Show("python environment error");
+            }
         }
 
         //输出打印的信息
@@ -2949,43 +2975,6 @@ namespace WordAddIn1
             //MessageBox.Show("codeOutputTotal " + codeOutputTotal.ToString() + "\r\ncodeOutputCount " + codeOutputCount.ToString());
         }
 
-        /// <summary>
-        /// 获得python安装路径
-        /// </summary>
-        private void getPythonLibPath()
-        {
-            string pathExt = "lib\\site-packages";
-            string environment = Environment.GetEnvironmentVariable("Path");
-            string[] paths = environment.Split(';');
-            string pathWithOutSlash = null;
-            foreach (string path in paths)
-            {
-                bool foundMatch = false;
-                try
-                {
-                    foundMatch = Regex.IsMatch(path, @"\\Python\d{0,2}\-{0,1}\d{0,2}", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-                }
-                catch (ArgumentException ex)
-                {
-                    MessageBox.Show(ex.Message, "异常消息提示：", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                pathWithOutSlash = path.TrimEnd(new char[] { '\\' });
-
-                if (foundMatch)
-                {
-                    if (File.Exists(path + "python.exe"))
-                    {
-                        if (Directory.Exists(Path.Combine(pathWithOutSlash, pathExt)))
-                        {
-                            python_exit = 1;
-                            pythonEnv = pathWithOutSlash;
-                            //pythonLibPath = Path.Combine(pathWithOutSlash, "lib\\");
-                        }
-                    }
-                }
-            }
-        }
 
         /// <summary>
         /// 选中部分进行替换
@@ -3013,25 +3002,36 @@ namespace WordAddIn1
         /// </summary>
         private void runCode_R()
         {
+            string code_file = tempFile + "\\runCode.R";
 
-            //string R_file = tempFile + "\\runCode.R";
-            //
-            //if (File.Exists(R_file))
-            //{
-            //    REngine.SetEnvironmentVariables();
-            //    REngine engine = REngine.GetInstance();
-            //    engine.Initialize();
-            //
-            //    var result = engine.Evaluate("source('" + R_file + "')").AsNumeric();
-            //    
-            //    //Console.ReadKey();
-            //    engine.Dispose();
-            //    //
-            //    MessageBox.Show(string.Join(", ", result));
-            //
-            //    
-            //}
-            //else MessageBox.Show("R file not exist");
+            try
+            {
+
+                if (File.Exists(code_file))
+                {
+                    Process p = new Process();
+                    p.StartInfo.FileName = @"Rscript.exe";
+
+                    string sArguments = code_file;
+
+                    p.StartInfo.Arguments = sArguments;
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.RedirectStandardInput = true;
+                    p.StartInfo.RedirectStandardError = true;
+                    p.StartInfo.CreateNoWindow = true;
+
+                    p.Start();
+                    p.BeginOutputReadLine();
+                    p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
+                }
+                else MessageBox.Show("R file not exist");
+
+            }
+            catch
+            {
+                MessageBox.Show("R environment error");
+            }
         }
 
         private void chooseR_Click(object sender, RibbonControlEventArgs e)
@@ -3050,6 +3050,7 @@ namespace WordAddIn1
                 string code_file = "";
                 if (codeChoice == "python") code_file = tempFile + "\\runCode.py";
                 else if (codeChoice == "R") code_file = tempFile + "\\runCode.R";
+                else if (codeChoice == "java") code_file = tempFile + "\\runCode.java";
                 else MessageBox.Show("代码语言错误");
                 if (File.Exists(code_file)) File.Delete(code_file);
             }
@@ -3060,43 +3061,67 @@ namespace WordAddIn1
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Title = "选择BibTeX文件";
             openFileDialog.Filter = "BibTeX文件(*.bib,*.txt)|*.bib;*.txt|BibTeX文件(*.bib)|*.bib|全部文件(*.*)|*.*";
+            openFileDialog.Multiselect = true;
+
+
             DialogResult dr = openFileDialog.ShowDialog();
             if (dr == DialogResult.OK)
             {
-                string InportFile = openFileDialog.FileName;
-                //MessageBox.Show(InportFile);
-
-
-                getPythonLibPath();
-
+                string startFile = "";
                 string py_file = scriptsDic + "\\bib2GBT.py";
-
-                if (python_exit == 1)
+                string sArg = "";
+                string catchError = "";
+                JObject js_settings = ImportJSON(SettingsFile);
+                if ((bool)js_settings["usePyScripts"])
                 {
-                    string python_path = pythonEnv + "\\python.exe";
-
-                    if (File.Exists(py_file))
-                    {
-                        Process p = new Process();
-                        p.StartInfo.FileName = python_path;
-
-                        string sArguments = py_file + " " + InportFile;
-
-                        p.StartInfo.Arguments = sArguments;
-                        p.StartInfo.UseShellExecute = false;
-                        p.StartInfo.RedirectStandardOutput = true;
-                        p.StartInfo.RedirectStandardInput = true;
-                        p.StartInfo.RedirectStandardError = true;
-                        p.StartInfo.CreateNoWindow = true;
-
-                        p.Start();
-                        p.BeginOutputReadLine();
-                        p.OutputDataReceived += new DataReceivedEventHandler(p_OutputGBT);
-                    }
-                    else MessageBox.Show("python file not exist");
-
+                    startFile = @"python.exe";
+                    sArg = py_file + " ";
+                    catchError = "Python Environment Error";
                 }
-                else MessageBox.Show("python_error");
+                else
+                {
+                    startFile = scriptsDic + "\\bib2GBT.exe";
+                    catchError = "bib2GBT.exe Error";
+                }
+
+
+                foreach (string InportFile in openFileDialog.FileNames)
+                {
+                    //MessageBox.Show(InportFile);
+
+                    try
+                    {
+                    
+                        if (File.Exists(py_file))
+                        {
+                            Process p = new Process();
+
+                            p.StartInfo.FileName = startFile;
+
+                            string sArguments = sArg + InportFile;
+                    
+                            p.StartInfo.Arguments = sArguments;
+                            p.StartInfo.UseShellExecute = false;
+                            p.StartInfo.RedirectStandardOutput = true;
+                            p.StartInfo.RedirectStandardInput = true;
+                            p.StartInfo.RedirectStandardError = true;
+                            p.StartInfo.CreateNoWindow = true;
+                    
+                            p.Start();
+                            p.BeginOutputReadLine();
+                            p.OutputDataReceived += new DataReceivedEventHandler(p_OutputGBT);
+                        }
+                        else MessageBox.Show("python file not exist");
+                    
+                    }
+                    catch
+                    {
+                        MessageBox.Show(catchError);
+                    }
+                }
+
+
+                gbtOutputCount = 1;
             }
         }
 
@@ -3104,7 +3129,86 @@ namespace WordAddIn1
         {
             if (!string.IsNullOrEmpty(e.Data))
             {
-                Globals.ThisAddIn.Application.Selection.InsertAfter(e.Data);
+                string output = Regex.Replace(e.Data, @"(?<=\[)(\d+)(?=\])", "");
+
+                if (output == e.Data)
+                {
+                    output = $"[{gbtOutputCount}] " + output;
+                }
+                else
+                {
+                    output = Regex.Replace(e.Data, @"(?<=\[)(\d+)(?=\])", gbtOutputCount.ToString());
+                }
+
+                gbtOutputCount += 1;
+
+
+                Globals.ThisAddIn.Application.Selection.InsertAfter(output + "\r\n");
+            }
+        }
+
+        private void chooseJava_Click(object sender, RibbonControlEventArgs e)
+        {
+            codeChoice = "java";
+            chooseCode.Image = Properties.Resources.java;
+        }
+
+        /// <summary>
+        /// 运行java代码
+        /// </summary>
+        private void runCode_java()
+        {
+            string code_file = tempFile + "\\runCode.java";
+
+            try
+            {
+
+                if (File.Exists(code_file))
+                {
+                    Process p = new Process();
+                    p.StartInfo.FileName = @"java.exe";
+
+                    string sArguments = code_file;
+
+                    p.StartInfo.Arguments = sArguments;
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.RedirectStandardInput = true;
+                    p.StartInfo.RedirectStandardError = true;
+                    p.StartInfo.CreateNoWindow = true;
+
+                    p.Start();
+                    p.BeginOutputReadLine();
+                    p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
+                }
+                else MessageBox.Show("java file not exist");
+
+            }
+            catch
+            {
+                MessageBox.Show("Java environment error");
+            }
+        }
+
+        private void highlight_Click(object sender, RibbonControlEventArgs e)
+        {
+            int TempInt = Globals.ThisAddIn.Application.ActiveWindow.Hwnd;
+            
+            if (HwndPaneDic_highlight.ContainsKey(TempInt))
+            {
+                HwndPaneDic_highlight[TempInt].Visible = false;
+                HwndPaneDic_highlight[TempInt].Dispose();
+                Globals.ThisAddIn.CustomTaskPanes.Remove(HwndPaneDic_highlight[TempInt]);
+                HwndPaneDic_highlight.Remove(TempInt);
+            }
+            else
+            {
+                HighlightForm highlightForm = new HighlightForm();
+            
+                highlightPane = Globals.ThisAddIn.CustomTaskPanes.Add(highlightForm, "Highlight");
+                highlightPane.Width = 500;
+                highlightPane.Visible = true;
+                HwndPaneDic_highlight.Add(TempInt, highlightPane);
             }
         }
     }

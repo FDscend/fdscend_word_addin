@@ -37,7 +37,7 @@ namespace WordAddIn1
                 bool ck;
                 if (jsob["checked"].ToString() == "1") ck = true;
                 else ck = false;
-                checkedListBox1.Items.Add(jsob["name"], ck);
+                checkedListBox1.Items.Add(String.Format("{0,6}", jsob["name"]) + "\t" + jsob["left"] + " " + jsob["right"], ck);
             }
         }
 
@@ -153,6 +153,42 @@ namespace WordAddIn1
             //MessageBox.Show(IsMatch.ToString());
 
             SetjsonFun(PresetFile, js);
+        }
+
+        private void addListChar_Click(object sender, EventArgs e)
+        {
+            string textLeft = addLeft.Text;
+            string textRight = addRight.Text;
+            string textName = addName.Text;
+
+
+            if (textLeft.Length == 0) MessageBox.Show("Left 不能为空");
+            else if (textLeft.Length != 1) MessageBox.Show("Left 应当为单个字符");
+            else if (textRight.Length == 0) MessageBox.Show("Right 不能为空");
+            else if (textRight.Length != 1) MessageBox.Show("Right 应当为单个字符");
+            else if (textName.Length == 0) MessageBox.Show("Name 不能为空");
+            else
+            {
+                JObject js = ImportJSON(PresetFile);
+
+                ((JArray)js["data"]).Add(
+                    new JObject()
+                    {
+                        {"name", textName },
+                        {"left", textLeft },
+                        {"right", textRight },
+                        {"checked", 1 }
+                    }
+                    );
+
+                SetjsonFun(PresetFile, js);
+
+                checkedListBox1.Items.Add(String.Format("{0,6}", textName) + "\t" + textLeft + " " + textRight, true);
+
+                addLeft.Text = "";
+                addRight.Text = "";
+                addName.Text = "";
+            }
         }
     }
 }
