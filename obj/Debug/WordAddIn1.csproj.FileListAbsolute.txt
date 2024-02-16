@@ -37,3 +37,13 @@ D:\code\WordAddIn1\bin\Debug\FDscend_WordAddIn.vsto
 D:\code\WordAddIn1\obj\Debug\FDscend_WordAddIn.dll
 D:\code\WordAddIn1\obj\Debug\FDscend_WordAddIn.pdb
 D:\code\WordAddIn1\obj\Debug\WordAddIn1.csproj.AssemblyReference.cache
+D:\code\WordAddIn1\obj\Debug\WordAddIn1.HighlightForm.resources
+D:\code\WordAddIn1\bin\Debug\runtimes\win-x86\native\WebView2Loader.dll
+D:\code\WordAddIn1\bin\Debug\runtimes\win-x64\native\WebView2Loader.dll
+D:\code\WordAddIn1\bin\Debug\runtimes\win-arm64\native\WebView2Loader.dll
+D:\code\WordAddIn1\bin\Debug\Microsoft.Web.WebView2.Core.dll
+D:\code\WordAddIn1\bin\Debug\Microsoft.Web.WebView2.WinForms.dll
+D:\code\WordAddIn1\bin\Debug\Microsoft.Web.WebView2.Wpf.dll
+D:\code\WordAddIn1\bin\Debug\Microsoft.Web.WebView2.Core.xml
+D:\code\WordAddIn1\bin\Debug\Microsoft.Web.WebView2.WinForms.xml
+D:\code\WordAddIn1\bin\Debug\Microsoft.Web.WebView2.Wpf.xml

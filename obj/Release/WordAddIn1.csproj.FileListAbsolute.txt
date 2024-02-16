@@ -37,3 +37,13 @@ D:\code\WordAddIn1\bin\Release\FDscend_WordAddIn.dll.manifest
 D:\code\WordAddIn1\bin\Release\FDscend_WordAddIn.vsto
 D:\code\WordAddIn1\obj\Release\FDscend_WordAddIn.dll
 D:\code\WordAddIn1\obj\Release\FDscend_WordAddIn.pdb
+D:\code\WordAddIn1\bin\Release\runtimes\win-x86\native\WebView2Loader.dll
+D:\code\WordAddIn1\bin\Release\runtimes\win-x64\native\WebView2Loader.dll
+D:\code\WordAddIn1\bin\Release\runtimes\win-arm64\native\WebView2Loader.dll
+D:\code\WordAddIn1\bin\Release\Microsoft.Web.WebView2.Core.dll
+D:\code\WordAddIn1\bin\Release\Microsoft.Web.WebView2.WinForms.dll
+D:\code\WordAddIn1\bin\Release\Microsoft.Web.WebView2.Wpf.dll
+D:\code\WordAddIn1\bin\Release\Microsoft.Web.WebView2.Core.xml
+D:\code\WordAddIn1\bin\Release\Microsoft.Web.WebView2.WinForms.xml
+D:\code\WordAddIn1\bin\Release\Microsoft.Web.WebView2.Wpf.xml
+D:\code\WordAddIn1\obj\Release\WordAddIn1.HighlightForm.resources
