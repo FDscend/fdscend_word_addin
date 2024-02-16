@@ -1,51 +1,51 @@
 {
-  "version": 20240113,
+  "version": 20240216,
   "encoding": "UTF-8",
   "data": [
     {
-      "name": "英\t( )",
+      "name": "小括号",
       "left": "(",
       "right": ")",
       "checked": 0
     },
     {
-      "name": "中\t（ ）",
+      "name": "CN小括号",
       "left": "（",
       "right": "）",
       "checked": 0
     },
     {
-      "name": "英\t[ ]",
+      "name": "方括号",
       "left": "[",
       "right": "]",
       "checked": 0
     },
     {
-      "name": "中\t【 】",
+      "name": "CN方括号",
       "left": "【",
       "right": "】",
       "checked": 0
     },
     {
-      "name": "\t{ }",
+      "name": "花括号",
       "left": "{",
       "right": "}",
       "checked": 0
     },
     {
-      "name": "\t《 》",
+      "name": "CN书名号",
       "left": "《",
       "right": "》",
       "checked": 0
     },
     {
-      "name": "中\t“ ”",
+      "name": "CN双引号",
       "left": "“",
       "right": "”",
       "checked": 0
     },
     {
-      "name": "中\t‘ ’",
+      "name": "CN单引号",
       "left": "‘",
       "right": "’",
       "checked": 0

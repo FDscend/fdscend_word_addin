@@ -1,9 +1,11 @@
 import json
 import sys
+import re
 
 
 def getAuthor(bibJson):
-    _author = bibJson["author"].replace(' and ',",").replace(' & ',",").upper()
+    _author = bibJson["author"].replace(' and ',",").replace(' & ',",").replace('.',"").upper()
+    _author = re.sub(r"\{[^{}]*\}", "", _author)
     
     if(_author.count(",") >= 3):
         index_1 = _author.find(',')
@@ -38,6 +40,11 @@ def type_J(bibJson, reftype, bibtype):
 
     if "pages" in bibJson: _pages = ':' + bibJson["pages"]
     else: _pages = ""
+
+    # cnki
+    if ("number" in bibJson) & ("pages" not in bibJson):
+        _number = ""
+        _pages = ':' + bibJson["number"]
 
     fileBGT = (getAuthor(bibJson) + ". " + 
                bibJson["title"] + 
@@ -79,56 +86,114 @@ def type_N(bibJson, reftype, bibtype):
     return fileBGT
 
 
-def mainProscess(bibFile: str) -> str:
-    with open(bibFile, "r", encoding='utf-8') as f:
-        lines = f.readlines() 
-
-
-    index_1 = lines[0].find('@')
-    index_2 = lines[0].find('{')
-    bibtype = lines[0][index_1 + 1: index_2].replace(' ', '')
-
+def getBibJson(lines: list) -> dict:
 
     jsonLines =[]
     jsonLines.append('{\r\n')
 
-    for l in lines[1: -1]:
-        if (l.find("=") != -1) & (l.find('{') == -1) & (l.find('}') == -1):
-            index_1 = l.find("=")
-            index_2 = l.rfind(",")
-            l = '"' + l[0: index_1].replace(' ', '') + '":"' + l[index_1 + 1: index_2].strip() + '",\r\n'
-        else:
-            l = l.replace('{', '"').replace('}', '"')
-            index = l.find("=")
 
-            if(index != -1): l = '"' + l[0: index].replace(' ', '') + '":' + l[index + 1: -1] + "\r\n"
+    for l in lines[1: -1]:
+        if (l.find('"') != -1) & (l.find('"') != l.rfind('"')):
+            index_1 = l.find("=")
+            index_2 = l.find('"')
+            index_3 = l.rfind('"')
+            l = '"' + l[0: index_1].replace(' ', '') + '":' + l[index_2: index_3] + '",\r\n'   
+
+        else:
+            #cnki
+            if ((l.find('=') != -1) &
+                (l.find('"') == -1) &
+                (l.find('{') == -1) &
+                (l.find('}') == -1)):
+
+                index_1 = l.find("=")
+                index_2 = l.find(',')
+                l = '"' + l[0: index_1].replace(' ', '') + '":"' + l[index_1 + 1: index_2].strip() + '",\r\n'
+            
+            else:
+                l = l.replace('{', '"').replace('}', '"')
+                index = l.find("=")
+                if(index != -1): l = '"' + l[0: index].replace(' ', '') + '":' + l[index + 1: -1] + "\r\n"
 
         jsonLines.append(l)
 
-    jsonLines.append(lines[-1])
+    jsonLines.append('}')
 
     index = jsonLines[-2].rfind('"')
     jsonLines[-2] = jsonLines[-2][0: index] + jsonLines[-2][index: -1].replace(',', '') + "\r\n"
-
+    
     bibJson = json.loads("".join(jsonLines).replace('\r', '').replace('\n', ''))
-    reftype = {"article": "[J]",
-                "mastersthesis": "[D]",
-                "inproceedings": "[C]",
-                "techreport": "[N]",
-                "misc": "[P]",
-                "manual": "[P]"}
 
-    match reftype[bibtype]:
-        case "[J]":
-            fileBGT = type_J(bibJson, reftype, bibtype)
-        case "[D]":
-            fileBGT = type_D(bibJson, reftype, bibtype)
-        case "[C]":
-            fileBGT = type_C(bibJson, reftype, bibtype)
-        case "[N]":
-            fileBGT = type_N(bibJson, reftype, bibtype)
-        case _:
-            fileBGT = "** 类型不支持 **"
+    return bibJson
+
+
+def mainProscess(bibFile: str) -> str:
+    with open(bibFile, "r", encoding='utf-8') as f:
+        lines = f.readlines() 
+
+    lines_multibib = [[]]
+    lines_singlebib = []
+    bib_count = 0
+
+    for l in lines:
+        if l == "\n": continue
+        if l.find('@') != -1:
+            if bib_count % 2 == 1:
+                lines_multibib.insert(bib_count - 1, lines_singlebib[:])
+                lines_singlebib.clear()
+            bib_count += 1
+    
+        lines_singlebib.append(l)
+
+    lines_multibib.insert(bib_count - 1, lines_singlebib[:])
+    lines_multibib.pop(bib_count)
+
+
+    reftype = {"article": "[J]",
+            "mastersthesis": "[D]",
+            "phdthesis": "[D]",
+            "inproceedings": "[C]",
+            "conference": "[C]",
+            "book": "[M]",
+            "booklet": "[M]",
+            "techreport": "[N]",
+            "misc": "[P]",
+            "manual": "[P]"}
+
+
+    fileBGT = []
+
+    for _lines in lines_multibib:
+   
+        index_1 = _lines[0].find('@')
+        index_2 = _lines[0].find('{')
+    
+        if index_2 == -1: index_2 = _lines[0].find('(')
+    
+        bibtype = _lines[0][index_1 + 1: index_2].replace(' ', '').lower()
+    
+        # print(bibtype)
+    
+        index_3 = _lines[-1].rfind(')')
+    
+        if index_3 != -1:
+            _lines[-1] = _lines[-1][0: index_3]
+            _lines.append('}')
+        
+        bibJson = getBibJson(_lines)
+    
+        match reftype[bibtype]:
+            case "[J]":
+                fileBGT.append(type_J(bibJson, reftype, bibtype))
+            case "[D]":
+                fileBGT.append(type_D(bibJson, reftype, bibtype))
+            case "[C]":
+                fileBGT.append(type_C(bibJson, reftype, bibtype))
+            case "[N]":
+                fileBGT.append(type_N(bibJson, reftype, bibtype))
+            case _:
+                fileBGT.append("** 类型不支持 **")
+
    
     return fileBGT
 
@@ -137,4 +202,10 @@ if __name__ == "__main__":
     bibFile = sys.argv[1]
     # bibFile = input("bibtex file:\r\n")
 
-    print(mainProscess(bibFile))
+    fileBGT = mainProscess(bibFile)
+    _count = 1
+    for l in fileBGT:
+        if fileBGT.__len__() == 1: print(l)
+        else:
+            print(f'[{_count}]', l)
+            _count += 1
