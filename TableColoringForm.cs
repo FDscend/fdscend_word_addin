@@ -52,6 +52,43 @@ namespace WordAddIn1
             SetTableLineColor();
             SetTableLineTxt();
 
+
+            this.Resize += new System.EventHandler(this.Form_Resize);
+        }
+
+        private void Form_Resize(object sender, EventArgs e)
+        {
+            groupTableColor.Width = this.ClientSize.Width - 8;
+            TableColorPresetList.Width = groupTableColor.Width - 14;
+
+            groupColorEffect.Width = groupTableColor.Width;
+            TableLine1.Width = TableColorPresetList.Width;
+            TableLine2.Width = TableLine1.Width;
+            TableLine3.Width = TableLine1.Width;
+            TableLine4.Width = TableLine1.Width;
+            TableLine5.Width = TableLine1.Width;
+            TableLine6.Width = TableLine1.Width;
+
+
+            int margin = (this.ClientSize.Width - 309) / 2;
+
+            ColorOK.Location = new Point(4 + margin, 486);
+            ExchangeColor.Location = new Point(137 + margin, 486);
+            SavePreset.Location = new Point(247 + margin, 486);
+
+            NewColor.Location = new Point(4 + margin, 531);
+            NewColor2.Location = new Point(82 + margin, 531);
+            NewColorH.Location = new Point(161 + margin, 531);
+            DeletePreset.Location = new Point(247 + margin, 531);
+
+            checkBoxFirstLine.Location = new Point(4 + margin, 576);
+            Export.Location = new Point(126 + margin, 576);
+            checkBoxInport.Location = new Point(220 + margin, 576);
+
+
+            InportPresetGroup.Width = groupTableColor.Width;
+            InportPresetList.Width = InportPresetGroup.Width - 101;
+            InportOK.Location = new Point(InportPresetGroup.Location.X + InportPresetGroup.Width - 92, 35);
         }
 
         public static JObject ImportJSON(string jsonfile)
@@ -359,7 +396,7 @@ namespace WordAddIn1
             {
                 //导入预设
                 openFileDialogINPreset.Title = "选择预设文件";
-                openFileDialogINPreset.Filter = "FDscend预设(*.fdtp)|*.fdpreset|ToolsBox_TablePreset(*.*)|*.*";
+                openFileDialogINPreset.Filter = "FDscend预设(*.fdtp)|*.fdtp|ToolsBox_TablePreset(*.*)|*.*";
                 DialogResult dr = openFileDialogINPreset.ShowDialog();
                 if (dr == DialogResult.OK)
                 {

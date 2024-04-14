@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Office.Interop.Word;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace WordAddIn1
 {
@@ -17,12 +20,26 @@ namespace WordAddIn1
         string FDscendHome = Ribbon1.FDscendHome;
         string highlight_index = Ribbon1.highlight_index;
         string online_url = @"https://highlightjs.org/demo";
+        bool mobileMod = false;
+
+        public static JObject ImportJSON(string jsonfile)
+        {
+            StreamReader reader = File.OpenText(jsonfile);
+            JsonTextReader jsonTextReader = new JsonTextReader(reader);
+            JObject jsonObject = (JObject)JToken.ReadFrom(jsonTextReader);
+            reader.Close();
+            return jsonObject;
+        }
 
         public HighlightForm()
         {
             InitializeComponent();
 
             InitializeWebView2Async();
+
+            JObject js = ImportJSON(Ribbon1.PresetHighlight);
+            online_url = js["onlineMod"]["url"].ToString();
+            mobileMod = (bool)js["onlineMod"]["mobileMod"];
 
 #if DEBUG
             webView21.Location = new System.Drawing.Point(0, 80);
@@ -41,7 +58,10 @@ namespace WordAddIn1
         {
             var env = await CoreWebView2Environment.CreateAsync(null, FDscendHome);
             await webView21.EnsureCoreWebView2Async(env);
-            //webView21.CoreWebView2.Navigate(highlight_index);
+            if (mobileMod)
+            {
+                webView21.CoreWebView2.Settings.UserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148";
+            }
             webView21.CoreWebView2.Navigate(online_url);
         }
 

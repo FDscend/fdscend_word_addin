@@ -32,7 +32,7 @@ namespace WordAddIn1
         public static string FDscendHome = "D:\\code\\WordAddIn1\\FDscend";
 #endif
 #if !DEBUG
-        public static string FDscendHome = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\分点作答\\FDscend";
+        public static string FDscendHome = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\FDscend";
 #endif
         public static string ControlKey = FDscendHome + Properties.Resources.ControlKey;
         public static string CheckUpdateFile = FDscendHome + Properties.Resources.CheckUpdateFile;
@@ -47,17 +47,19 @@ namespace WordAddIn1
         public static string PresetToolsBoxShadeColor = FDscendHome + Properties.Resources.PresetToolsBoxShadeColor;
         public static string PresetToolsBoxTable = FDscendHome + Properties.Resources.PresetToolsBoxTable;
         public static string XMTsetting = FDscendHome + Properties.Resources.PresetXMTsetting;
-        public static string XMTstyle = FDscendHome + Properties.Resources.PresetXMTstyle;
         public static string highlight_index = FDscendHome + Properties.Resources.highlight_index;
+        public static string PresetHighlight = FDscendHome + Properties.Resources.PresetHighlight;
 
         public static string tempFile = FDscendHome + "\\temp";
         public static string scriptsDic = FDscendHome + "\\scripts";
+        public static string presetsDir = FDscendHome + "\\Presets";
 
         public static string latest_info = FDscendHome + "\\latest.json";
         public static string temp_websource_htm = FDscendHome + "\\temp\\temp.htm";
         public static string temp_pic_path = FDscendHome + "\\temp\\temp_pic_path";
 
         public static string pdf_path = FDscendHome + "\\说明文档.pdf";
+        public static string readme_path = FDscendHome + "\\readme.html";
 
 
 
@@ -70,6 +72,7 @@ namespace WordAddIn1
         public const string KeyCode4 = "code4";
         public const string KeyToolsBox = "tools";
         public const string KeyRunCode = "runCode";
+        public const string KeyBrowser = "browser";
         public const string KeyAdmin = "admin";
 
 
@@ -91,6 +94,8 @@ namespace WordAddIn1
 
         static int gbtOutputCount = 1;
 
+        int XMT_styleChoice = 0;
+
 
         //窗体句柄字典
         private Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> HwndPaneDic_tab = new Dictionary<int, Microsoft.Office.Tools.CustomTaskPane> { };
@@ -105,6 +110,7 @@ namespace WordAddIn1
         Microsoft.Office.Tools.CustomTaskPane changCharPane;
         Microsoft.Office.Tools.CustomTaskPane charMatchPane;
         Microsoft.Office.Tools.CustomTaskPane highlightPane;
+        Microsoft.Office.Tools.CustomTaskPane simpleBrowserPane;
 
         // 样式是否存在 int 默认 0
         int maintitle_bool;
@@ -268,13 +274,22 @@ namespace WordAddIn1
                         ToolsBox.Visible = false;
                     break;
                 case KeyRunCode:
-                    if (ReadjsonFun(jsonfile, "state_" + KeyToolsBox) == "1")
+                    if (ReadjsonFun(jsonfile, "state_" + KeyRunCode) == "1")
                     {
                         runCodeGroup.Visible = true;
                         return true;
                     }
                     else
                         runCodeGroup.Visible = false;
+                    break;
+                case KeyBrowser:
+                    if (ReadjsonFun(jsonfile, "state_" + KeyBrowser) == "1")
+                    {
+                        simpleBrowser.Visible = true;
+                        return true;
+                    }
+                    else
+                        simpleBrowser.Visible = false;
                     break;
                 case KeyAdmin:
                     if (ReadjsonFun(jsonfile, "state_"+KeyAdmin) == "1")
@@ -313,7 +328,6 @@ namespace WordAddIn1
 #endif
 #if !DEBUG
             KeyStateLoad();
-            button_tuisong.Visible = false;
             //FileTabOnOff.Visible = false;
 #endif
 
@@ -447,6 +461,7 @@ namespace WordAddIn1
             CodeGroup4.Visible = true;
             ToolsBox.Visible = true;
             runCodeGroup.Visible = true;
+            simpleBrowser.Visible = true;
         }
 
         public void KeyStateLoad()
@@ -459,87 +474,6 @@ namespace WordAddIn1
                 string key_temp = jp.Value.ToString();
                 BoolKeyState(key_temp, ControlKey);
             }
-        }
-
-        private void button_tuisong_Click(object sender, RibbonControlEventArgs e)
-        {
-            //插入文本
-            //Globals.ThisAddIn.Application.Selection; //获取光标位置
-            //int insert_start = Globals.ThisAddIn.Application.Selection.Start;
-            //int insert_end = Globals.ThisAddIn.Application.Selection.End;
-            //Word.Range rng = app.Application.ActiveDocument.Range(insert_start, insert_end);
-            //rng.Text = "分点作答，一键排版！";
-            //rng.Select();
-
-
-            button_header_Click(sender, e);//设置页眉
-            button_footer_Click(sender, e);//设置页脚
-            button_font_Click(sender, e);//替换全文字体
-
-
-            //清除全文部分格式属性
-            app.Application.ActiveDocument.Content.Bold = 0;
-            //app.Application.ActiveDocument.Content.HighlightColorIndex = 0;
-            app.Application.ActiveDocument.Content.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphJustify;
-            app.Application.ActiveDocument.Content.ParagraphFormat.LineSpacingRule = Word.WdLineSpacing.wdLineSpaceSingle;//单倍行间距
-            //app.Application.ActiveDocument.Content.ParagraphFormat.LineSpacingRule = Word.WdLineSpacing.wdLineSpaceExactly;
-            //app.Application.ActiveDocument.Content.ParagraphFormat.LineSpacingRule = Word.WdLineSpacing.wdLineSpaceMultiple;
-            //app.Application.ActiveDocument.Content.ParagraphFormat.LineSpacing = (float)1.25;//行间距
-            app.Application.ActiveDocument.Content.ParagraphFormat.SpaceBefore= float.Parse("0");//段前间距
-            app.Application.ActiveDocument.Content.ParagraphFormat.SpaceAfter= float.Parse("0");//段后间距           
-            
-            
-
-            Word.Document myDoc = Globals.ThisAddIn.Application.ActiveDocument;
-            Word.Paragraphs paragraphs = myDoc.Paragraphs;
-            int numberOfParagraphs = paragraphs.Count;            
-            for(int i=1;i<=numberOfParagraphs;i++)
-            {
-                if((int)paragraphs[i].OutlineLevel==1)
-                {
-                    //换竖线
-                    object Replace_String = "|";       //要替换的字符
-                    object ms = System.Type.Missing;
-                    object Replace = Microsoft.Office.Interop.Word.WdReplace.wdReplaceAll;//设置替换方式:一，全部替换；二，只替换一个；三，一个都不替换。
-                    object ReplaceWith = "｜";             //最终替换成的字符
-                                                          //执行Word自带的查找/替换功能函数
-                    app.Application.ActiveDocument.Content.Find.Execute(ref Replace_String, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ms, ref ReplaceWith, ref Replace, ref ms, ref ms, ref ms, ref ms);
-
-
-                    paragraphs[i].Range.Font.Bold = 1;
-                    paragraphs[i].Range.Font.Color = Word.WdColor.wdColorBlack;
-                    paragraphs[i].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                    paragraphs[i].Range.ParagraphFormat.SpaceAfter = float.Parse("5");
-                }
-                if ((int)paragraphs[i].OutlineLevel == 2)
-                {
-                    paragraphs[i].Range.Font.Bold = 1;
-                    paragraphs[i].Range.Font.Color = Word.WdColor.wdColorBlack;
-                    paragraphs[i].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                    paragraphs[i].Range.ParagraphFormat.SpaceBefore = float.Parse("5");
-                }
-                if ((int)paragraphs[i].OutlineLevel == 3)
-                {
-                    paragraphs[i].Range.Font.Bold = 1;
-                    paragraphs[i].Range.Font.Color = Word.WdColor.wdColorBlack;
-                    paragraphs[i].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
-                }
-                if ((int)paragraphs[i].OutlineLevel == 10)
-                {
-                    if (paragraphs[i].Range.ParagraphFormat.CharacterUnitFirstLineIndent == float.Parse("2") || paragraphs[i].Range.ParagraphFormat.FirstLineIndent == paragraphs[i].Range.Font.Size * 2)
-                    {
-                        ;//如果已经缩进了就不管了
-                    }
-                    else
-                    {
-                        //paragraphs[i].Range.ParagraphFormat.FirstLineIndent = app.CentimetersToPoints(float.Parse("0"));
-                        paragraphs[i].Range.ParagraphFormat.IndentFirstLineCharWidth(2);
-                    }
-                }
-            }
-
-            author_doc_Click(sender, e);
-
         }
 
         private void button_header_Click(object sender, RibbonControlEventArgs e)
@@ -638,12 +572,20 @@ namespace WordAddIn1
         private void button_MainTitle_Click(object sender, RibbonControlEventArgs e)
         {
             //大标题
+
+
+            //获取预设
+            JObject js = ImportJSON(XMTsetting);
+            string title_name = js["style"][XMT_styleChoice]["title"].ToString();
+            string docx_file = presetsDir + js["style"][XMT_styleChoice]["docx_file"].ToString();
+
+
             Globals.ThisAddIn.Application.Selection.ClearFormatting();
 
             for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
             {
                 //MessageBox.Show(Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal);
-                if(Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal== "标题_XMT")
+                if(Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal== title_name)
                 {
                     maintitle_bool = 1;
                     break;
@@ -653,12 +595,12 @@ namespace WordAddIn1
             if (maintitle_bool == 0)
             {
                 // CreatMainTitleStyle();
-                CopyStyle(XMTstyle, "标题_XMT");
+                CopyStyle(docx_file, title_name);
 
                 maintitle_bool = 1;
             }
             
-            Globals.ThisAddIn.Application.Selection.set_Style("标题_XMT");
+            Globals.ThisAddIn.Application.Selection.set_Style(title_name);
 
             //换竖线
             object Replace_String = "|";       //要替换的字符
@@ -670,10 +612,8 @@ namespace WordAddIn1
 
             Microsoft.Office.Core.DocumentProperties properties;
             properties = (Microsoft.Office.Core.DocumentProperties)app.Application.ActiveDocument.BuiltInDocumentProperties;
-            //string title = properties["Title"].Value;
 
             properties["Title"].Value = Globals.ThisAddIn.Application.Selection.Paragraphs[1].Range.Text;
-            //MessageBox.Show(Globals.ThisAddIn.Application.Selection.Paragraphs[1].Range.Text);
         }
 
         void CopyStyle(string source, string styleName)
@@ -1020,12 +960,20 @@ namespace WordAddIn1
         private void button_title_1_Click(object sender, RibbonControlEventArgs e)
         {
             //标题1
+
+
+            //获取预设
+            JObject js = ImportJSON(XMTsetting);
+            string title_1_name = js["style"][XMT_styleChoice]["title_1"].ToString();
+            string docx_file = presetsDir + js["style"][XMT_styleChoice]["docx_file"].ToString();
+
+
             Globals.ThisAddIn.Application.Selection.ClearFormatting();
 
             for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
             {
                 //MessageBox.Show(Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal);
-                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == "标题1_XMT")
+                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == title_1_name)
                 {
                     title_1_bool = 1;
                     break;
@@ -1035,23 +983,31 @@ namespace WordAddIn1
             if (title_1_bool == 0)
             {
                 // CreatTitle1Style();
-                CopyStyle(XMTstyle, "标题1_XMT");
+                CopyStyle(docx_file, title_1_name);
 
                 title_1_bool = 1;
             }
 
-            Globals.ThisAddIn.Application.Selection.set_Style("标题1_XMT");
+            Globals.ThisAddIn.Application.Selection.set_Style(title_1_name);
         }
 
         private void button_title_2_Click(object sender, RibbonControlEventArgs e)
         {
             //标题2
+
+
+            //获取预设
+            JObject js = ImportJSON(XMTsetting);
+            string title_2_name = js["style"][XMT_styleChoice]["title_2"].ToString();
+            string docx_file = presetsDir + js["style"][XMT_styleChoice]["docx_file"].ToString();
+
+
             Globals.ThisAddIn.Application.Selection.ClearFormatting();
 
             for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
             {
                 //MessageBox.Show(Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal);
-                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == "标题2_XMT")
+                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == title_2_name)
                 {
                     title_2_bool = 1;
                     break;
@@ -1061,23 +1017,31 @@ namespace WordAddIn1
             if (title_2_bool == 0)
             {
                 //CreatTitle2Style();
-                CopyStyle(XMTstyle, "标题2_XMT");
+                CopyStyle(docx_file, title_2_name);
 
                 title_2_bool = 1;
             }
 
-            Globals.ThisAddIn.Application.Selection.set_Style("标题2_XMT");
+            Globals.ThisAddIn.Application.Selection.set_Style(title_2_name);
         }
 
         private void button_MainText_Click(object sender, RibbonControlEventArgs e)
         {
             //正文
+
+
+            //获取预设
+            JObject js = ImportJSON(XMTsetting);
+            string MainText_name = js["style"][XMT_styleChoice]["MainText"].ToString();
+            string docx_file = presetsDir + js["style"][XMT_styleChoice]["docx_file"].ToString();
+
+
             Globals.ThisAddIn.Application.Selection.ClearFormatting();
 
             for (int i = 1; i < Globals.ThisAddIn.Application.ActiveDocument.Styles.Count; i++)
             {
                 //MessageBox.Show(Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal);
-                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == "正文_XMT")
+                if (Globals.ThisAddIn.Application.ActiveDocument.Styles[i].NameLocal == MainText_name)
                 {
                     maintext_bool = 1;
                     break;
@@ -1087,12 +1051,12 @@ namespace WordAddIn1
             if (maintext_bool == 0)
             {
                 // CreatMainTextStyle();
-                CopyStyle(XMTstyle, "正文_XMT");
+                CopyStyle(docx_file, MainText_name);
 
                 maintext_bool = 1;
             }
 
-            Globals.ThisAddIn.Application.Selection.set_Style("正文_XMT");
+            Globals.ThisAddIn.Application.Selection.set_Style(MainText_name);
 
             // 如果在列表中创建样式，无法缩进
             //Globals.ThisAddIn.Application.Selection.ParagraphFormat.FirstLineIndent = Globals.ThisAddIn.Application.Selection.Font.Size * 2;
@@ -1352,7 +1316,7 @@ namespace WordAddIn1
         private void About_Click(object sender, RibbonControlEventArgs e)
         {
             AboutForm abForm = new AboutForm();
-            abForm.ShowDialog();
+            abForm.Show();
         }
 
         private void CodeTabSetting2_Click(object sender, RibbonControlEventArgs e)
@@ -3206,10 +3170,45 @@ namespace WordAddIn1
                 HighlightForm highlightForm = new HighlightForm();
             
                 highlightPane = Globals.ThisAddIn.CustomTaskPanes.Add(highlightForm, "Highlight");
-                highlightPane.Width = 500;
+                highlightPane.Width = 800;
                 highlightPane.Visible = true;
                 HwndPaneDic_highlight.Add(TempInt, highlightPane);
             }
+        }
+
+        private void changeStyle_Click(object sender, RibbonControlEventArgs e)
+        {
+            JObject js = ImportJSON(XMTsetting);
+            string message = "";
+            int count = 0;
+
+            foreach(JObject jsob in js["style"])
+            {
+                message += count.ToString() + "    " + jsob["style_name"].ToString();
+
+                if (count == XMT_styleChoice) message += "    << 当前预设";
+                message += '\n';
+
+                 count++;
+            }
+            
+            string key = Interaction.InputBox(message, "选择预设").ToString();
+
+            if (key != "")
+            {
+                int intkey = int.Parse(key);
+                if (intkey >= 0 && intkey < count) XMT_styleChoice = int.Parse(key);
+                else MessageBox.Show("number error");
+            }
+        }
+
+        private void startBrowser_Click(object sender, RibbonControlEventArgs e)
+        {
+            SimpleBrowser simpleBrowserForm = new SimpleBrowser();
+
+            simpleBrowserPane = Globals.ThisAddIn.CustomTaskPanes.Add(simpleBrowserForm, "Simple Browser");
+            simpleBrowserPane.Width = 800;
+            simpleBrowserPane.Visible = true;
         }
     }
 }

@@ -148,5 +148,15 @@ namespace WordAddIn1
                 return false;
             } 
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/FDscend/bibtex2gbt7714");
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(Ribbon1.readme_path);
+        }
     }
 }

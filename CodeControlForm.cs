@@ -256,7 +256,7 @@ namespace WordAddIn1
         {
             //导入预设
             openFileDialogINPreset.Title = "选择预设文件";
-            openFileDialogINPreset.Filter = "FDscend代码预设(*.fdpreset)|*.fdcp|Preset_Code(*.*)|*.*";
+            openFileDialogINPreset.Filter = "FDscend代码预设(*.fdcp)|*.fdcp|Preset_Code(*.*)|*.*";
             DialogResult dr = openFileDialogINPreset.ShowDialog();
             if (dr == DialogResult.OK)
             {

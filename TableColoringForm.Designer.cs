@@ -183,7 +183,7 @@ namespace WordAddIn1
             // NewColor
             // 
             this.NewColor.BackColor = System.Drawing.Color.OldLace;
-            this.NewColor.Location = new System.Drawing.Point(3, 531);
+            this.NewColor.Location = new System.Drawing.Point(4, 531);
             this.NewColor.Name = "NewColor";
             this.NewColor.Size = new System.Drawing.Size(78, 39);
             this.NewColor.TabIndex = 4;

@@ -39,8 +39,20 @@ namespace WordAddIn1
                 else ck = false;
                 checkedListBox1.Items.Add(String.Format("{0,6}", jsob["name"]) + "\t" + jsob["left"] + " " + jsob["right"], ck);
             }
+
+            this.Resize += new System.EventHandler(this.Form_Resize);
         }
 
+        private void Form_Resize(object sender, EventArgs e)
+        {
+            checkedListBox1.Width = this.ClientSize.Width;
+            button1.Width = checkedListBox1.Width;
+            groupBox1.Width = checkedListBox1.Width;
+            addLeft.Width = groupBox1.Width - 85 - 9;
+            addRight.Width = addLeft.Width;
+            addName.Width = addLeft.Width;
+            addListChar.Width = groupBox1.Width - 14;
+        }
 
         public static JObject ImportJSON(string jsonfile)
         {

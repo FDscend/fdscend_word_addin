@@ -32,6 +32,18 @@ namespace WordAddIn1
                 else ck = false;
                 checkedListBox1.Items.Add(jsob["from"] + " -> " + jsob["to"], ck);
             }
+
+            this.Resize += new System.EventHandler(this.Form_Resize);
+        }
+
+        private void Form_Resize(object sender, EventArgs e)
+        {
+            checkedListBox1.Width = this.ClientSize.Width - 8;
+            button1.Width = checkedListBox1.Width;
+            groupBox1.Width = checkedListBox1.Width;
+            addFrom.Width = groupBox1.Width - 89 - 9;
+            addTo.Width = addFrom.Width;
+            addListChar.Width = groupBox1.Width - 12;
         }
 
         public static JObject ImportJSON(string jsonfile)

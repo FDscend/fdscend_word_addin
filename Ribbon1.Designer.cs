@@ -46,8 +46,8 @@ namespace WordAddIn1
             this.separator1 = this.Factory.CreateRibbonSeparator();
             this.runCodeGroup = this.Factory.CreateRibbonGroup();
             this.appendCodeMod = this.Factory.CreateRibbonCheckBox();
+            this.simpleBrowser = this.Factory.CreateRibbonGroup();
             this.control = this.Factory.CreateRibbonGroup();
-            this.button_tuisong = this.Factory.CreateRibbonButton();
             this.button_MainTitle = this.Factory.CreateRibbonButton();
             this.button_title_1 = this.Factory.CreateRibbonButton();
             this.button_title_2 = this.Factory.CreateRibbonButton();
@@ -65,6 +65,7 @@ namespace WordAddIn1
             this.author_new = this.Factory.CreateRibbonButton();
             this.WeixinPic = this.Factory.CreateRibbonButton();
             this.bilibiliPic = this.Factory.CreateRibbonButton();
+            this.changeStyle = this.Factory.CreateRibbonButton();
             this.CodeFormat = this.Factory.CreateRibbonButton();
             this.CodeTabSetting = this.Factory.CreateRibbonButton();
             this.CodeTabSetting2 = this.Factory.CreateRibbonButton();
@@ -100,14 +101,15 @@ namespace WordAddIn1
             this.checkCharMatch = this.Factory.CreateRibbonButton();
             this.del_header_line = this.Factory.CreateRibbonButton();
             this.inlineCode = this.Factory.CreateRibbonButton();
-            this.FileTabOnOff = this.Factory.CreateRibbonToggleButton();
             this.bib2gbt = this.Factory.CreateRibbonButton();
+            this.FileTabOnOff = this.Factory.CreateRibbonToggleButton();
             this.highlight = this.Factory.CreateRibbonButton();
             this.runCode = this.Factory.CreateRibbonButton();
             this.chooseCode = this.Factory.CreateRibbonMenu();
             this.choosePython = this.Factory.CreateRibbonButton();
             this.chooseR = this.Factory.CreateRibbonButton();
             this.chooseJava = this.Factory.CreateRibbonButton();
+            this.startBrowser = this.Factory.CreateRibbonButton();
             this.SettingBt = this.Factory.CreateRibbonButton();
             this.About = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
@@ -119,6 +121,7 @@ namespace WordAddIn1
             this.CodeGroup4.SuspendLayout();
             this.ToolsBox.SuspendLayout();
             this.runCodeGroup.SuspendLayout();
+            this.simpleBrowser.SuspendLayout();
             this.control.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,13 +134,13 @@ namespace WordAddIn1
             this.tab1.Groups.Add(this.CodeGroup4);
             this.tab1.Groups.Add(this.ToolsBox);
             this.tab1.Groups.Add(this.runCodeGroup);
+            this.tab1.Groups.Add(this.simpleBrowser);
             this.tab1.Groups.Add(this.control);
             this.tab1.Label = "分点";
             this.tab1.Name = "tab1";
             // 
             // group_tuisong
             // 
-            this.group_tuisong.Items.Add(this.button_tuisong);
             this.group_tuisong.Items.Add(this.button_MainTitle);
             this.group_tuisong.Items.Add(this.button_title_1);
             this.group_tuisong.Items.Add(this.button_title_2);
@@ -150,6 +153,7 @@ namespace WordAddIn1
             this.group_tuisong.Items.Add(this.author);
             this.group_tuisong.Items.Add(this.WeixinPic);
             this.group_tuisong.Items.Add(this.bilibiliPic);
+            this.group_tuisong.Items.Add(this.changeStyle);
             this.group_tuisong.Label = "文案";
             this.group_tuisong.Name = "group_tuisong";
             this.group_tuisong.Visible = false;
@@ -235,21 +239,19 @@ namespace WordAddIn1
             this.appendCodeMod.SuperTip = "勾选后，代码将会追加到上次的运行内容之后";
             this.appendCodeMod.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.appendCodeMod_Click);
             // 
+            // simpleBrowser
+            // 
+            this.simpleBrowser.Items.Add(this.startBrowser);
+            this.simpleBrowser.Label = "简单浏览器";
+            this.simpleBrowser.Name = "simpleBrowser";
+            this.simpleBrowser.Visible = false;
+            // 
             // control
             // 
             this.control.Items.Add(this.SettingBt);
             this.control.Items.Add(this.About);
             this.control.Label = "控制";
             this.control.Name = "control";
-            // 
-            // button_tuisong
-            // 
-            this.button_tuisong.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button_tuisong.Image = ((System.Drawing.Image)(resources.GetObject("button_tuisong.Image")));
-            this.button_tuisong.Label = "一键排版";
-            this.button_tuisong.Name = "button_tuisong";
-            this.button_tuisong.ShowImage = true;
-            this.button_tuisong.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_tuisong_Click);
             // 
             // button_MainTitle
             // 
@@ -413,6 +415,16 @@ namespace WordAddIn1
             this.bilibiliPic.ShowImage = true;
             this.bilibiliPic.SuperTip = "输入B站视频or直播连接，插入封面图至文档选中处";
             this.bilibiliPic.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.bilibiliPic_Click);
+            // 
+            // changeStyle
+            // 
+            this.changeStyle.Image = global::WordAddIn1.Properties.Resources.choose;
+            this.changeStyle.Label = "选择预设";
+            this.changeStyle.Name = "changeStyle";
+            this.changeStyle.ScreenTip = "选择预设";
+            this.changeStyle.ShowImage = true;
+            this.changeStyle.SuperTip = "改变标题、一级标题、二级标题、正文格式的预设";
+            this.changeStyle.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.changeStyle_Click);
             // 
             // CodeFormat
             // 
@@ -729,6 +741,16 @@ namespace WordAddIn1
             this.inlineCode.SuperTip = "选中文字，按照行内代码样式排版";
             this.inlineCode.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.inlineCode_Click);
             // 
+            // bib2gbt
+            // 
+            this.bib2gbt.Image = global::WordAddIn1.Properties.Resources.bib2gbt;
+            this.bib2gbt.Label = "BibTeX";
+            this.bib2gbt.Name = "bib2gbt";
+            this.bib2gbt.ScreenTip = "将BibTeX转换成GBT格式";
+            this.bib2gbt.ShowImage = true;
+            this.bib2gbt.SuperTip = "将BibTeX转换成GBT7714-2015格式，并插入到选中位置.";
+            this.bib2gbt.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.bib2gbt_Click);
+            // 
             // FileTabOnOff
             // 
             this.FileTabOnOff.Image = ((System.Drawing.Image)(resources.GetObject("FileTabOnOff.Image")));
@@ -738,16 +760,6 @@ namespace WordAddIn1
             this.FileTabOnOff.ShowImage = true;
             this.FileTabOnOff.SuperTip = "在多个文档间切换（请注意及时保存文档）";
             this.FileTabOnOff.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.FileTabOnOff_Click);
-            // 
-            // bib2gbt
-            // 
-            this.bib2gbt.Image = global::WordAddIn1.Properties.Resources.bib2gbt;
-            this.bib2gbt.Label = "BibTeX";
-            this.bib2gbt.Name = "bib2gbt";
-            this.bib2gbt.ScreenTip = "【实验性】将BibTeX转换成GBT格式";
-            this.bib2gbt.ShowImage = true;
-            this.bib2gbt.SuperTip = "将BibTeX转换成GBT7714-2015格式，并插入到选中位置.";
-            this.bib2gbt.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.bib2gbt_Click);
             // 
             // highlight
             // 
@@ -812,6 +824,17 @@ namespace WordAddIn1
             this.chooseJava.SuperTip = "需要 Java 环境";
             this.chooseJava.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.chooseJava_Click);
             // 
+            // startBrowser
+            // 
+            this.startBrowser.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.startBrowser.Image = global::WordAddIn1.Properties.Resources.edge;
+            this.startBrowser.Label = "开始";
+            this.startBrowser.Name = "startBrowser";
+            this.startBrowser.ScreenTip = "打开侧栏浏览器";
+            this.startBrowser.ShowImage = true;
+            this.startBrowser.SuperTip = "你可以在侧栏浏览网页、本地HTML,PDF,MD";
+            this.startBrowser.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.startBrowser_Click);
+            // 
             // SettingBt
             // 
             this.SettingBt.Image = global::WordAddIn1.Properties.Resources.settings;
@@ -857,6 +880,8 @@ namespace WordAddIn1
             this.ToolsBox.PerformLayout();
             this.runCodeGroup.ResumeLayout(false);
             this.runCodeGroup.PerformLayout();
+            this.simpleBrowser.ResumeLayout(false);
+            this.simpleBrowser.PerformLayout();
             this.control.ResumeLayout(false);
             this.control.PerformLayout();
             this.ResumeLayout(false);
@@ -866,7 +891,6 @@ namespace WordAddIn1
         #endregion
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button_tuisong;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_header;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_footer;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton button_font;
@@ -940,6 +964,9 @@ namespace WordAddIn1
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton chooseJava;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton highlight;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton changeStyle;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup simpleBrowser;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton startBrowser;
     }
 
     partial class ThisRibbonCollection

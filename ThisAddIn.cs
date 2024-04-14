@@ -6,6 +6,8 @@ using System.Xml.Linq;
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Word;
+using System.IO;
+using System.Windows.Forms;
 
 namespace WordAddIn1
 {
@@ -17,6 +19,41 @@ namespace WordAddIn1
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
+            File.Delete(Ribbon1.latest_info);
+            DeleteFolder(Ribbon1.tempFile);
+            DeleteFolder(Ribbon1.FDscendHome + "\\EBWebView");
+        }
+
+        void DeleteFolder(string folderPath)
+        {
+            if (Directory.Exists(folderPath))
+            {
+                try
+                {
+                    // 删除文件夹内的所有文件
+                    string[] files = Directory.GetFiles(folderPath);
+                    foreach (string file in files)
+                    {
+                        File.Delete(file);
+                    }
+
+                    // 递归删除子文件夹
+                    string[] subFolders = Directory.GetDirectories(folderPath);
+                    foreach (string subFolder in subFolders)
+                    {
+                        DeleteFolder(subFolder);
+                    }
+
+                    // 删除空文件夹
+                    Directory.Delete(folderPath);
+                }
+                catch (Exception ex)
+                {
+#if DEBUG
+                    MessageBox.Show($"删除文件夹失败: {ex.Message}");
+#endif
+                }
+            }     
         }
 
         #region VSTO 生成的代码

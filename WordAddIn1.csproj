@@ -54,6 +54,11 @@
       <ProductName>Microsoft .NET Framework 4.6.1 %28x86 和 x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
@@ -128,6 +133,9 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="MarkdownSharp, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MarkdownSharp.2.0.5\lib\net40\MarkdownSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.2277.86, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Web.WebView2.1.0.2277.86\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
@@ -142,8 +150,10 @@
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -266,6 +276,9 @@
     <EmbeddedResource Include="SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SimpleBrowser.resx">
+      <DependentUpon>SimpleBrowser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TabForm.resx">
       <DependentUpon>TabForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -303,6 +316,12 @@
     <Compile Include="SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SimpleBrowser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SimpleBrowser.Designer.cs">
+      <DependentUpon>SimpleBrowser.cs</DependentUpon>
+    </Compile>
     <Compile Include="TabForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -334,8 +353,10 @@
     <Content Include="ico.ico" />
     <Content Include="Resources\bib2gbt.png" />
     <Content Include="Resources\bilibili_logo.png" />
+    <Content Include="Resources\choose.png" />
     <Content Include="Resources\code.png" />
     <Content Include="Resources\codeRun.png" />
+    <Content Include="Resources\edge.png" />
     <Content Include="Resources\highlight.png" />
     <Content Include="Resources\java.png" />
     <Content Include="Resources\python.png" />
