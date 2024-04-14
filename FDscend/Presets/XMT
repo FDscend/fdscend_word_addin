@@ -1,10 +1,20 @@
 {
-  "version": "20230511",
+  "version": "20240414",
   "encoding": "UTF-8",
   "author": 1,
   "author_new": "",
   "header_text": "",
   "heade_font": "宋体",
   "footer_text": "",
-  "footer_font": "宋体"
+  "footer_font": "宋体",
+  "style": [
+    {
+      "style_name": "默认样式",
+      "docx_file": "\\XMT_style.docx",
+      "title": "标题_XMT",
+      "title_1": "标题1_XMT",
+      "title_2": "标题2_XMT",
+      "MainText": "正文_XMT"
+    }
+  ]
 }

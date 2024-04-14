@@ -5,37 +5,37 @@
     {
       "from": ",",
       "to": "，",
-      "checked": 1
+      "checked": 0
     },
     {
       "from": ".",
       "to": "。",
-      "checked": 1
+      "checked": 0
     },
     {
       "from": ";",
       "to": "；",
-      "checked": 1
+      "checked": 0
     },
     {
       "from": ":",
       "to": "：",
-      "checked": 1
+      "checked": 0
     },
     {
       "from": "?",
       "to": "？",
-      "checked": 1
+      "checked": 0
     },
     {
       "from": "(",
       "to": "（",
-      "checked": 0
+      "checked": 1
     },
     {
       "from": ")",
       "to": "）",
-      "checked": 0
+      "checked": 1
     },
     {
       "from": "[",

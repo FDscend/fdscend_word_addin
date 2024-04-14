@@ -4,7 +4,13 @@ import re
 
 
 def getAuthor(bibJson):
-    _author = bibJson["author"].replace(' and ',",").replace(' & ',",").replace('.',"").upper()
+    if bibJson["author"].find('&') != -1:  # cnki
+        _author = bibJson["author"].replace(' and ',",").replace(' & ',",").replace('.',"").upper()
+    else:
+        _author = bibJson["author"].replace(',',"").replace(' and ',",").replace('.',"").upper()
+
+    _author = _author.replace(', ',",").replace(',',", ")
+
     _author = re.sub(r"\{[^{}]*\}", "", _author)
     
     if(_author.count(",") >= 3):
@@ -23,7 +29,7 @@ def getAuthor(bibJson):
 
 
 def type_D(bibJson, reftype, bibtype):
-    fileBGT = getAuthor(bibJson) + ". " + bibJson["title"] + reftype[bibtype] + ". " + bibJson["school"] + "," + bibJson["year"]
+    fileBGT = getAuthor(bibJson) + ". " + bibJson["title"] + reftype[bibtype] + ". " + bibJson["school"] + "," + bibJson["year"] + "."
     return fileBGT
 
 
@@ -50,7 +56,7 @@ def type_J(bibJson, reftype, bibtype):
                bibJson["title"] + 
                reftype[bibtype] + ". " + 
                bibJson["journal"] +
-               _year + _volume + _number + _pages
+               _year + _volume + _number + _pages + "."
                )
 
     return fileBGT
@@ -68,7 +74,7 @@ def type_C(bibJson, reftype, bibtype):
                bibJson["title"] + 
                reftype[bibtype] + ". //" + 
                bibJson["booktitle"] +
-               _year + _pages
+               _year + _pages + "."
                )
 
     return fileBGT
@@ -80,7 +86,7 @@ def type_N(bibJson, reftype, bibtype):
                bibJson["title"] + 
                reftype[bibtype] + ". " + 
                bibJson["institution"] + "," + 
-               bibJson["year"]
+               bibJson["year"] + "."
                )
 
     return fileBGT
@@ -111,7 +117,7 @@ def getBibJson(lines: list) -> dict:
                 l = '"' + l[0: index_1].replace(' ', '') + '":"' + l[index_1 + 1: index_2].strip() + '",\r\n'
             
             else:
-                l = l.replace('{', '"').replace('}', '"')
+                l = l.replace('{', '"', 1)[::-1].replace('}', '"', 1)[::-1]  # replace the outermost layer only
                 index = l.find("=")
                 if(index != -1): l = '"' + l[0: index].replace(' ', '') + '":' + l[index + 1: -1] + "\r\n"
 
@@ -122,7 +128,7 @@ def getBibJson(lines: list) -> dict:
     index = jsonLines[-2].rfind('"')
     jsonLines[-2] = jsonLines[-2][0: index] + jsonLines[-2][index: -1].replace(',', '') + "\r\n"
     
-    bibJson = json.loads("".join(jsonLines).replace('\r', '').replace('\n', ''))
+    bibJson = json.loads("".join(jsonLines).replace('\r', '').replace('\n', '').replace('\t', '').replace('\\', ''))
 
     return bibJson
 

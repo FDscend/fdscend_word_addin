@@ -1,0 +1,551 @@
+<!DOCTYPE html><html><head>
+      <title>readme</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#000;background:0 0;text-shadow:0 1px #fff;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-] ::-moz-selection,code[class*=language-]::-moz-selection,pre[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection{text-shadow:none;background:#b3d4fc}code[class*=language-] ::selection,code[class*=language-]::selection,pre[class*=language-] ::selection,pre[class*=language-]::selection{text-shadow:none;background:#b3d4fc}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto}:not(pre)>code[class*=language-],pre[class*=language-]{background:#f5f2f0}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#708090}.token.punctuation{color:#999}.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#905}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#690}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{color:#a67f59;background:hsla(0,0%,100%,.5)}.token.atrule,.token.attr-value,.token.keyword{color:#07a}.token.function{color:#dd4a68}.token.important,.token.regex,.token.variable{color:#e90}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body {
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  overflow: initial;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+html body > :first-child {
+  margin-top: 0;
+}
+html body h1,
+html body h2,
+html body h3,
+html body h4,
+html body h5,
+html body h6 {
+  line-height: 1.2;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  color: #000;
+}
+html body h1::before {
+  content: counter(chapterH1, cjk-ideographic) "\3001";
+}
+html body h1 {
+  font-size: 2.25em;
+  font-weight: 300;
+  padding-bottom: 0.3em;
+  text-align: center;
+  counter-increment: chapterH1;
+  counter-reset: chapterH2;
+}
+html body h2::before {
+  content: counter(chapterH1) "." counter(chapterH2) " ";
+}
+html body h2 {
+  font-size: 1.75em;
+  font-weight: 400;
+  padding-bottom: 0.3em;
+  counter-increment: chapterH2;
+  counter-reset: chapterH3;
+}
+html body h3::before {
+  content: counter(chapterH1) "." counter(chapterH2) "." counter(chapterH3) " ";
+}
+html body h3 {
+  font-size: 1.5em;
+  font-weight: 500;
+  counter-increment: chapterH3;
+}
+html body h4 {
+  font-size: 1.25em;
+  font-weight: 600;
+}
+html body h5 {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+html body h6 {
+  font-size: 1em;
+  font-weight: 600;
+}
+html body h1,
+html body h2,
+html body h3,
+html body h4,
+html body h5 {
+  font-weight: 600;
+}
+html body h5 {
+  font-size: 1em;
+}
+html body h6 {
+  color: #5c5c5c;
+}
+html body strong {
+  color: #000;
+}
+html body del {
+  color: #5c5c5c;
+}
+html body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+html body a {
+  color: #08c;
+  text-decoration: none;
+}
+html body a:hover {
+  color: #00a3f5;
+  text-decoration: none;
+}
+html body img {
+  max-width: 100%;
+}
+html body > p {
+  margin-top: 0;
+  margin-bottom: 16px;
+  word-wrap: break-word;
+}
+html body > ol,
+html body > ul {
+  margin-bottom: 16px;
+}
+html body ol,
+html body ul {
+  padding-left: 2em;
+}
+html body ol.no-list,
+html body ul.no-list {
+  padding: 0;
+  list-style-type: none;
+}
+html body ol ol,
+html body ol ul,
+html body ul ol,
+html body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+html body li {
+  margin-bottom: 0;
+}
+html body li.task-list-item {
+  list-style: none;
+}
+html body li > p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+html body .task-list-item-checkbox {
+  margin: 0 0.2em 0.25em -1.8em;
+  vertical-align: middle;
+}
+html body .task-list-item-checkbox:hover {
+  cursor: pointer;
+}
+html body blockquote {
+  margin: 16px 0;
+  font-size: inherit;
+  padding: 0 15px;
+  color: #5c5c5c;
+  background-color: #f0f0f0;
+  border-left: 4px solid #d6d6d6;
+}
+html body blockquote > :first-child {
+  margin-top: 0;
+}
+html body blockquote > :last-child {
+  margin-bottom: 0;
+}
+html body hr {
+  height: 4px;
+  margin: 32px 0;
+  background-color: #d6d6d6;
+  border: 0 none;
+}
+html body table {
+  margin: 10px 0 15px 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+html body table th {
+  font-weight: 700;
+  color: #000;
+}
+html body table td,
+html body table th {
+  border: 1px solid #d6d6d6;
+  padding: 6px 13px;
+}
+html body dl {
+  padding: 0;
+}
+html body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: 700;
+}
+html body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+html body code {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 0.85em;
+  color: #000;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+  padding: 0.2em 0;
+}
+html body code::after,
+html body code::before {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+html body pre > code {
+  padding: 0;
+  margin: 0;
+  word-break: normal;
+  white-space: pre;
+  background: 0 0;
+  border: 0;
+}
+html body .highlight {
+  margin-bottom: 16px;
+}
+html body .highlight pre,
+html body pre {
+  padding: 1em;
+  overflow: auto;
+  line-height: 1.45;
+  border: #d6d6d6;
+  border-radius: 3px;
+}
+html body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+html body pre code,
+html body pre tt {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+html body pre code:after,
+html body pre code:before,
+html body pre tt:after,
+html body pre tt:before {
+  content: normal;
+}
+html body blockquote,
+html body dl,
+html body ol,
+html body p,
+html body pre,
+html body ul {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+html body kbd {
+  color: #000;
+  border: 1px solid #d6d6d6;
+  border-bottom: 2px solid #c7c7c7;
+  padding: 2px 4px;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+}
+@media print {
+  html body {
+    background-color: #fff;
+  }
+  html body h1,
+  html body h2,
+  html body h3,
+  html body h4,
+  html body h5,
+  html body h6 {
+    color: #000;
+    page-break-after: avoid;
+  }
+  html body blockquote {
+    color: #5c5c5c;
+  }
+  html body pre {
+    page-break-inside: avoid;
+  }
+  html body table {
+    display: table;
+  }
+  html body img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  html body code,
+  html body pre {
+    word-wrap: break-word;
+    white-space: pre;
+  }
+}
+.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="fdscend_word_addinhttpsgithubcomfdscendfdscend_word_addin"><a href="https://github.com/FDscend/fdscend_word_addin">fdscend_word_addin</a> </h1>
+<ol>
+<li>在 Word 中一键实现代码排版</li>
+<li>本插件为预览版，仍存在许多 bug，使用中请注意及时保存文档，</li>
+<li>欢迎提交使用反馈，帮助插件的改进。</li>
+</ol>
+<h1 id="实现功能">实现功能 </h1>
+<ul>
+<li>【代码排版】
+<ul>
+<li>四种排版样式，样式参见后文 gif 展示。功能支持修改预设文件实现不同程度的自定义</li>
+</ul>
+</li>
+<li>【文案】功能区
+<ul>
+<li>简单的标题正文格式，并支持样式自定义</li>
+<li>使用预设的页眉、页脚</li>
+<li>页眉插入当天时间</li>
+<li>文末插入自定义署名（支持自动读取 Office 署名、wps 署名、计算机用户名，支持自定义预设署名）</li>
+<li>输入微信公众号文章链接，插入文章封面图</li>
+<li>输入 bilibili 视频、直播间链接，插入封面图</li>
+</ul>
+</li>
+<li>【工具箱】功能区
+<ul>
+<li>一键给段落底纹上色，并支持颜色自定义</li>
+<li>一键修改样式底纹颜色，并支持颜色自定义</li>
+<li>简单给表格上色，支持修改预设文件</li>
+<li>表格改成三线表（不支持含合并单元格的表格）</li>
+<li>标签栏（暂时有点小问题~）</li>
+<li>批量替换符合，支持自定义</li>
+<li>批量检查符合配对，支持自定义</li>
+<li>批量删除页眉横线</li>
+<li>行间代码排版，效果类似 markdown 的行间代码</li>
+<li>BibTeX 转 GB/T7714-2015 格式</li>
+<li>代码高亮（需要 webView2 runtime）</li>
+</ul>
+</li>
+<li>【运行代码】功能区 <s>Word is a code editor</s>
+<ul>
+<li>选中文档中的代码，点击运行，可以在代码下方输出打印文字</li>
+<li>支持运行 Python, R, Java（需要相应的环境）</li>
+</ul>
+</li>
+<li>【简单浏览器】
+<ul>
+<li>在侧栏浏览在线网页，支持一键切换电脑、手机模式</li>
+<li>在侧栏预览本地 HTML, PDF, Markdown</li>
+</ul>
+</li>
+</ul>
+<h1 id="使用环境">使用环境 </h1>
+<ol>
+<li>系统：Windows 10+ （win10 以下未测试，不保证可使用）</li>
+<li>仅支持 Microsoft Word 桌面版，建议 Office2019 版本以上（测试有限，不确定最低在哪个 Word 版本能正常使用）</li>
+<li>经测试 WPS 不完全兼容，所以安装包没有写入 WPS</li>
+</ol>
+<h1 id="使用方法">使用方法 </h1>
+<ol>
+<li>点击“设置”<br>
+<img src="doc/%E5%BC%80%E5%A7%8B.png" alt="开始"></li>
+<li>在弹窗中输入操作码（操作码见<a href="#%E6%93%8D%E4%BD%9C%E7%A0%81">后文</a>）<br>
+<img src="doc/%E8%BE%93%E5%85%A5%E6%93%8D%E4%BD%9C%E7%A0%81.png" alt="输入"></li>
+<li>选项卡功能示意图（不代表实际功能）<br>
+<img src="doc/%E9%80%89%E9%A1%B9%E5%8D%A1%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="示意图"></li>
+</ol>
+<h1 id="操作码">操作码 </h1>
+<p><em>由于一些功能在完善中，暂时无法正常使用，所以通过操作码仅开放能够正常使用的功能</em></p>
+<p><strong>可用操作码</strong></p>
+<ul>
+<li>代码样式 1：<code>code</code></li>
+<li>代码样式 2：<code>codeL</code></li>
+<li>代码样式 3：<code>codeB</code></li>
+<li>代码样式 4：<code>code4</code></li>
+<li>文案：<code>xmt</code></li>
+<li>工具箱：<code>tools</code></li>
+<li>运行代码：<code>runCode</code></li>
+<li>简单浏览器：<code>browser</code></li>
+</ul>
+<h1 id="代码排版效果">代码排版效果 </h1>
+<p>本插件实现了以下三种代码排版样式。使用方法均为：选中代码，点击对应“一键排版”按键。</p>
+<p><strong>注意</strong>：本插件没有直接高亮代码的功能。</p>
+<ol>
+<li>直接从代码窗复制，保留原格式粘贴到 Word 可以保留高亮。</li>
+<li>使用“代码高亮”功能（实验性）</li>
+</ol>
+<h2 id="代码样式-1">代码样式 1 </h2>
+<p><img src="doc/%E4%BB%A3%E7%A0%81%E6%A0%B7%E5%BC%8F1.gif" alt="代码样式1"><br>
+<a href="https://www.bilibili.com/video/BV1Br4y1u748">实现原理</a></p>
+<h2 id="代码样式-2">代码样式 2 </h2>
+<p><img src="doc/%E4%BB%A3%E7%A0%81%E6%A0%B7%E5%BC%8F2.gif" alt="代码样式2"><br>
+<a href="https://www.bilibili.com/video/BV1Fe4y1P7RV">实现原理</a></p>
+<h2 id="代码样式-3">代码样式 3 </h2>
+<p><img src="doc/%E4%BB%A3%E7%A0%81%E6%A0%B7%E5%BC%8F3.gif" alt="代码样式3"></p>
+<h2 id="代码样式-4">代码样式 4 </h2>
+<p><img src="doc/%E4%BB%A3%E7%A0%81%E6%A0%B7%E5%BC%8F4.gif" alt="代码样式4"></p>
+<h1 id="自定义设置与预设">自定义设置与预设 </h1>
+<p>在 ProgramData 目录下（通常是 <code>C:\ProgramData\FDscend</code>），有插件所有的设置文件<br>
+<img src="doc/%E9%A2%84%E8%AE%BE%E6%96%87%E4%BB%B6%E5%9B%BE.png" alt="预设文件图"></p>
+<ol>
+<li>由于各种因素，暂未在插件选项卡中对各项设置实现全部自定义，但是基本所有选项都可以在预设文件中进行修改。</li>
+<li>修改时请使用 UTF-8 编码，以及相应数字或者字符串类型。</li>
+<li>建议：在修改预设文件前先备份。</li>
+</ol>
+<h1 id="关于源代码">关于源代码 </h1>
+<ul>
+<li>请遵循项目开源协议</li>
+<li>建议使用 release 模式，不会显示未完成部分。debug 模式会显示所有功能，容易触发 bug。
+<ul>
+<li>release 模式需要将<a href="doc/settings.7z">预设文件 7z</a>解压至 ProgramData 目录，如其中的 Config 子文件夹应当在<code>C:\ProgramData\分点作答\FDscend\Config</code></li>
+<li>由于项目使用了绝对路径，debug 模式需要将工程放置于<code>D:\code\WordAddIn1\WordAddIn1.sln</code>。或者在 <code>Ribbon1.cs</code> 中修改 <code>FDscendHome</code> 的值（项目版本 v0.15.0+）</li>
+</ul>
+</li>
+</ul>
+<h1 id="一些特性">一些特性 </h1>
+<ul>
+<li>
+<p>v0.17.0+</p>
+<ul>
+<li>【工具箱-&gt;BibTeX】【文案-&gt;获取封面（b 站）】功能已打包，无 Python 环境也能运行。注：可在【控制-&gt;设置】中勾选“使用 Python 脚本”重新启用功能相应的脚本</li>
+</ul>
+</li>
+<li>
+<p>v0.16.0</p>
+<ul>
+<li>【文案】 中的“文章标题”“一级标题”“二级标题”“正文格式”功能开放自定义，在 <code>FDscend\Presets\XMT_style.docx</code> 中修改样式即可。（注意此功能不能在未创建的文档中使用）</li>
+<li>【工具箱-&gt;BibTeX】功能需要 python 3.10+环境，运行 <code>FDscend/scripts/</code> 文件夹下的 python 文件。此功能的更多信息参见 <a href="https://github.com/FDscend/bibtex2gbt7714">GitHub - FDscend/bibtex2gbt7714: 使用 Python 将 BibTeX 文件转换为 GB/T7714-2015 格式，支持可视操作、单一命令行、批量命令行</a></li>
+</ul>
+</li>
+<li>
+<p>v0.15.0+</p>
+<ul>
+<li>【文案-&gt;获取封面（b 站）】功能需要 python 环境，运行 <code>FDscend/scripts/</code> 文件夹下的 python 文件。（由于未知原因，用 c#写的代码给出乱码，所以只好先用 python 实现一下）</li>
+</ul>
+</li>
+<li>
+<p>v0.13.1+</p>
+<ul>
+<li>工具箱 -&gt; 标签栏：关闭文档后无法正常显示标签栏。临时应急方法：可以重新通过按键打开标签栏，或者先点一下别的窗口（比如随便一个文件夹）再回到 Word。</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      <div class="md-sidebar-toc">
+<div class="md-toc">
+<div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
+          <a href="#fdscend_word_addinhttpsgithubcomfdscendfdscend_word_addin" class="md-toc-link">
+            </a><p><a href="#fdscend_word_addinhttpsgithubcomfdscendfdscend_word_addin" class="md-toc-link"></a><a href="https://github.com/FDscend/fdscend_word_addin">fdscend_word_addin</a></p>
+
+          </div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
+          <a href="#实现功能" class="md-toc-link">
+            <p>实现功能</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
+          <a href="#使用环境" class="md-toc-link">
+            <p>使用环境</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
+          <a href="#使用方法" class="md-toc-link">
+            <p>使用方法</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
+          <a href="#操作码" class="md-toc-link">
+            <p>操作码</p>
+
+          </a></div><details style="padding:0;;padding-left:0px;" open="">
+        <summary class="md-toc-link-wrapper">
+          <a href="#代码排版效果" class="md-toc-link"><p>代码排版效果</p>
+</a>
+          </summary>
+        <div>
+          <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#代码样式-1" class="md-toc-link">
+            <p>代码样式 1</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#代码样式-2" class="md-toc-link">
+            <p>代码样式 2</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#代码样式-3" class="md-toc-link">
+            <p>代码样式 3</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:42px">
+          <a href="#代码样式-4" class="md-toc-link">
+            <p>代码样式 4</p>
+
+          </a></div>
+        </div>
+      </details>
+    <div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
+          <a href="#自定义设置与预设" class="md-toc-link">
+            <p>自定义设置与预设</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
+          <a href="#关于源代码" class="md-toc-link">
+            <p>关于源代码</p>
+
+          </a></div><div class="md-toc-link-wrapper" style="padding:0;;display:list-item;list-style:square;margin-left:18px">
+          <a href="#一些特性" class="md-toc-link">
+            <p>一些特性</p>
+
+          </a></div>
+</div>
+</div>
+      <a id="sidebar-toc-btn">≡</a>
+    
+    
+    
+    
+    
+    
+<script>
+
+var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+sidebarTOCBtn.addEventListener('click', function(event) {
+  event.stopPropagation()
+  if (document.body.hasAttribute('html-show-sidebar-toc')) {
+    document.body.removeAttribute('html-show-sidebar-toc')
+  } else {
+    document.body.setAttribute('html-show-sidebar-toc', true)
+  }
+})
+</script>
+      
+  
+    </body></html>
