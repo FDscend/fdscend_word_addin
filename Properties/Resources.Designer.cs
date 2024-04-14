@@ -112,6 +112,16 @@ namespace WordAddIn1.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap choose {
+            get {
+                object obj = ResourceManager.GetObject("choose", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap code {
             get {
                 object obj = ResourceManager.GetObject("code", resourceCulture);
@@ -149,7 +159,7 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.16.0 的本地化字符串。
+        ///   查找类似 0.18.0 的本地化字符串。
         /// </summary>
         public static string current_ver {
             get {
@@ -168,11 +178,40 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap edge {
+            get {
+                object obj = ResourceManager.GetObject("edge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 https://github.com/FDscend/fdscend_word_addin 的本地化字符串。
         /// </summary>
         public static string github_code_url {
             get {
                 return ResourceManager.GetString("github_code_url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap highlight {
+            get {
+                object obj = ResourceManager.GetObject("highlight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \highlight\index.html 的本地化字符串。
+        /// </summary>
+        public static string highlight_index {
+            get {
+                return ResourceManager.GetString("highlight_index", resourceCulture);
             }
         }
         
@@ -183,6 +222,16 @@ namespace WordAddIn1.Properties {
             get {
                 object obj = ResourceManager.GetObject("ico", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap java {
+            get {
+                object obj = ResourceManager.GetObject("java", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -270,6 +319,15 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
+        ///   查找类似 \Presets\Highlight 的本地化字符串。
+        /// </summary>
+        public static string PresetHighlight {
+            get {
+                return ResourceManager.GetString("PresetHighlight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 \Presets\ToolsBox 的本地化字符串。
         /// </summary>
         public static string PresetToolsBoxShadeColor {
@@ -293,15 +351,6 @@ namespace WordAddIn1.Properties {
         public static string PresetXMTsetting {
             get {
                 return ResourceManager.GetString("PresetXMTsetting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 \Presets\XMT_style.docx 的本地化字符串。
-        /// </summary>
-        public static string PresetXMTstyle {
-            get {
-                return ResourceManager.GetString("PresetXMTstyle", resourceCulture);
             }
         }
         
@@ -332,6 +381,15 @@ namespace WordAddIn1.Properties {
             get {
                 object obj = ResourceManager.GetObject("settings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Config\Settings 的本地化字符串。
+        /// </summary>
+        public static string SettingsFile {
+            get {
+                return ResourceManager.GetString("SettingsFile", resourceCulture);
             }
         }
         
