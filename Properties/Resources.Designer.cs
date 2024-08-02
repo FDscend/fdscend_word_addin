@@ -73,6 +73,16 @@ namespace WordAddIn1.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap _switch {
+            get {
+                object obj = ResourceManager.GetObject("_switch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap add {
             get {
                 object obj = ResourceManager.GetObject("add", resourceCulture);
@@ -159,7 +169,7 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.18.0 的本地化字符串。
+        ///   查找类似 0.19.0 的本地化字符串。
         /// </summary>
         public static string current_ver {
             get {
@@ -228,6 +238,26 @@ namespace WordAddIn1.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap img2pdf {
+            get {
+                object obj = ResourceManager.GetObject("img2pdf", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap imgpdf {
+            get {
+                object obj = ResourceManager.GetObject("imgpdf", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap java {
             get {
                 object obj = ResourceManager.GetObject("java", resourceCulture);
@@ -247,6 +277,26 @@ namespace WordAddIn1.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap math {
+            get {
+                object obj = ResourceManager.GetObject("math", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap merge {
+            get {
+                object obj = ResourceManager.GetObject("merge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap office {
             get {
                 object obj = ResourceManager.GetObject("office", resourceCulture);
@@ -260,6 +310,16 @@ namespace WordAddIn1.Properties {
         public static System.Drawing.Bitmap pair {
             get {
                 object obj = ResourceManager.GetObject("pair", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap pdf2img {
+            get {
+                object obj = ResourceManager.GetObject("pdf2img", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -324,6 +384,15 @@ namespace WordAddIn1.Properties {
         public static string PresetHighlight {
             get {
                 return ResourceManager.GetString("PresetHighlight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \Presets\MathTools 的本地化字符串。
+        /// </summary>
+        public static string PresetMathTools {
+            get {
+                return ResourceManager.GetString("PresetMathTools", resourceCulture);
             }
         }
         
@@ -396,9 +465,29 @@ namespace WordAddIn1.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap split {
+            get {
+                object obj = ResourceManager.GetObject("split", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap tab {
             get {
                 object obj = ResourceManager.GetObject("tab", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap update {
+            get {
+                object obj = ResourceManager.GetObject("update", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
