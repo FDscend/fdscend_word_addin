@@ -1,5 +1,27 @@
 {
   "version": "20230102",
   "encoding": "UTF-8",
-  "key_0": "default"
+  "key_0": "default",
+  "key_code": "code",
+  "state_code": "0",
+  "key_codeL": "codeL",
+  "state_codeL": "0",
+  "key_codeB": "codeB",
+  "state_codeB": "0",
+  "key_code4": "code4",
+  "state_code4": "0",
+  "key_xmt": "xmt",
+  "state_xmt": "0",
+  "key_tools": "tools",
+  "state_tools": "1",
+  "key_runCode": "runCode",
+  "state_runCode": "0",
+  "key_browser": "browser",
+  "state_browser": "1",
+  "key_math": "math",
+  "state_math": "1",
+  "key_test": "test",
+  "state_test": "0",
+  "key_pdf": "pdf",
+  "state_pdf": "1"
 }
