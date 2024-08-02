@@ -21,7 +21,6 @@ namespace WordAddIn1
         //全局路径
         string latest_info = Ribbon1.latest_info;
         string url = Properties.Resources.latest_info_url;
-        string doc_path = Ribbon1.pdf_path;
 
 
         public AboutForm()
@@ -47,7 +46,7 @@ namespace WordAddIn1
 
         private void help_doc_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(doc_path);
+            System.Diagnostics.Process.Start(Ribbon1.readme_path);
         }
 
         private void git_web_Click(object sender, EventArgs e)
@@ -152,11 +151,6 @@ namespace WordAddIn1
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/FDscend/bibtex2gbt7714");
-        }
-
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start(Ribbon1.readme_path);
         }
     }
 }

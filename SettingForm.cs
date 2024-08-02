@@ -29,10 +29,13 @@ namespace WordAddIn1
         const string KeyToolsBox = Ribbon1.KeyToolsBox;
         const string KeyRunCode = Ribbon1.KeyRunCode;
         const string KeyBrowser = Ribbon1.KeyBrowser;
+        const string KeyMathList = Ribbon1.KeyMathList;
+        const string KeyTestGroup = Ribbon1.KeyTestGroup;
+        const string KeyPdfTools = Ribbon1.KeyPdfTools;
         const string KeyAdmin = Ribbon1.KeyAdmin;
 
-        string[] keyArray = new string[] { KeyXMT, KeyCode, KeyCode2, KeyCodeLatex, KeyCode4, KeyToolsBox, KeyRunCode , KeyBrowser };
-        string[] nameArray = new string[] { "文案", "代码排版", "代码排版3", "代码排版2", "代码排版4", "工具箱", "运行代码" ,"简单浏览器"};
+        string[] keyArray = new string[] { KeyXMT, KeyCode, KeyCode2, KeyCodeLatex, KeyCode4, KeyToolsBox, KeyRunCode, KeyBrowser, KeyMathList, KeyTestGroup, KeyPdfTools };
+        string[] nameArray = new string[] { "文案", "代码排版", "代码排版3", "代码排版2", "代码排版4", "工具箱", "运行代码", "简单浏览器", "公式编号", "实验性功能", "PDF 工具箱" };
 
         public bool boolKeyAllTrue;
 
@@ -191,6 +194,12 @@ namespace WordAddIn1
                 case KeyRunCode:
                     break;
                 case KeyBrowser:
+                    break;
+                case KeyMathList:
+                    break;
+                case KeyTestGroup:
+                    break;
+                case KeyPdfTools:
                     break;
                 default:
                     return false;

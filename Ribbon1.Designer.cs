@@ -38,16 +38,6 @@ namespace WordAddIn1
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.group_tuisong = this.Factory.CreateRibbonGroup();
-            this.code = this.Factory.CreateRibbonGroup();
-            this.CodeLatex = this.Factory.CreateRibbonGroup();
-            this.Code2 = this.Factory.CreateRibbonGroup();
-            this.CodeGroup4 = this.Factory.CreateRibbonGroup();
-            this.ToolsBox = this.Factory.CreateRibbonGroup();
-            this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.runCodeGroup = this.Factory.CreateRibbonGroup();
-            this.appendCodeMod = this.Factory.CreateRibbonCheckBox();
-            this.simpleBrowser = this.Factory.CreateRibbonGroup();
-            this.control = this.Factory.CreateRibbonGroup();
             this.button_MainTitle = this.Factory.CreateRibbonButton();
             this.button_title_1 = this.Factory.CreateRibbonButton();
             this.button_title_2 = this.Factory.CreateRibbonButton();
@@ -66,6 +56,7 @@ namespace WordAddIn1
             this.WeixinPic = this.Factory.CreateRibbonButton();
             this.bilibiliPic = this.Factory.CreateRibbonButton();
             this.changeStyle = this.Factory.CreateRibbonButton();
+            this.code = this.Factory.CreateRibbonGroup();
             this.CodeFormat = this.Factory.CreateRibbonButton();
             this.CodeTabSetting = this.Factory.CreateRibbonButton();
             this.CodeTabSetting2 = this.Factory.CreateRibbonButton();
@@ -81,13 +72,17 @@ namespace WordAddIn1
             this.CodeListNum = this.Factory.CreateRibbonButton();
             this.CodeBoderLineFun = this.Factory.CreateRibbonButton();
             this.CodeControl = this.Factory.CreateRibbonButton();
+            this.CodeLatex = this.Factory.CreateRibbonGroup();
             this.CodeFormatLatex = this.Factory.CreateRibbonButton();
+            this.Code2 = this.Factory.CreateRibbonGroup();
             this.CodeFormat2 = this.Factory.CreateRibbonButton();
             this.SetCode3CurrentColor = this.Factory.CreateRibbonButton();
             this.saveCode3Color = this.Factory.CreateRibbonButton();
+            this.CodeGroup4 = this.Factory.CreateRibbonGroup();
             this.CodeFormat4 = this.Factory.CreateRibbonButton();
             this.SetCode4CurrentColor = this.Factory.CreateRibbonButton();
             this.saveCode4Color = this.Factory.CreateRibbonButton();
+            this.ToolsBox = this.Factory.CreateRibbonGroup();
             this.ParaShadeSplit = this.Factory.CreateRibbonSplitButton();
             this.ParagraphShading = this.Factory.CreateRibbonButton();
             this.ParaShadingColorSet = this.Factory.CreateRibbonButton();
@@ -102,14 +97,35 @@ namespace WordAddIn1
             this.del_header_line = this.Factory.CreateRibbonButton();
             this.inlineCode = this.Factory.CreateRibbonButton();
             this.bib2gbt = this.Factory.CreateRibbonButton();
-            this.FileTabOnOff = this.Factory.CreateRibbonToggleButton();
-            this.highlight = this.Factory.CreateRibbonButton();
+            this.pdfToolsGroup = this.Factory.CreateRibbonGroup();
+            this.Pdf2Img = this.Factory.CreateRibbonButton();
+            this.Img2Pdf = this.Factory.CreateRibbonButton();
+            this.Pdf2Imgpdf = this.Factory.CreateRibbonButton();
+            this.MgPdf = this.Factory.CreateRibbonButton();
+            this.mathList = this.Factory.CreateRibbonGroup();
+            this.mathInsertCh1 = this.Factory.CreateRibbonButton();
+            this.visSplit = this.Factory.CreateRibbonToggleButton();
+            this.addEQNUM = this.Factory.CreateRibbonButton();
+            this.mathChangeMod = this.Factory.CreateRibbonMenu();
+            this.mathMod1 = this.Factory.CreateRibbonButton();
+            this.mathMod2 = this.Factory.CreateRibbonButton();
+            this.mathMod3 = this.Factory.CreateRibbonButton();
+            this.mathMod4 = this.Factory.CreateRibbonButton();
+            this.updateField = this.Factory.CreateRibbonButton();
+            this.setSeqChar = this.Factory.CreateRibbonButton();
+            this.runCodeGroup = this.Factory.CreateRibbonGroup();
             this.runCode = this.Factory.CreateRibbonButton();
             this.chooseCode = this.Factory.CreateRibbonMenu();
             this.choosePython = this.Factory.CreateRibbonButton();
             this.chooseR = this.Factory.CreateRibbonButton();
             this.chooseJava = this.Factory.CreateRibbonButton();
+            this.appendCodeMod = this.Factory.CreateRibbonCheckBox();
+            this.simpleBrowser = this.Factory.CreateRibbonGroup();
             this.startBrowser = this.Factory.CreateRibbonButton();
+            this.testGroup = this.Factory.CreateRibbonGroup();
+            this.FileTabOnOff = this.Factory.CreateRibbonToggleButton();
+            this.highlight = this.Factory.CreateRibbonButton();
+            this.control = this.Factory.CreateRibbonGroup();
             this.SettingBt = this.Factory.CreateRibbonButton();
             this.About = this.Factory.CreateRibbonButton();
             this.button1 = this.Factory.CreateRibbonButton();
@@ -120,8 +136,11 @@ namespace WordAddIn1
             this.Code2.SuspendLayout();
             this.CodeGroup4.SuspendLayout();
             this.ToolsBox.SuspendLayout();
+            this.pdfToolsGroup.SuspendLayout();
+            this.mathList.SuspendLayout();
             this.runCodeGroup.SuspendLayout();
             this.simpleBrowser.SuspendLayout();
+            this.testGroup.SuspendLayout();
             this.control.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,8 +152,11 @@ namespace WordAddIn1
             this.tab1.Groups.Add(this.Code2);
             this.tab1.Groups.Add(this.CodeGroup4);
             this.tab1.Groups.Add(this.ToolsBox);
+            this.tab1.Groups.Add(this.pdfToolsGroup);
+            this.tab1.Groups.Add(this.mathList);
             this.tab1.Groups.Add(this.runCodeGroup);
             this.tab1.Groups.Add(this.simpleBrowser);
+            this.tab1.Groups.Add(this.testGroup);
             this.tab1.Groups.Add(this.control);
             this.tab1.Label = "分点";
             this.tab1.Name = "tab1";
@@ -157,101 +179,6 @@ namespace WordAddIn1
             this.group_tuisong.Label = "文案";
             this.group_tuisong.Name = "group_tuisong";
             this.group_tuisong.Visible = false;
-            // 
-            // code
-            // 
-            this.code.Items.Add(this.CodeFormat);
-            this.code.Items.Add(this.CodeTabSetting);
-            this.code.Items.Add(this.CodeTabSetting2);
-            this.code.Items.Add(this.BorderLine);
-            this.code.Items.Add(this.ResetCodeBGcolor);
-            this.code.Items.Add(this.TableWidthSet);
-            this.code.Items.Add(this.PresetCode);
-            this.code.Items.Add(this.CodeListNum);
-            this.code.Items.Add(this.CodeBoderLineFun);
-            this.code.Items.Add(this.CodeControl);
-            this.code.Label = "代码排版";
-            this.code.Name = "code";
-            this.code.Tag = "";
-            this.code.Visible = false;
-            // 
-            // CodeLatex
-            // 
-            this.CodeLatex.Items.Add(this.CodeFormatLatex);
-            this.CodeLatex.Label = "代码排版2";
-            this.CodeLatex.Name = "CodeLatex";
-            this.CodeLatex.Visible = false;
-            // 
-            // Code2
-            // 
-            this.Code2.Items.Add(this.CodeFormat2);
-            this.Code2.Items.Add(this.SetCode3CurrentColor);
-            this.Code2.Items.Add(this.saveCode3Color);
-            this.Code2.Label = "代码排版3";
-            this.Code2.Name = "Code2";
-            this.Code2.Visible = false;
-            // 
-            // CodeGroup4
-            // 
-            this.CodeGroup4.Items.Add(this.CodeFormat4);
-            this.CodeGroup4.Items.Add(this.SetCode4CurrentColor);
-            this.CodeGroup4.Items.Add(this.saveCode4Color);
-            this.CodeGroup4.Label = "代码排版4";
-            this.CodeGroup4.Name = "CodeGroup4";
-            this.CodeGroup4.Visible = false;
-            // 
-            // ToolsBox
-            // 
-            this.ToolsBox.Items.Add(this.ParaShadeSplit);
-            this.ToolsBox.Items.Add(this.StyleShadeSplit);
-            this.ToolsBox.Items.Add(this.TableColoring);
-            this.ToolsBox.Items.Add(this.ThreeLine);
-            this.ToolsBox.Items.Add(this.changecharCE);
-            this.ToolsBox.Items.Add(this.checkCharMatch);
-            this.ToolsBox.Items.Add(this.del_header_line);
-            this.ToolsBox.Items.Add(this.inlineCode);
-            this.ToolsBox.Items.Add(this.bib2gbt);
-            this.ToolsBox.Items.Add(this.separator1);
-            this.ToolsBox.Items.Add(this.FileTabOnOff);
-            this.ToolsBox.Items.Add(this.highlight);
-            this.ToolsBox.Label = "工具箱";
-            this.ToolsBox.Name = "ToolsBox";
-            this.ToolsBox.Visible = false;
-            // 
-            // separator1
-            // 
-            this.separator1.Name = "separator1";
-            // 
-            // runCodeGroup
-            // 
-            this.runCodeGroup.Items.Add(this.runCode);
-            this.runCodeGroup.Items.Add(this.chooseCode);
-            this.runCodeGroup.Items.Add(this.appendCodeMod);
-            this.runCodeGroup.Label = "运行代码";
-            this.runCodeGroup.Name = "runCodeGroup";
-            this.runCodeGroup.Visible = false;
-            // 
-            // appendCodeMod
-            // 
-            this.appendCodeMod.Label = "追加模式";
-            this.appendCodeMod.Name = "appendCodeMod";
-            this.appendCodeMod.ScreenTip = "追加模式";
-            this.appendCodeMod.SuperTip = "勾选后，代码将会追加到上次的运行内容之后";
-            this.appendCodeMod.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.appendCodeMod_Click);
-            // 
-            // simpleBrowser
-            // 
-            this.simpleBrowser.Items.Add(this.startBrowser);
-            this.simpleBrowser.Label = "简单浏览器";
-            this.simpleBrowser.Name = "simpleBrowser";
-            this.simpleBrowser.Visible = false;
-            // 
-            // control
-            // 
-            this.control.Items.Add(this.SettingBt);
-            this.control.Items.Add(this.About);
-            this.control.Label = "控制";
-            this.control.Name = "control";
             // 
             // button_MainTitle
             // 
@@ -426,6 +353,23 @@ namespace WordAddIn1
             this.changeStyle.SuperTip = "改变标题、一级标题、二级标题、正文格式的预设";
             this.changeStyle.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.changeStyle_Click);
             // 
+            // code
+            // 
+            this.code.Items.Add(this.CodeFormat);
+            this.code.Items.Add(this.CodeTabSetting);
+            this.code.Items.Add(this.CodeTabSetting2);
+            this.code.Items.Add(this.BorderLine);
+            this.code.Items.Add(this.ResetCodeBGcolor);
+            this.code.Items.Add(this.TableWidthSet);
+            this.code.Items.Add(this.PresetCode);
+            this.code.Items.Add(this.CodeListNum);
+            this.code.Items.Add(this.CodeBoderLineFun);
+            this.code.Items.Add(this.CodeControl);
+            this.code.Label = "代码排版";
+            this.code.Name = "code";
+            this.code.Tag = "";
+            this.code.Visible = false;
+            // 
             // CodeFormat
             // 
             this.CodeFormat.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -543,6 +487,13 @@ namespace WordAddIn1
             this.CodeControl.ScreenTip = "代码排版的所有设置";
             this.CodeControl.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CodeControl_Click);
             // 
+            // CodeLatex
+            // 
+            this.CodeLatex.Items.Add(this.CodeFormatLatex);
+            this.CodeLatex.Label = "代码排版2";
+            this.CodeLatex.Name = "CodeLatex";
+            this.CodeLatex.Visible = false;
+            // 
             // CodeFormatLatex
             // 
             this.CodeFormatLatex.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -553,6 +504,15 @@ namespace WordAddIn1
             this.CodeFormatLatex.ShowImage = true;
             this.CodeFormatLatex.SuperTip = "样式2";
             this.CodeFormatLatex.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.CodeFormatLatex_Click);
+            // 
+            // Code2
+            // 
+            this.Code2.Items.Add(this.CodeFormat2);
+            this.Code2.Items.Add(this.SetCode3CurrentColor);
+            this.Code2.Items.Add(this.saveCode3Color);
+            this.Code2.Label = "代码排版3";
+            this.Code2.Name = "Code2";
+            this.Code2.Visible = false;
             // 
             // CodeFormat2
             // 
@@ -581,6 +541,15 @@ namespace WordAddIn1
             this.saveCode3Color.SuperTip = "将本文档使用的代码排版3的底纹颜色保存至预设文件";
             this.saveCode3Color.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.saveCode3Color_Click);
             // 
+            // CodeGroup4
+            // 
+            this.CodeGroup4.Items.Add(this.CodeFormat4);
+            this.CodeGroup4.Items.Add(this.SetCode4CurrentColor);
+            this.CodeGroup4.Items.Add(this.saveCode4Color);
+            this.CodeGroup4.Label = "代码排版4";
+            this.CodeGroup4.Name = "CodeGroup4";
+            this.CodeGroup4.Visible = false;
+            // 
             // CodeFormat4
             // 
             this.CodeFormat4.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -607,6 +576,21 @@ namespace WordAddIn1
             this.saveCode4Color.ScreenTip = "保存颜色";
             this.saveCode4Color.SuperTip = "将本文档使用的代码排版4的底纹颜色保存至预设文件";
             this.saveCode4Color.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.saveCode4Color_Click);
+            // 
+            // ToolsBox
+            // 
+            this.ToolsBox.Items.Add(this.ParaShadeSplit);
+            this.ToolsBox.Items.Add(this.StyleShadeSplit);
+            this.ToolsBox.Items.Add(this.TableColoring);
+            this.ToolsBox.Items.Add(this.ThreeLine);
+            this.ToolsBox.Items.Add(this.changecharCE);
+            this.ToolsBox.Items.Add(this.checkCharMatch);
+            this.ToolsBox.Items.Add(this.del_header_line);
+            this.ToolsBox.Items.Add(this.inlineCode);
+            this.ToolsBox.Items.Add(this.bib2gbt);
+            this.ToolsBox.Label = "工具箱";
+            this.ToolsBox.Name = "ToolsBox";
+            this.ToolsBox.Visible = false;
             // 
             // ParaShadeSplit
             // 
@@ -751,25 +735,182 @@ namespace WordAddIn1
             this.bib2gbt.SuperTip = "将BibTeX转换成GBT7714-2015格式，并插入到选中位置.";
             this.bib2gbt.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.bib2gbt_Click);
             // 
-            // FileTabOnOff
+            // pdfToolsGroup
             // 
-            this.FileTabOnOff.Image = ((System.Drawing.Image)(resources.GetObject("FileTabOnOff.Image")));
-            this.FileTabOnOff.Label = "标签栏";
-            this.FileTabOnOff.Name = "FileTabOnOff";
-            this.FileTabOnOff.ScreenTip = "【实验性】标签栏";
-            this.FileTabOnOff.ShowImage = true;
-            this.FileTabOnOff.SuperTip = "在多个文档间切换（请注意及时保存文档）";
-            this.FileTabOnOff.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.FileTabOnOff_Click);
+            this.pdfToolsGroup.Items.Add(this.Pdf2Img);
+            this.pdfToolsGroup.Items.Add(this.Img2Pdf);
+            this.pdfToolsGroup.Items.Add(this.Pdf2Imgpdf);
+            this.pdfToolsGroup.Items.Add(this.MgPdf);
+            this.pdfToolsGroup.Label = "PDF 工具箱";
+            this.pdfToolsGroup.Name = "pdfToolsGroup";
+            this.pdfToolsGroup.Visible = false;
             // 
-            // highlight
+            // Pdf2Img
             // 
-            this.highlight.Image = global::WordAddIn1.Properties.Resources.highlight;
-            this.highlight.Label = "代码高亮";
-            this.highlight.Name = "highlight";
-            this.highlight.ScreenTip = "【实验性】代码高亮";
-            this.highlight.ShowImage = true;
-            this.highlight.SuperTip = "打开代码高亮面板";
-            this.highlight.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.highlight_Click);
+            this.Pdf2Img.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.Pdf2Img.Image = global::WordAddIn1.Properties.Resources.pdf2img;
+            this.Pdf2Img.Label = "PDF转图片";
+            this.Pdf2Img.Name = "Pdf2Img";
+            this.Pdf2Img.ScreenTip = "PDF转图片";
+            this.Pdf2Img.ShowImage = true;
+            this.Pdf2Img.SuperTip = "将选择的PDF文件逐页输出为图片";
+            this.Pdf2Img.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Pdf2Img_Click);
+            // 
+            // Img2Pdf
+            // 
+            this.Img2Pdf.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.Img2Pdf.Image = global::WordAddIn1.Properties.Resources.img2pdf;
+            this.Img2Pdf.Label = "图片转PDF";
+            this.Img2Pdf.Name = "Img2Pdf";
+            this.Img2Pdf.ScreenTip = "图片转PDF";
+            this.Img2Pdf.ShowImage = true;
+            this.Img2Pdf.SuperTip = "将选中的图片转为一份PDF";
+            this.Img2Pdf.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Img2Pdf_Click);
+            // 
+            // Pdf2Imgpdf
+            // 
+            this.Pdf2Imgpdf.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.Pdf2Imgpdf.Image = global::WordAddIn1.Properties.Resources.imgpdf;
+            this.Pdf2Imgpdf.Label = "转图像PDF";
+            this.Pdf2Imgpdf.Name = "Pdf2Imgpdf";
+            this.Pdf2Imgpdf.ScreenTip = "转图像PDF";
+            this.Pdf2Imgpdf.ShowImage = true;
+            this.Pdf2Imgpdf.SuperTip = "将选中的 PDF 转换为每页都是图像的 PDF";
+            this.Pdf2Imgpdf.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.Pdf2Imgpdf_Click);
+            // 
+            // MgPdf
+            // 
+            this.MgPdf.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.MgPdf.Image = global::WordAddIn1.Properties.Resources.merge;
+            this.MgPdf.Label = "合并PDF";
+            this.MgPdf.Name = "MgPdf";
+            this.MgPdf.ScreenTip = "合并PDF";
+            this.MgPdf.ShowImage = true;
+            this.MgPdf.SuperTip = "将选中的PDF合并为一份PDF";
+            this.MgPdf.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.MgPdf_Click);
+            // 
+            // mathList
+            // 
+            this.mathList.Items.Add(this.mathInsertCh1);
+            this.mathList.Items.Add(this.visSplit);
+            this.mathList.Items.Add(this.addEQNUM);
+            this.mathList.Items.Add(this.mathChangeMod);
+            this.mathList.Items.Add(this.updateField);
+            this.mathList.Items.Add(this.setSeqChar);
+            this.mathList.Label = "公式编号";
+            this.mathList.Name = "mathList";
+            this.mathList.Visible = false;
+            // 
+            // mathInsertCh1
+            // 
+            this.mathInsertCh1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.mathInsertCh1.Image = global::WordAddIn1.Properties.Resources.split;
+            this.mathInsertCh1.Label = "插入分隔";
+            this.mathInsertCh1.Name = "mathInsertCh1";
+            this.mathInsertCh1.ScreenTip = "在选中位置插入分隔标记";
+            this.mathInsertCh1.ShowImage = true;
+            this.mathInsertCh1.SuperTip = "公式一级编号在分隔标记后加一，如(1-1)增加到(2-1)";
+            this.mathInsertCh1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.mathInsertCh1_Click);
+            // 
+            // visSplit
+            // 
+            this.visSplit.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.visSplit.Image = global::WordAddIn1.Properties.Resources._switch;
+            this.visSplit.Label = "显示分隔";
+            this.visSplit.Name = "visSplit";
+            this.visSplit.ScreenTip = "显示/隐藏分隔标记";
+            this.visSplit.ShowImage = true;
+            this.visSplit.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.visSplit_Click);
+            // 
+            // addEQNUM
+            // 
+            this.addEQNUM.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.addEQNUM.Image = global::WordAddIn1.Properties.Resources.math;
+            this.addEQNUM.Label = "公式编号";
+            this.addEQNUM.Name = "addEQNUM";
+            this.addEQNUM.ScreenTip = "公式编号";
+            this.addEQNUM.ShowImage = true;
+            this.addEQNUM.SuperTip = "公式编号右对齐（用于单独一条公式）";
+            this.addEQNUM.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.addEQNUM_Click);
+            // 
+            // mathChangeMod
+            // 
+            this.mathChangeMod.Image = global::WordAddIn1.Properties.Resources.choose;
+            this.mathChangeMod.Items.Add(this.mathMod1);
+            this.mathChangeMod.Items.Add(this.mathMod2);
+            this.mathChangeMod.Items.Add(this.mathMod3);
+            this.mathChangeMod.Items.Add(this.mathMod4);
+            this.mathChangeMod.Label = "模式";
+            this.mathChangeMod.Name = "mathChangeMod";
+            this.mathChangeMod.ScreenTip = "编号模式";
+            this.mathChangeMod.ShowImage = true;
+            this.mathChangeMod.SuperTip = "选择合适的编号模式，不同模式有不同的使用方法和注意事项";
+            // 
+            // mathMod1
+            // 
+            this.mathMod1.Label = "模式 1";
+            this.mathMod1.Name = "mathMod1";
+            this.mathMod1.ScreenTip = "模式 1";
+            this.mathMod1.ShowImage = true;
+            this.mathMod1.SuperTip = "1. 自动更新编号: √\n2. 加入交叉引用: ×\n3. 编号格式：(1)\n\n备注：可以对编号打书签，再交叉引用书签";
+            this.mathMod1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.mathMod1_Click);
+            // 
+            // mathMod2
+            // 
+            this.mathMod2.Label = "模式 2";
+            this.mathMod2.Name = "mathMod2";
+            this.mathMod2.ScreenTip = "模式 2";
+            this.mathMod2.ShowImage = true;
+            this.mathMod2.SuperTip = "1. 自动更新编号: √\n2. 加入交叉引用: √\n3. 编号格式：(1)\n\n备注：编号通过有序列表实现，交叉引用编号项";
+            this.mathMod2.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.mathMod2_Click);
+            // 
+            // mathMod3
+            // 
+            this.mathMod3.Label = "模式 3";
+            this.mathMod3.Name = "mathMod3";
+            this.mathMod3.ScreenTip = "模式 3";
+            this.mathMod3.ShowImage = true;
+            this.mathMod3.SuperTip = "1. 自动更新编号: ×\n2. 加入交叉引用: ×\n3. 编号格式：(1-1)\n\n备注：\n1. 先给每章标题末尾插入分隔标记，再对公式插入编号\n2. 可以对编号打" +
+    "书签，再交叉引用书签";
+            this.mathMod3.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.mathMod3_Click);
+            // 
+            // mathMod4
+            // 
+            this.mathMod4.Label = "模式 4";
+            this.mathMod4.Name = "mathMod4";
+            this.mathMod4.ScreenTip = "模式 4";
+            this.mathMod4.ShowImage = true;
+            this.mathMod4.SuperTip = "1. 自动更新编号: √\n2. 加入交叉引用: √\n3. 编号格式：(1-1)\n\n备注：\n先给每章标题末尾插入分隔标记，再对公式插入编号";
+            this.mathMod4.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.mathMod4_Click);
+            // 
+            // updateField
+            // 
+            this.updateField.Image = global::WordAddIn1.Properties.Resources.update;
+            this.updateField.Label = "更新域";
+            this.updateField.Name = "updateField";
+            this.updateField.ScreenTip = "更新域代码";
+            this.updateField.ShowImage = true;
+            this.updateField.SuperTip = "更新选中区域的域代码（包含编号、引用等）";
+            this.updateField.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.updateField_Click);
+            // 
+            // setSeqChar
+            // 
+            this.setSeqChar.Image = global::WordAddIn1.Properties.Resources.settings;
+            this.setSeqChar.Label = "设置符号";
+            this.setSeqChar.Name = "setSeqChar";
+            this.setSeqChar.ScreenTip = "设置公式编号连接符号";
+            this.setSeqChar.ShowImage = true;
+            this.setSeqChar.SuperTip = "公式一级编号和二级编号之间的连接符号";
+            this.setSeqChar.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.setSeqChar_Click);
+            // 
+            // runCodeGroup
+            // 
+            this.runCodeGroup.Items.Add(this.runCode);
+            this.runCodeGroup.Items.Add(this.chooseCode);
+            this.runCodeGroup.Items.Add(this.appendCodeMod);
+            this.runCodeGroup.Label = "运行代码";
+            this.runCodeGroup.Name = "runCodeGroup";
+            this.runCodeGroup.Visible = false;
             // 
             // runCode
             // 
@@ -824,6 +965,21 @@ namespace WordAddIn1
             this.chooseJava.SuperTip = "需要 Java 环境";
             this.chooseJava.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.chooseJava_Click);
             // 
+            // appendCodeMod
+            // 
+            this.appendCodeMod.Label = "追加模式";
+            this.appendCodeMod.Name = "appendCodeMod";
+            this.appendCodeMod.ScreenTip = "追加模式";
+            this.appendCodeMod.SuperTip = "勾选后，代码将会追加到上次的运行内容之后";
+            this.appendCodeMod.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.appendCodeMod_Click);
+            // 
+            // simpleBrowser
+            // 
+            this.simpleBrowser.Items.Add(this.startBrowser);
+            this.simpleBrowser.Label = "简单浏览器";
+            this.simpleBrowser.Name = "simpleBrowser";
+            this.simpleBrowser.Visible = false;
+            // 
             // startBrowser
             // 
             this.startBrowser.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -834,6 +990,43 @@ namespace WordAddIn1
             this.startBrowser.ShowImage = true;
             this.startBrowser.SuperTip = "你可以在侧栏浏览网页、本地HTML,PDF,MD";
             this.startBrowser.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.startBrowser_Click);
+            // 
+            // testGroup
+            // 
+            this.testGroup.Items.Add(this.FileTabOnOff);
+            this.testGroup.Items.Add(this.highlight);
+            this.testGroup.Label = "实验性功能";
+            this.testGroup.Name = "testGroup";
+            this.testGroup.Visible = false;
+            // 
+            // FileTabOnOff
+            // 
+            this.FileTabOnOff.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.FileTabOnOff.Image = ((System.Drawing.Image)(resources.GetObject("FileTabOnOff.Image")));
+            this.FileTabOnOff.Label = "标签栏";
+            this.FileTabOnOff.Name = "FileTabOnOff";
+            this.FileTabOnOff.ScreenTip = "【实验性】标签栏";
+            this.FileTabOnOff.ShowImage = true;
+            this.FileTabOnOff.SuperTip = "在多个文档间切换（请注意及时保存文档）";
+            this.FileTabOnOff.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.FileTabOnOff_Click);
+            // 
+            // highlight
+            // 
+            this.highlight.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.highlight.Image = global::WordAddIn1.Properties.Resources.highlight;
+            this.highlight.Label = "代码高亮";
+            this.highlight.Name = "highlight";
+            this.highlight.ScreenTip = "【实验性】代码高亮";
+            this.highlight.ShowImage = true;
+            this.highlight.SuperTip = "打开代码高亮面板";
+            this.highlight.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.highlight_Click);
+            // 
+            // control
+            // 
+            this.control.Items.Add(this.SettingBt);
+            this.control.Items.Add(this.About);
+            this.control.Label = "控制";
+            this.control.Name = "control";
             // 
             // SettingBt
             // 
@@ -878,10 +1071,16 @@ namespace WordAddIn1
             this.CodeGroup4.PerformLayout();
             this.ToolsBox.ResumeLayout(false);
             this.ToolsBox.PerformLayout();
+            this.pdfToolsGroup.ResumeLayout(false);
+            this.pdfToolsGroup.PerformLayout();
+            this.mathList.ResumeLayout(false);
+            this.mathList.PerformLayout();
             this.runCodeGroup.ResumeLayout(false);
             this.runCodeGroup.PerformLayout();
             this.simpleBrowser.ResumeLayout(false);
             this.simpleBrowser.PerformLayout();
+            this.testGroup.ResumeLayout(false);
+            this.testGroup.PerformLayout();
             this.control.ResumeLayout(false);
             this.control.PerformLayout();
             this.ResumeLayout(false);
@@ -961,12 +1160,28 @@ namespace WordAddIn1
         internal Microsoft.Office.Tools.Ribbon.RibbonButton chooseR;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox appendCodeMod;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton bib2gbt;
-        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton chooseJava;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton highlight;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton changeStyle;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup simpleBrowser;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton startBrowser;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton addEQNUM;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup mathList;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup testGroup;
+        internal Microsoft.Office.Tools.Ribbon.RibbonMenu mathChangeMod;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton mathMod1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton mathMod2;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton updateField;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton mathMod3;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton setSeqChar;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton mathInsertCh1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton visSplit;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton mathMod4;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton Pdf2Img;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton MgPdf;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton Img2Pdf;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup pdfToolsGroup;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton Pdf2Imgpdf;
     }
 
     partial class ThisRibbonCollection

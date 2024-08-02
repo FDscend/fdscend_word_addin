@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;  //正则表达式
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Net.NetworkInformation;
+using System.Drawing.Imaging;
 
 
 namespace WordAddIn1
@@ -49,6 +50,7 @@ namespace WordAddIn1
         public static string XMTsetting = FDscendHome + Properties.Resources.PresetXMTsetting;
         public static string highlight_index = FDscendHome + Properties.Resources.highlight_index;
         public static string PresetHighlight = FDscendHome + Properties.Resources.PresetHighlight;
+        public static string PresetMathTools = FDscendHome + Properties.Resources.PresetMathTools;
 
         public static string tempFile = FDscendHome + "\\temp";
         public static string scriptsDic = FDscendHome + "\\scripts";
@@ -73,6 +75,9 @@ namespace WordAddIn1
         public const string KeyToolsBox = "tools";
         public const string KeyRunCode = "runCode";
         public const string KeyBrowser = "browser";
+        public const string KeyMathList = "math";
+        public const string KeyTestGroup = "test";
+        public const string KeyPdfTools = "pdf";
         public const string KeyAdmin = "admin";
 
 
@@ -95,6 +100,9 @@ namespace WordAddIn1
         static int gbtOutputCount = 1;
 
         int XMT_styleChoice = 0;
+
+        int mathMod = 1;
+        string connector_symbol = "-";
 
 
         //窗体句柄字典
@@ -202,6 +210,15 @@ namespace WordAddIn1
                 case KeyRunCode:
                     runCodeGroup.Visible = true;
                     break;
+                case KeyMathList:
+                    mathList.Visible = true;
+                    break;
+                case KeyTestGroup:
+                    testGroup.Visible = true;
+                    break;
+                case KeyPdfTools:
+                    pdfToolsGroup.Visible = true;
+                    break;
                 case KeyAdmin:
                     KeyAllTrue();
                     break;
@@ -291,6 +308,33 @@ namespace WordAddIn1
                     else
                         simpleBrowser.Visible = false;
                     break;
+                case KeyMathList:
+                    if (ReadjsonFun(jsonfile, "state_" + KeyMathList) == "1")
+                    {
+                        mathList.Visible = true;
+                        return true;
+                    }
+                    else
+                        mathList.Visible = false;
+                    break;
+                case KeyTestGroup:
+                    if (ReadjsonFun(jsonfile, "state_" + KeyTestGroup) == "1")
+                    {
+                        testGroup.Visible = true;
+                        return true;
+                    }
+                    else
+                        testGroup.Visible = false;
+                    break;
+                case KeyPdfTools:
+                    if (ReadjsonFun(jsonfile, "state_" + KeyPdfTools) == "1")
+                    {
+                        pdfToolsGroup.Visible = true;
+                        return true;
+                    }
+                    else
+                        pdfToolsGroup.Visible = false;
+                    break;
                 case KeyAdmin:
                     if (ReadjsonFun(jsonfile, "state_"+KeyAdmin) == "1")
                     {
@@ -323,8 +367,8 @@ namespace WordAddIn1
 
             //
 #if DEBUG
-            KeyAllTrue();
-            //KeyStateLoad();
+            //KeyAllTrue();
+            KeyStateLoad();
 #endif
 #if !DEBUG
             KeyStateLoad();
@@ -376,6 +420,28 @@ namespace WordAddIn1
                 if (GetNetStatus("api.github.com")) AutoUpdate();
             }
 
+
+            //math list
+            JObject js_math = ImportJSON(PresetMathTools);
+            mathMod = (int)js_math["default_mod"];
+            connector_symbol = js_math["connector_symbol"].ToString();
+
+            mathChangeMod.Label = "模式 " + js_math["default_mod"].ToString();
+            mathMod3.SuperTip = mathMod3.SuperTip.Replace("(1-1)", "(1" + connector_symbol + "1)");
+            mathMod4.SuperTip = mathMod4.SuperTip.Replace("(1-1)", "(1" + connector_symbol + "1)");
+
+            try
+            {
+                visSplit.Checked = Globals.ThisAddIn.Application.ActiveWindow.View.ShowHiddenText;
+            }
+            catch (Exception)
+            {
+
+                ;
+            }
+
+            if (mathMod == 3 || mathMod == 4) visMathClick(true);
+            else visMathClick(false);
         }
 
         bool GetNetStatus(string ping_url)
@@ -1807,7 +1873,7 @@ namespace WordAddIn1
 
             tables_select.Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
             tables_select.Borders[Word.WdBorderType.wdBorderTop].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
-            tables_select.Rows[1].Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth050pt;
+            tables_select.Rows[1].Borders[Word.WdBorderType.wdBorderBottom].LineWidth = Word.WdLineWidth.wdLineWidth100pt;
         }
 
         private void CodeFormatLatex_Click(object sender, RibbonControlEventArgs e)
@@ -3023,8 +3089,8 @@ namespace WordAddIn1
         private void bib2gbt_Click(object sender, RibbonControlEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "选择BibTeX文件";
-            openFileDialog.Filter = "BibTeX文件(*.bib,*.txt)|*.bib;*.txt|BibTeX文件(*.bib)|*.bib|全部文件(*.*)|*.*";
+            openFileDialog.Title = "选择 BibTeX 文件";
+            openFileDialog.Filter = "BibTeX 文件 (*.bib,*.txt)|*.bib;*.txt|BibTeX 文件 (*.bib)|*.bib|全部文件 (*.*)|*.*";
             openFileDialog.Multiselect = true;
 
 
@@ -3053,37 +3119,39 @@ namespace WordAddIn1
                 {
                     //MessageBox.Show(InportFile);
 
-                    try
+                    if (!string.IsNullOrEmpty(InportFile))
                     {
-                    
-                        if (File.Exists(py_file))
+                        try
                         {
-                            Process p = new Process();
 
-                            p.StartInfo.FileName = startFile;
+                            if (File.Exists(py_file))
+                            {
+                                Process p = new Process();
 
-                            string sArguments = sArg + InportFile;
-                    
-                            p.StartInfo.Arguments = sArguments;
-                            p.StartInfo.UseShellExecute = false;
-                            p.StartInfo.RedirectStandardOutput = true;
-                            p.StartInfo.RedirectStandardInput = true;
-                            p.StartInfo.RedirectStandardError = true;
-                            p.StartInfo.CreateNoWindow = true;
-                    
-                            p.Start();
-                            p.BeginOutputReadLine();
-                            p.OutputDataReceived += new DataReceivedEventHandler(p_OutputGBT);
+                                p.StartInfo.FileName = startFile;
+
+                                string sArguments = sArg + InportFile;
+
+                                p.StartInfo.Arguments = sArguments;
+                                p.StartInfo.UseShellExecute = false;
+                                p.StartInfo.RedirectStandardOutput = true;
+                                p.StartInfo.RedirectStandardInput = true;
+                                p.StartInfo.RedirectStandardError = true;
+                                p.StartInfo.CreateNoWindow = true;
+
+                                p.Start();
+                                p.BeginOutputReadLine();
+                                p.OutputDataReceived += new DataReceivedEventHandler(p_OutputGBT);
+                            }
+                            else MessageBox.Show("python file not exist");
+
                         }
-                        else MessageBox.Show("python file not exist");
-                    
-                    }
-                    catch
-                    {
-                        MessageBox.Show(catchError);
-                    }
+                        catch
+                        {
+                            MessageBox.Show(catchError);
+                        }
+                    }             
                 }
-
 
                 gbtOutputCount = 1;
             }
@@ -3209,6 +3277,547 @@ namespace WordAddIn1
             simpleBrowserPane = Globals.ThisAddIn.CustomTaskPanes.Add(simpleBrowserForm, "Simple Browser");
             simpleBrowserPane.Width = 800;
             simpleBrowserPane.Visible = true;
+        }
+
+        private void addEQNUM_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (mathMod == 1) addEQNUM_1();
+            else if (mathMod == 2) addEQNUM_2();
+            else if (mathMod == 3) addEQNUM_3();
+            else if (mathMod == 4) addEQNUM_4();
+        }
+
+        private void addEQNUM_1()
+        {
+            Globals.ThisAddIn.Application.Selection.InsertAfter("#(");
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+            Globals.ThisAddIn.Application.Selection.Fields.Add(
+                Globals.ThisAddIn.Application.Selection.Range,
+                Word.WdFieldType.wdFieldEmpty,
+                @"AUTONUM \* Arabic",
+                false
+                ).Update();
+
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+            Globals.ThisAddIn.Application.Selection.InsertAfter(")");
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+            //foreach (Word.OMath math in Globals.ThisAddIn.Application.Selection.OMaths)
+            //{
+            //    math.Linearize();
+            //    math.BuildUp();
+            //}
+
+            Globals.ThisAddIn.Application.Selection.OMaths.BuildUp();
+        }
+
+        private void addEQNUM_2()
+        {
+            if (!CheckIfFieldCodeExists("eqlist"))
+            {
+                Word.ListTemplate listTemplate = Globals.ThisAddIn.Application.ListGalleries[Word.WdListGalleryType.wdOutlineNumberGallery].ListTemplates[1];
+                listTemplate.ListLevels[1].NumberFormat = "%1";
+                listTemplate.Name = "eqlist";
+
+                Globals.ThisAddIn.Application.Selection.Range.ListFormat.ApplyListTemplateWithLevel(
+                    listTemplate,
+                    false,
+                    Word.WdListApplyTo.wdListApplyToWholeList,
+                    Word.WdDefaultListBehavior.wdWord10ListBehavior
+                    );
+
+                Globals.ThisAddIn.Application.Selection.Range.ListFormat.RemoveNumbers(Word.WdNumberType.wdNumberParagraph);
+            }
+
+
+            Globals.ThisAddIn.Application.Selection.InsertAfter("#(");
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+            
+            Globals.ThisAddIn.Application.Selection.Fields.Add(
+                Globals.ThisAddIn.Application.Selection.Range,
+                Word.WdFieldType.wdFieldEmpty,
+                @"LISTNUM  eqlist ",
+                false
+                ).Update();
+            
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+            Globals.ThisAddIn.Application.Selection.InsertAfter(")");
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+            
+            Globals.ThisAddIn.Application.Selection.OMaths.BuildUp();
+        }
+
+        private void mathMod1_Click(object sender, RibbonControlEventArgs e)
+        {
+            changeMathModClick(1);
+            visMathClick(false);
+        }
+
+        private void mathMod2_Click(object sender, RibbonControlEventArgs e)
+        {
+            changeMathModClick(2);
+            visMathClick(false);
+        }
+
+        private void updateField_Click(object sender, RibbonControlEventArgs e)
+        {
+            Globals.ThisAddIn.Application.Selection.Fields.Update();
+        }
+
+        /// <summary>
+        /// 给改变mathMod的几个按键的统一函数
+        /// </summary>
+        /// <param name="mod"></param>
+        private void changeMathModClick(int mod)
+        {
+            mathMod = mod;
+            mathChangeMod.Label = "模式 " + mathMod.ToString();
+
+            JObject js_math = ImportJSON(PresetMathTools);
+            js_math["default_mod"] = mathMod;
+            SetjsonFun(PresetMathTools, js_math);
+        }
+
+        private void visMathClick(bool vis)
+        {
+            setSeqChar.Visible = vis;
+            mathInsertCh1.Visible = vis;
+            visSplit.Visible = vis;
+        }
+
+        private void mathMod3_Click(object sender, RibbonControlEventArgs e)
+        {
+            changeMathModClick(3);
+            visMathClick(true);
+        }
+
+        private void addEQNUM_3()
+        {
+            Globals.ThisAddIn.Application.Selection.InsertAfter("#(");
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+            Globals.ThisAddIn.Application.Selection.Fields.Add(
+                Globals.ThisAddIn.Application.Selection.Range,
+                Word.WdFieldType.wdFieldEmpty,
+                @"SEQ fdch1 \c \* Arabic",
+                false
+                ).Update();
+
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+            Globals.ThisAddIn.Application.Selection.InsertAfter(connector_symbol);
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+            Globals.ThisAddIn.Application.Selection.Fields.Add(
+                Globals.ThisAddIn.Application.Selection.Range,
+                Word.WdFieldType.wdFieldEmpty,
+                @"SEQ fdeq \* Arabic",
+                false
+                ).Update();
+
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+            Globals.ThisAddIn.Application.Selection.InsertAfter(")");
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+            Globals.ThisAddIn.Application.Selection.OMaths.BuildUp();
+        }
+
+        private void setSeqChar_Click(object sender, RibbonControlEventArgs e)
+        {
+            JObject js_math = ImportJSON(PresetMathTools);
+            string key = Interaction.InputBox("如：\n-: (1-1)\n.: (1.1)\n\n当前连接符：" + js_math["connector_symbol"].ToString(), "输入连接符号").ToString();
+
+            if (key != "")
+            {
+                mathMod3.SuperTip = mathMod3.SuperTip.Replace("(1" + connector_symbol + "1)", "(1" + key + "1)");
+                mathMod4.SuperTip = mathMod4.SuperTip.Replace("(1" + connector_symbol + "1)", "(1" + key + "1)");
+
+                connector_symbol = key;
+                js_math["connector_symbol"] = key;
+                SetjsonFun(PresetMathTools, js_math);
+
+                if (mathMod == 4)
+                {
+                    Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
+
+                    foreach (Word.ListTemplate listTemplate in doc.ListTemplates)
+                    {
+                        if (listTemplate.Name == "eqlist4")
+                        {
+                            listTemplate.ListLevels[2].NumberFormat = "%1" + connector_symbol + "%2";
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void mathInsertCh1_Click(object sender, RibbonControlEventArgs e)
+        {
+            int start = Globals.ThisAddIn.Application.Selection.Start;
+
+            Globals.ThisAddIn.Application.Selection.InsertAfter("-来自分点的公式编号分隔标记-");
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+
+            if(mathMod == 3)
+            {
+                Globals.ThisAddIn.Application.Selection.Fields.Add(
+                    Globals.ThisAddIn.Application.Selection.Range,
+                    Word.WdFieldType.wdFieldEmpty,
+                    @"SEQ fdch1 \* Arabic",
+                    false
+                    ).Update();
+
+                Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+                Globals.ThisAddIn.Application.Selection.Fields.Add(
+                    Globals.ThisAddIn.Application.Selection.Range,
+                    Word.WdFieldType.wdFieldEmpty,
+                    @"SEQ fdeq \r \* Arabic",
+                    false
+                    ).Update();
+            }
+            else
+            {
+                if (!CheckIfFieldCodeExists("eqlist4")) MathMod4SetList();
+
+                Globals.ThisAddIn.Application.Selection.Fields.Add(
+                    Globals.ThisAddIn.Application.Selection.Range,
+                    Word.WdFieldType.wdFieldEmpty,
+                    @"LISTNUM  eqlist4 \l 1 ",
+                    false
+                    ).Update();
+            }
+
+            int end = Globals.ThisAddIn.Application.Selection.End;
+
+            Globals.ThisAddIn.Application.ActiveDocument.Range(start, end).Font.Hidden = 1;
+        }
+
+        private void visSplit_Click(object sender, RibbonControlEventArgs e)
+        {
+            Globals.ThisAddIn.Application.ActiveWindow.View.ShowHiddenText = visSplit.Checked;
+        }
+
+        private void mathMod4_Click(object sender, RibbonControlEventArgs e)
+        {
+            changeMathModClick(4);
+            visMathClick(true);
+        }
+
+        private void MathMod4SetList()
+        {
+            Word.ListTemplate listTemplate = Globals.ThisAddIn.Application.ListGalleries[Word.WdListGalleryType.wdOutlineNumberGallery].ListTemplates[1];
+            listTemplate.ListLevels[1].NumberFormat = "%1";
+            listTemplate.ListLevels[2].NumberFormat = "%1" + connector_symbol + "%2";
+            listTemplate.Name = "eqlist4";
+
+            Globals.ThisAddIn.Application.Selection.Range.ListFormat.ApplyListTemplateWithLevel(
+                listTemplate,
+                false,
+                Word.WdListApplyTo.wdListApplyToWholeList,
+                Word.WdDefaultListBehavior.wdWord10ListBehavior
+                );
+
+            Globals.ThisAddIn.Application.Selection.Range.ListFormat.RemoveNumbers(Word.WdNumberType.wdNumberParagraph);
+        }
+
+        private void addEQNUM_4()
+        {
+            if (!CheckIfFieldCodeExists("eqlist4")) MathMod4SetList();
+
+            Globals.ThisAddIn.Application.Selection.InsertAfter("#(");
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+            Globals.ThisAddIn.Application.Selection.Fields.Add(
+                Globals.ThisAddIn.Application.Selection.Range,
+                Word.WdFieldType.wdFieldEmpty,
+                @"LISTNUM  eqlist4 \l 2 ",
+                false
+                ).Update();
+
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+            Globals.ThisAddIn.Application.Selection.InsertAfter(")");
+            Globals.ThisAddIn.Application.Selection.Collapse(Word.WdCollapseDirection.wdCollapseEnd);
+
+            Globals.ThisAddIn.Application.Selection.OMaths.BuildUp();
+        }
+
+        /// <summary>
+        /// 判断是否存在域代码
+        /// </summary>
+        /// <param name="listNumName"></param>
+        /// <returns></returns>
+        private bool CheckIfFieldCodeExists(string listNumName)
+        {
+            Word.Document doc = Globals.ThisAddIn.Application.ActiveDocument;
+
+            foreach (Word.Field field in doc.Fields)
+            {
+                if (field.Type == Word.WdFieldType.wdFieldListNum)
+                {
+                    // 获取域代码文本
+                    string fieldCode = field.Code.Text.Trim();
+
+                    // 检查是否包含指定的 LISTNUM 名称
+                    if (fieldCode.Contains(listNumName))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private void Pdf2Img_Click(object sender, RibbonControlEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "选择 PDF 文件",
+                Filter = "PDF 文件(*.pdf)|*.pdf",
+                Multiselect = false
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string pdfPath = openFileDialog.FileName;
+
+                if (!string.IsNullOrEmpty(pdfPath))
+                {
+                    FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog
+                    {
+                        Description = "选择输出文件夹"
+                    };
+
+                    if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string outputDir = folderBrowserDialog.SelectedPath;
+                        if (!string.IsNullOrEmpty(outputDir))
+                        {
+                            if (!Directory.Exists(outputDir))
+                            {
+                                Directory.CreateDirectory(outputDir);
+                            }
+
+                            RunPdfTools(" pdf2img " + pdfPath + " " + outputDir);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// pdfTools.py 调用函数，传入参数
+        /// </summary>
+        /// <param name="arg"></param>
+        private void RunPdfTools(string InportFile)
+        {
+            string startFile = "";
+            string py_file = scriptsDic + "\\pdfTools.py";
+            string sArg = "";
+            string catchError = "";
+            JObject js_settings = ImportJSON(SettingsFile);
+            if ((bool)js_settings["usePyScripts"])
+            {
+                startFile = @"python.exe";
+                sArg = py_file + " ";
+                catchError = "Python Environment Error";
+            }
+            else
+            {
+                startFile = scriptsDic + "\\pdfTools.exe";
+                catchError = "pdfTools.exe Error";
+            }
+
+
+            try
+            {
+
+                if (File.Exists(py_file))
+                {
+                    Process p = new Process();
+
+                    p.StartInfo.FileName = startFile;
+
+                    string sArguments = sArg + InportFile;
+
+                    p.StartInfo.Arguments = sArguments;
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.RedirectStandardInput = true;
+                    p.StartInfo.RedirectStandardError = true;
+                    p.StartInfo.CreateNoWindow = true;
+                    p.EnableRaisingEvents = true;  // 允许 Process 触发事件
+                    p.Exited += new EventHandler(Process_Exited);
+
+                    p.Start();
+                }
+                else MessageBox.Show("python file not exist");
+
+            }
+            catch
+            {
+                MessageBox.Show(catchError);
+            }
+        }
+
+        private static void Process_Exited(object sender, EventArgs e)
+        {
+            MessageBox.Show("转换完成！", "Process Exited", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void MgPdf_Click(object sender, RibbonControlEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "选择 PDF 文件",
+                Filter = "PDF 文件(*.pdf)|*.pdf",
+                Multiselect = true
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string[] selectedFiles = openFileDialog.FileNames;
+
+                string destinationFolder = tempFile;
+
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "PDF 文件 (*.pdf)|*.pdf",
+                    Title = "保存 PDF 文件",
+                    FileName = "分点-合并pdf.pdf"
+                };
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string output_pdf = saveFileDialog.FileName;
+
+                    if (!string.IsNullOrEmpty(output_pdf))
+                    {
+                        foreach (string file in Directory.GetFiles(destinationFolder))
+                        {
+                            File.Delete(file);
+                        }
+                        
+                        foreach (string file in selectedFiles)
+                        {
+                            try
+                            {
+                                string fileName = Path.GetFileName(file);
+                                string destinationPath = Path.Combine(destinationFolder, fileName);
+                                File.Copy(file, destinationPath, true);
+                            }
+                            catch (IOException ex)
+                            {
+                                Console.WriteLine($"Error copying file {file}: {ex.Message}");
+                            }
+                        }
+                        
+                        RunPdfTools(" mgpdf " + destinationFolder + " " + output_pdf);
+                    }
+                }         
+            }
+        }
+
+        private void Img2Pdf_Click(object sender, RibbonControlEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "选择图片",
+                Filter = "图片 (*.png,*.jpg,*.jpeg)|*.png;*.jpg;*.jpeg",
+                Multiselect = true
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string[] selectedFiles = openFileDialog.FileNames;
+
+                string destinationFolder = tempFile;
+
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "PDF 文件 (*.pdf)|*.pdf",
+                    Title = "保存 PDF 文件",
+                    FileName = "分点-图像转pdf.pdf"
+                };
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string output_pdf = saveFileDialog.FileName;
+
+                    if (!string.IsNullOrEmpty(output_pdf))
+                    {
+                        foreach (string file in Directory.GetFiles(destinationFolder))
+                        {
+                            File.Delete(file);
+                        }
+
+
+                        foreach (string file in selectedFiles)
+                        {
+                            try
+                            {
+                                string fileName = Path.GetFileName(file);
+                                string destinationPath = Path.Combine(destinationFolder, fileName);
+                                File.Copy(file, destinationPath, true);
+                            }
+                            catch (IOException ex)
+                            {
+                                Console.WriteLine($"Error copying file {file}: {ex.Message}");
+                            }
+                        }
+
+                        RunPdfTools(" img2pdf " + destinationFolder + " " + output_pdf);
+
+                        File.Delete(Path.GetDirectoryName(output_pdf) + "\\temp.pdf");
+                    }
+                }
+            }
+        }
+
+        private void Pdf2Imgpdf_Click(object sender, RibbonControlEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "选择 PDF 文件",
+                Filter = "PDF 文件(*.pdf)|*.pdf",
+                Multiselect = false
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string inputPdf = openFileDialog.FileName;
+
+                if (!string.IsNullOrEmpty(inputPdf))
+                {
+                    SaveFileDialog saveFileDialog = new SaveFileDialog
+                    {
+                        Filter = "PDF 文件 (*.pdf)|*.pdf",
+                        Title = "保存 PDF 文件",
+                        FileName = "分点-图像版pdf.pdf"
+                    };
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string output_pdf = saveFileDialog.FileName;
+                        if (!string.IsNullOrEmpty(output_pdf))
+                        {
+                            foreach (string file in Directory.GetFiles(tempFile))
+                            {
+                                File.Delete(file);
+                            }
+
+
+                            RunPdfTools(" pdf2imgpdf " + inputPdf + " " + output_pdf + " " + tempFile);
+
+                            File.Delete(Path.GetDirectoryName(output_pdf) + "\\temp.pdf");
+                        }
+                    }
+                }
+            }
         }
     }
 }

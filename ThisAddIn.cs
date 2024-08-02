@@ -50,7 +50,7 @@ namespace WordAddIn1
                 catch (Exception ex)
                 {
 #if DEBUG
-                    MessageBox.Show($"删除文件夹失败: {ex.Message}");
+                    //MessageBox.Show($"删除文件夹失败: {ex.Message}");
 #endif
                 }
             }     
