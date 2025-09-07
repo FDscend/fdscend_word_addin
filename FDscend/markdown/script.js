@@ -334,6 +334,16 @@ const thmMeta = {
   THM: { defaultTitle: "Theorem" },
   DEF: { defaultTitle: "Definition" },
   LEM: { defaultTitle: "Lemma" },
+  PRP: { defaultTitle: "Proposition" },
+  COR: { defaultTitle: "Corollary" },
+  CLM: { defaultTitle: "Claim" },
+  ASM: { defaultTitle: "Assumption" },
+  EXM: { defaultTitle: "Example" },
+  EXR: { defaultTitle: "Exercise" },
+  HYP: { defaultTitle: "Hypothesis" },
+  RMK: { defaultTitle: "Remark" },
+  AXM: { defaultTitle: "Axiom" },
+  CNJ: { defaultTitle: "Conjecture" },
 };
 
 const alertMeta = {
