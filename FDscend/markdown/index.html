@@ -31,25 +31,57 @@
   <body>
     <div id="md-body" class="markdown-body">
       <!-- 默认离线内容 -->
-       <div class="offline-message">
-      <h1>无法加载内容</h1>
-      <p>请检查网络连接后刷新页面</p>
-      <div class="offline-resources">
-        <p>依赖的外部资源：</p>
-        <ul>
-          <li>
-            <a href="https://cdnjs.cloudflare.com/ajax/libs/marked/16.1.1/lib/marked.umd.min.js">Markdown 渲染库</a>、<a
-              href="https://cdn.jsdelivr.net/npm/marked-footnote/dist/index.umd.min.js">脚注库</a>
-          </li>
-          <li><a href="https://cdn.jsdelivr.net/npm/mermaid@11.9.0/dist/mermaid.min.js">Mermaid 渲染库</a></li>
-          <li><a href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js">代码高亮库</a>以及相关样式</li>
-          <li><a href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js">数学公式渲染库</a>以及相关样式</li>
-          <li><a href="https://cdn.jsdelivr.net/npm/emoji-toolkit@9.0.1/lib/js/joypixels.min.js">emoji渲染库</a>以及相关<a
-                href="https://cdn.jsdelivr.net/npm/emoji-toolkit@9.0.1/extras/css/joypixels.min.css">样式</a></li>
-          <li><a href="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js">Yaml 处理</a></li>
-        </ul>
+      <div class="offline-message">
+        <h1>无法加载内容</h1>
+        <p>请检查网络连接后刷新页面</p>
+        <div class="offline-resources">
+          <p>依赖的外部资源：</p>
+          <ul>
+            <li>
+              <a
+                href="https://cdnjs.cloudflare.com/ajax/libs/marked/16.1.1/lib/marked.umd.min.js"
+                >Markdown 渲染库</a
+              >、<a
+                href="https://cdn.jsdelivr.net/npm/marked-footnote/dist/index.umd.min.js"
+                >脚注库</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://cdn.jsdelivr.net/npm/mermaid@11.9.0/dist/mermaid.min.js"
+                >Mermaid 渲染库</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+                >代码高亮库</a
+              >以及相关样式
+            </li>
+            <li>
+              <a
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"
+                >数学公式渲染库</a
+              >以及相关样式
+            </li>
+            <li>
+              <a
+                href="https://cdn.jsdelivr.net/npm/emoji-toolkit@9.0.1/lib/js/joypixels.min.js"
+                >emoji渲染库</a
+              >以及相关<a
+                href="https://cdn.jsdelivr.net/npm/emoji-toolkit@9.0.1/extras/css/joypixels.min.css"
+                >样式</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"
+                >Yaml 处理</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
     </div>
     <div class="floating-ball" id="floatingBall">⚙️</div>
     <div class="control-panel" id="controlPanel">
@@ -110,39 +142,7 @@
         </select>
       </div>
     </div>
-    <textarea id="text" style="display: none">
-
-inline `print(123)` :x:
-
-```python
-def getAuthor(bibJson):
-    if bibJson["author"].find('&') != -1:  # cnki
-        _author = bibJson["author"].replace(' and ',",").replace(' & ',",").replace('.',"").upper()
-    else:
-        _author = bibJson["author"].replace(',',"").replace(' and ',",").replace('.',"").upper()
-
-    _author = _author.replace(', ',",").replace(',',", ")
-
-    _author = re.sub(r"\{[^{}]*\}", "", _author)
-    
-    if(_author.count(",") >= 3):
-        index_1 = _author.find(',')
-        index_2 = _author[index_1 + 1: -1].find(',')
-        index_3 = _author[index_1 + 1: -1][index_2 + 1: -1].find(',')
-
-        etc = ", et al"
-
-        if('\u4e00' <= _author[0: index_1] <= '\u9fff'):
-            etc = ",等"
-        
-        _author = _author[0: index_1 + index_2 + index_3 + 2] + etc
-
-    return _author
-```
-
-
-  </textarea
-    >
+    <textarea id="text" style="display: none"> </textarea>
     <script>
       // adjStyle();
 
