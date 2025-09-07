@@ -1,0 +1,380 @@
+/* 2025-9-1 */
+
+/* markdown styles */
+h1::before{
+	content: '§' counter(chapterH1) '. ';
+}
+
+h1 {
+  text-align: center;
+  counter-increment: chapterH1;
+  counter-reset: chapterH2;
+}
+
+h2::before{
+	content: '§' counter(chapterH1) "." counter(chapterH2) '. ';
+}
+
+h2 {
+  counter-increment: chapterH2;
+  counter-reset: chapterH3;
+}
+
+h3::before{
+	content: '§' counter(chapterH1) "."counter(chapterH2) "." counter(chapterH3) '. ';
+}
+
+h3 {
+  counter-increment: chapterH3;
+}
+
+.markdown-body {
+  width: 90%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.markdown-body strong {
+  color: #d32f2f;
+}
+
+.markdown-body strong mark {
+  color: #d32f2f;
+}
+
+em {
+  color: #f4511e;
+}
+
+code {
+  background-color: rgba(175, 184, 193, 0.2);
+}
+
+pre code.hljs {
+  border: 1.5px solid black;
+}
+
+html,
+body {
+  font-size: 16px;
+}
+
+table {
+  margin: auto;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+/* .markdown-body mark.text-highlight {
+  background-color: #FFEB3B;
+  color: #000;
+  padding: 0.2em 0;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+} */
+
+/* front-matter styles */
+.front-matter-container {
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+}
+
+.front-matter-title {
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.front-matter-title:before {
+  content: "ⓘ";
+  margin-right: 8px;
+  font-size: 1.1em;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.front-tag {
+  background-color: #e0e8ff;
+  color: #3a5ccc;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 0.85em;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+}
+
+.front-tag:before {
+  content: "#";
+  margin-right: 2px;
+  opacity: 0.6;
+}
+
+.metadata-row {
+  display: flex;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+}
+
+.metadata-key {
+  font-weight: 600;
+  color: #555;
+  min-width: 40px;
+}
+
+.metadata-value {
+  color: #333;
+  flex-grow: 1;
+}
+
+/* Obsidian 风格的日期样式 */
+.date-value {
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.thm-block {
+  background: white;
+  border: 1.5px solid black;
+  border-radius: 8px;
+  padding: 0.6em 0.8em;
+  margin: 1em 0;
+}
+
+.alert-block {
+  padding: 0.6em 1em;
+  margin: 1em 0;
+  border-radius: 6px;
+}
+
+/* 去掉默认的 disclosure triangle */
+.alert-block summary {
+  list-style: none;
+}
+.alert-block summary::-webkit-details-marker {
+  display: none;
+}
+
+/* 箭头容器 */
+.alert-block .arrow {
+  width: 0;
+  height: 0;
+  margin-left: 0.8em;
+  margin-right: auto;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid currentColor; /* currentColor 表示继承文本颜色 */
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+.thm-block .arrow {
+  width: 0;
+  height: 0;
+  margin-left: 0.8em;
+  margin-right: auto;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid currentColor; /* currentColor 表示继承文本颜色 */
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+
+/* 展开时旋转 90° */
+.alert-block[open] .arrow {
+  transform: rotate(90deg);
+}
+.thm-block[open] .arrow {
+  transform: rotate(90deg);
+}
+
+/* foot-note styles */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  word-wrap: normal;
+  border: 0;
+}
+
+/* control */
+.floating-ball {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  user-select: none;
+}
+
+.control-panel {
+  position: fixed; /* 改为fixed定位 */
+  bottom: 100px; /* 出现在浮动球上方 */
+  right: 30px; /* 与浮动球右对齐 */
+  width: 200px;
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+  display: none;
+  z-index: 1000; /* 确保在浮动球之上 */
+}
+
+.control-panel.show {
+  display: block;
+}
+
+.control-item {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.control-item select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-top: 5px;
+}
+
+.control-item select[multiple] {
+  height: 120px;
+  overflow-y: auto;
+}
+
+.control-item label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.has-tooltip {
+  position: relative;
+}
+
+.has-tooltip .tooltip {
+  visibility: hidden;
+  width: 200px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.has-tooltip .tooltip-warn {
+  visibility: hidden;
+  width: 200px;
+  background-color: #da3d3d;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.has-tooltip .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.has-tooltip .tooltip-warn::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #da3d3d transparent transparent transparent;
+}
+
+.has-tooltip:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.has-tooltip:hover .tooltip-warn {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* 离线提示样式 */
+.offline-message {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.offline-message h1 {
+  color: #d32f2f;
+}
+
+.offline-resources {
+  margin-top: 2rem;
+  text-align: left;
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.offline-resources ul {
+  margin: 0.5rem 0 0 1rem;
+  padding-left: 1rem;
+}

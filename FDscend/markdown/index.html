@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="src/github-markdown-light.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/emoji-toolkit@9.0.1/extras/css/joypixels.min.css"
+    />
+    <link
+      id="highlight-style"
+      rel="stylesheet"
+      href="../highlight/highlight/styles/github.min.css"
+    />
+    <link rel="stylesheet" href="mdStyle.css" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/16.1.1/lib/marked.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emoji-toolkit@9.0.1/lib/js/joypixels.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked-footnote/dist/index.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11.9.0/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <script src="../highlight/highlight/highlight.min.js"></script>
+    <script src="script.js"></script>
+    <title>Markdown-preview</title>
+  </head>
+
+  <body>
+    <div id="md-body" class="markdown-body">
+      <!-- 默认离线内容 -->
+       <div class="offline-message">
+      <h1>无法加载内容</h1>
+      <p>请检查网络连接后刷新页面</p>
+      <div class="offline-resources">
+        <p>依赖的外部资源：</p>
+        <ul>
+          <li>
+            <a href="https://cdnjs.cloudflare.com/ajax/libs/marked/16.1.1/lib/marked.umd.min.js">Markdown 渲染库</a>、<a
+              href="https://cdn.jsdelivr.net/npm/marked-footnote/dist/index.umd.min.js">脚注库</a>
+          </li>
+          <li><a href="https://cdn.jsdelivr.net/npm/mermaid@11.9.0/dist/mermaid.min.js">Mermaid 渲染库</a></li>
+          <li><a href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js">代码高亮库</a>以及相关样式</li>
+          <li><a href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js">数学公式渲染库</a>以及相关样式</li>
+          <li><a href="https://cdn.jsdelivr.net/npm/emoji-toolkit@9.0.1/lib/js/joypixels.min.js">emoji渲染库</a>以及相关<a
+                href="https://cdn.jsdelivr.net/npm/emoji-toolkit@9.0.1/extras/css/joypixels.min.css">样式</a></li>
+          <li><a href="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js">Yaml 处理</a></li>
+        </ul>
+      </div>
+    </div>
+    </div>
+    <div class="floating-ball" id="floatingBall">⚙️</div>
+    <div class="control-panel" id="controlPanel">
+      <div class="control-item">
+        <input type="checkbox" id="renderMermaid" checked />
+        <label for="renderMermaid" class="has-tooltip"
+          >渲染 Mermaid 和高亮代码<span class="tooltip"
+            >将 mermaid 代码渲染成图，并对其它代码块进行高亮</span
+          ></label
+        >
+      </div>
+      <div class="control-item">
+        <input type="checkbox" id="renderMath" checked />
+        <label for="renderMath" class="has-tooltip"
+          >渲染 公式<span class="tooltip"
+            >将 $...$ 作为行内公式，$$...$$ 作为行间公式标识</span
+          ></label
+        >
+      </div>
+      <div class="control-item">
+        <input type="checkbox" id="renderFootnote" checked />
+        <label for="renderFootnote" class="has-tooltip"
+          >渲染 脚注<span class="tooltip"
+            >将 [^..] 和 [^...]: ... 作为脚注和引用标识</span
+          ></label
+        >
+      </div>
+      <div class="control-item">
+        <input type="checkbox" id="renderHighlight" checked />
+        <label for="renderHighlight" class="has-tooltip"
+          >渲染 高亮文本<span class="tooltip"
+            >将 ==...== 识别为高亮标识</span
+          ></label
+        >
+      </div>
+      <div class="control-item">
+        <input type="checkbox" id="renderFront" checked />
+        <label for="renderFront" class="has-tooltip"
+          >渲染 前言<span class="tooltip">渲染前言区声明的文档属性</span></label
+        >
+      </div>
+      <div class="control-item">
+        <input type="checkbox" id="renderAdmonition" checked />
+        <label for="renderAdmonition" class="has-tooltip"
+          >渲染 警告块
+          <span class="tooltip">将 > [!keyword] 识别为警告块标识</span>
+        </label>
+      </div>
+      <div class="control-item">
+        <label for="highlightTheme">代码高亮主题:</label>
+        <select id="highlightTheme">
+          <option value="github">GitHub</option>
+          <option value="github-dark">GitHub Dark</option>
+          <option value="atom-one-light">Atom One Light</option>
+          <option value="atom-one-dark">Atom One Dark</option>
+          <option value="vs">Visual Studio</option>
+          <option value="xcode">Xcode</option>
+        </select>
+      </div>
+    </div>
+    <textarea id="text" style="display: none">
+
+inline `print(123)` :x:
+
+```python
+def getAuthor(bibJson):
+    if bibJson["author"].find('&') != -1:  # cnki
+        _author = bibJson["author"].replace(' and ',",").replace(' & ',",").replace('.',"").upper()
+    else:
+        _author = bibJson["author"].replace(',',"").replace(' and ',",").replace('.',"").upper()
+
+    _author = _author.replace(', ',",").replace(',',", ")
+
+    _author = re.sub(r"\{[^{}]*\}", "", _author)
+    
+    if(_author.count(",") >= 3):
+        index_1 = _author.find(',')
+        index_2 = _author[index_1 + 1: -1].find(',')
+        index_3 = _author[index_1 + 1: -1][index_2 + 1: -1].find(',')
+
+        etc = ", et al"
+
+        if('\u4e00' <= _author[0: index_1] <= '\u9fff'):
+            etc = ",等"
+        
+        _author = _author[0: index_1 + index_2 + index_3 + 2] + etc
+
+    return _author
+```
+
+
+  </textarea
+    >
+    <script>
+      // adjStyle();
+
+      setupToggle("renderAdmonition", "renderAdmonition");
+      setupToggle("renderMermaid", "renderMermaid");
+      setupToggle("renderMath", "renderMath");
+      setupToggle("renderFootnote", "renderFootnote");
+      setupToggle("renderHighlight", "renderHighlight");
+      setupToggle("renderFront", "renderFront");
+
+      // 初始化时加载设置
+      loadSettings();
+
+      mermaid.initialize({
+        securityLevel: "loose",
+        theme: "default",
+      });
+
+      renderAll();
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // 拦截所有链接点击
+        document.body.addEventListener("click", function (e) {
+          if (e.target.tagName === "A") {
+            const href = e.target.getAttribute("href");
+
+            // 处理 .md 文件链接
+            if (href && (href.endsWith(".md") || href.includes(".md#"))) {
+              e.preventDefault();
+
+              // 通知 C# 端处理 Markdown 文件加载
+              if (
+                window.chrome &&
+                chrome.webview &&
+                chrome.webview.postMessage
+              ) {
+                chrome.webview.postMessage({
+                  type: "loadMarkdown",
+                  path: href,
+                });
+              } else {
+                console.log("Would load markdown:", href);
+              }
+            }
+
+            // 处理内部锚点滚动
+            if (href && href.startsWith("#")) {
+              e.preventDefault();
+              const target = document.getElementById(href.substring(1));
+              console.log(href.substring(1));
+              if (target) {
+                target.scrollIntoView({ behavior: "smooth" });
+              }
+            }
+          }
+        });
+      });
+
+      document
+        .getElementById("floatingBall")
+        .addEventListener("click", function () {
+          const panel = document.getElementById("controlPanel");
+          panel.classList.toggle("show");
+        });
+
+      document
+        .getElementById("renderAdmonition")
+        .addEventListener("change", function (e) {
+          renderConfig.renderAdmonition = e.target.checked;
+
+          renderAll();
+        });
+
+      document
+        .getElementById("renderMermaid")
+        .addEventListener("change", function (e) {
+          renderConfig.renderMermaid = e.target.checked;
+
+          renderAll();
+        });
+      document
+        .getElementById("renderFootnote")
+        .addEventListener("change", function (e) {
+          renderConfig.renderFootnote = e.target.checked;
+
+          renderAll();
+        });
+      document
+        .getElementById("renderHighlight")
+        .addEventListener("change", function (e) {
+          renderConfig.renderHighlight = e.target.checked;
+
+          renderAll();
+        });
+      document
+        .getElementById("renderFront")
+        .addEventListener("change", function (e) {
+          renderConfig.renderFront = e.target.checked;
+
+          renderAll();
+        });
+      document
+        .getElementById("highlightTheme")
+        .addEventListener("change", function (e) {
+          renderConfig.highlightTheme = e.target.value;
+
+          loadCodeHighlightTheme(e.target.value);
+          renderConfig["highlightTheme"] = e.target.value;
+          saveSettings();
+
+          renderAll();
+        });
+    </script>
+  </body>
+</html>
