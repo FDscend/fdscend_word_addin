@@ -141,6 +141,39 @@ _由于一些功能在完善中，暂时无法正常使用，所以通过操作�
 
 > 交叉引用，选“段落编号”
 
+# 简单浏览器
+
+预览 markdown 功能需要连接网络，支持
+
+- 数学公式渲染：`$...$` 和 `$$...$$`
+- mermaid 图
+- 脚注：`[^label]`
+- 文本高亮：`==text==`
+- 前言区渲染标签
+- 渲染 Obsidian 样式的警告块 `> [!keyword]` 和自定义标题的 `> [!keyword] title`
+
+  - 支持的 keywords（不区分大小写）: `NOTE, ABSTRACT, SUMMARY, INFO, TODO, TIP, HINT, IMPORTANT, SUCCESS, CHECK, DONE, QUESTION, HELP, FAQ, WARNING, CAUTION, ATTENTION, FAILURE, FAIL, MISSING, DANGER, ERROR, BUG, EXAMPLE, QUOTE, CITE`
+  - 数学定理变体 keywords（不区分大小写）:
+
+    | Environment name | keyword |
+    | :--------------: | :-----: |
+    |     Theorem      |  `THM`  |
+    |    Definition    |  `DEF`  |
+    |      Lemma       |  `LEM`  |
+    |   Proposition    |  `PRP`  |
+    |    Corollary     |  `COR`  |
+    |      Claim       |  `CLM`  |
+    |    Assumption    |  `ASM`  |
+    |     Example      |  `EXM`  |
+    |     Exercise     |  `EXR`  |
+    |    Hypothesis    |  `HYP`  |
+    |      Remark      |  `RMK`  |
+    |      Axiom       |  `AXM`  |
+    |    Conjecture    |  `CNJ`  |
+
+  - 可以使用警告块变体 `> [!keyword]+ (title)` 和 `> [!keyword]- (title)` 获得可折叠/展开的警告块
+  - 使用不支持的 keyword 会按照 NOTE 处理
+
 # 自定义设置与预设
 
 在 ProgramData 目录下（通常是 `C:\ProgramData\FDscend`），有插件所有的设置文件
