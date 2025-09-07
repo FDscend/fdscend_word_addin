@@ -169,7 +169,7 @@ namespace WordAddIn1.Properties {
         }
         
         /// <summary>
-        ///   查找类似 0.19.0 的本地化字符串。
+        ///   查找类似 0.19.1 的本地化字符串。
         /// </summary>
         public static string current_ver {
             get {
@@ -281,6 +281,15 @@ namespace WordAddIn1.Properties {
             get {
                 object obj = ResourceManager.GetObject("math", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \markdown\index.html 的本地化字符串。
+        /// </summary>
+        public static string mdIndex {
+            get {
+                return ResourceManager.GetString("mdIndex", resourceCulture);
             }
         }
         
@@ -469,6 +478,24 @@ namespace WordAddIn1.Properties {
             get {
                 object obj = ResourceManager.GetObject("split", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \highlight\highlight.zip 的本地化字符串。
+        /// </summary>
+        public static string srcHighlight {
+            get {
+                return ResourceManager.GetString("srcHighlight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 \markdown\src.zip 的本地化字符串。
+        /// </summary>
+        public static string srcMarkdown {
+            get {
+                return ResourceManager.GetString("srcMarkdown", resourceCulture);
             }
         }
         

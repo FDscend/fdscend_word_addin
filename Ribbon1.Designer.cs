@@ -588,6 +588,7 @@ namespace WordAddIn1
             this.ToolsBox.Items.Add(this.del_header_line);
             this.ToolsBox.Items.Add(this.inlineCode);
             this.ToolsBox.Items.Add(this.bib2gbt);
+            this.ToolsBox.Items.Add(this.highlight);
             this.ToolsBox.Label = "工具箱";
             this.ToolsBox.Name = "ToolsBox";
             this.ToolsBox.Visible = false;
@@ -994,7 +995,6 @@ namespace WordAddIn1
             // testGroup
             // 
             this.testGroup.Items.Add(this.FileTabOnOff);
-            this.testGroup.Items.Add(this.highlight);
             this.testGroup.Label = "实验性功能";
             this.testGroup.Name = "testGroup";
             this.testGroup.Visible = false;

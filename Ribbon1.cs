@@ -48,7 +48,6 @@ namespace WordAddIn1
         public static string PresetToolsBoxShadeColor = FDscendHome + Properties.Resources.PresetToolsBoxShadeColor;
         public static string PresetToolsBoxTable = FDscendHome + Properties.Resources.PresetToolsBoxTable;
         public static string XMTsetting = FDscendHome + Properties.Resources.PresetXMTsetting;
-        public static string highlight_index = FDscendHome + Properties.Resources.highlight_index;
         public static string PresetHighlight = FDscendHome + Properties.Resources.PresetHighlight;
         public static string PresetMathTools = FDscendHome + Properties.Resources.PresetMathTools;
 
@@ -63,6 +62,11 @@ namespace WordAddIn1
         public static string pdf_path = FDscendHome + "\\说明文档.pdf";
         public static string readme_path = FDscendHome + "\\readme.html";
 
+        public static string mdIndex = FDscendHome + Properties.Resources.mdIndex;
+        public static string srcMarkdown = FDscendHome + Properties.Resources.srcMarkdown;
+
+        public static string highlight_index = FDscendHome + Properties.Resources.highlight_index;
+        public static string srcHighlight = FDscendHome + Properties.Resources.srcHighlight;
 
 
         //全局常量
